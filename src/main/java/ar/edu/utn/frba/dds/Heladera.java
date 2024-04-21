@@ -9,13 +9,13 @@ import java.util.List;
 public class Heladera {
   //ubicacion
   private String nombre;
-  private String capacidadViandas;
+  private Integer capacidadViandas;
   private Date fechaCreacion;
   private List<Vianda> viandas;
   private Ubicacion ubicacion;
 
   //ojo, aca la lista está vacía
-  public Heladera(String nombre, String capacidadViandas, Date fechaCreacion, Ubicacion ubicacion) {
+  public Heladera(String nombre, Integer capacidadViandas, Date fechaCreacion, Ubicacion ubicacion) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.fechaCreacion = requireNonNull(fechaCreacion);
@@ -37,7 +37,7 @@ public class Heladera {
     return nombre;
   }
 
-  public String getCapacidadViandas() {
+  public Integer getCapacidadViandas() {
     return capacidadViandas;
   }
 
