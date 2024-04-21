@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Date;
 
-public class DonacionDeDinero implements ColaboracionHumana {
+public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridica {
 
   private Date fecha;
   private Integer monto;
@@ -23,6 +23,22 @@ public class DonacionDeDinero implements ColaboracionHumana {
     this.monto = monto;
     this.donacionPeriodica = requireNonNull(donacionPeriodica);
     this.frecuenciaEnDias = frecuenciaEnDias;
+  }
+
+  public Date getFecha() {
+    return fecha;
+  }
+
+  public Integer getMonto() {
+    return monto;
+  }
+
+  public Boolean getDonacionPeriodica() {
+    return donacionPeriodica;
+  }
+
+  public Integer getFrecuenciaEnDias() {
+    return frecuenciaEnDias;
   }
 
   @Override

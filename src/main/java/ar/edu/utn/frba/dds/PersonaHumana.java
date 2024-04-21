@@ -32,8 +32,36 @@ public class PersonaHumana {
     this.historialDeColaboraciones = new ArrayList<>();
   }
 
-  public void colaborar(ColaboracionHumana formaDeColaborar) {
-    historialDeColaboraciones.add(formaDeColaborar);
-    formaDeColaborar.realizarColaboracion();
+  public String getNombre() {
+    return nombre;
+  }
+
+  public String getApellido() {
+    return apellido;
+  }
+
+  public Date getFechaDeNacimiento() {
+    return fechaDeNacimiento;
+  }
+
+  public String getDireccion() {
+    return direccion;
+  }
+
+  public MedioDeContacto getMedioDeContacto() {
+    return medioDeContacto;
+  }
+
+  public Set<FormaDeColaboracionHumana> getFormasDeColaboracion() {
+    return formasDeColaboracion;
+  }
+
+  public List<ColaboracionHumana> getHistorialDeColaboraciones() {
+    return historialDeColaboraciones;
+  }
+
+  public void colaborar(ColaboracionHumana unaColaboracion) {
+    unaColaboracion.realizarColaboracion();
+    historialDeColaboraciones.add(unaColaboracion);
   }
 }
