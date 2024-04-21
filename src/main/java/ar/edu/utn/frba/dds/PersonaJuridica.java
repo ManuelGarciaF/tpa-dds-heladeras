@@ -14,19 +14,22 @@ public class PersonaJuridica {
   private String direccion;
   private Set<FormaDeColaboracionJuridica> formasDeColaboracion;
   private List<ColaboracionJuridica> historialDeColaboraciones;
+  private Usuario usuario;
 
   public PersonaJuridica(String razonSocial,
                          TipoPersonaJuridica tipo,
                          String rubro,
                          MedioDeContacto medioDeContacto,
                          String direccion,
-                         Set<FormaDeColaboracionJuridica> formasDeColaboracion) {
+                         Set<FormaDeColaboracionJuridica> formasDeColaboracion,
+                         Usuario usuario) {
     this.razonSocial = requireNonNull(razonSocial);
     this.tipo = requireNonNull(tipo);
     this.rubro = requireNonNull(rubro);
     this.medioDeContacto = requireNonNull(medioDeContacto);
     this.direccion = direccion;
     this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+    this.usuario = requireNonNull(usuario);
     this.historialDeColaboraciones = new ArrayList<>();
   }
 

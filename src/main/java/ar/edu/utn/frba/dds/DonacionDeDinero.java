@@ -4,7 +4,6 @@ package ar.edu.utn.frba.dds;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridica {
 
@@ -13,7 +12,10 @@ public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridic
   private Boolean donacionPeriodica;
   private Integer frecuenciaEnDias;
 
-  public DonacionDeDinero(LocalDate fecha, Integer monto, Boolean donacionPeriodica, Integer frecuenciaEnDias) {
+  public DonacionDeDinero(LocalDate fecha,
+                          Integer monto,
+                          Boolean donacionPeriodica,
+                          Integer frecuenciaEnDias) {
     this.fecha = requireNonNull(fecha);
 
     requireNonNull(monto);

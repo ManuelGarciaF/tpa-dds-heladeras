@@ -2,18 +2,23 @@ package ar.edu.utn.frba.dds;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Vianda {
   private String tipoComida;
-  private Date fechaVencimiento;
-  private Date fechaDeDonacion;
+  private LocalDate fechaVencimiento;
+  private LocalDate fechaDeDonacion;
   private PersonaHumana colaborador;
   private Integer calorias;
   private Integer peso;
   private Boolean fueEntregado = false; // Suponemos que por defecto no fue creada.
 
-  public Vianda(Date fechaVencimiento, Date fechaDeDonacion, Heladera heladeraDondeEstaAlmacenada, PersonaHumana colaborador, int calorias, int peso) {
+  public Vianda(LocalDate fechaVencimiento,
+                LocalDate fechaDeDonacion,
+                Heladera heladeraDondeEstaAlmacenada,
+                PersonaHumana colaborador,
+                Integer calorias,
+                Integer peso) {
     this.fechaVencimiento = requireNonNull(fechaVencimiento);
     this.fechaDeDonacion = requireNonNull(fechaDeDonacion);
     this.colaborador = requireNonNull(colaborador);
@@ -21,11 +26,11 @@ public class Vianda {
     this.calorias = calorias;
   }
 
-  public Date getFechaVencimiento() {
+  public LocalDate getFechaVencimiento() {
     return fechaVencimiento;
   }
 
-  public Date getFechaDeDonacion() {
+  public LocalDate getFechaDeDonacion() {
     return fechaDeDonacion;
   }
 

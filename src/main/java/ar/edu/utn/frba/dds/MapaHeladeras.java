@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapaHeladeras {
-	private List<Heladera> heladeras;
-	private static final MapaHeladeras INSTANCE = new MapaHeladeras();
+  private List<Heladera> heladeras;
+  private static final MapaHeladeras INSTANCE = new MapaHeladeras();
 
-	public static MapaHeladeras instance (){
-		return INSTANCE;
-	}
+  public static MapaHeladeras instance() {
+    return INSTANCE;
+  }
 
-	private MapaHeladeras() {
-		this.heladeras = new ArrayList<>();
-	}
+  private MapaHeladeras() {
+    this.heladeras = new ArrayList<>();
+  }
 
-	public List<Heladera> listarHeladeras() {
-		return heladeras;
-	}
+  public List<Heladera> listarHeladeras() {
+    return heladeras;
+  }
 
-	public void agregarHeladera(Heladera heladera) {
-		this.heladeras.add(heladera);
-	}
+  public void agregarHeladera(Heladera heladera) {
+    this.heladeras.add(heladera);
+  }
 
-	public void quitarHeladera(Heladera heladera) {
-		this.heladeras.remove(heladera);
-	}
+  public void quitarHeladera(Heladera heladera) {
+    this.heladeras.remove(heladera);
+  }
 }

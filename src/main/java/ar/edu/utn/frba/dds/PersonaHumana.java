@@ -1,11 +1,11 @@
 package ar.edu.utn.frba.dds;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
 
 public class PersonaHumana {
   private String nombre;
@@ -13,6 +13,7 @@ public class PersonaHumana {
   private LocalDate fechaDeNacimiento;
   private String direccion;
   private MedioDeContacto medioDeContacto;
+  private Usuario usuario;
 
   private Set<FormaDeColaboracionHumana> formasDeColaboracion;
   private List<ColaboracionHumana> historialDeColaboraciones;
@@ -22,13 +23,15 @@ public class PersonaHumana {
                        LocalDate fechaDeNacimiento,
                        String direccion,
                        MedioDeContacto medioDeContacto,
-                       Set<FormaDeColaboracionHumana> formasDeColaboracion) {
+                       Set<FormaDeColaboracionHumana> formasDeColaboracion,
+                       Usuario usuario) {
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);
     this.fechaDeNacimiento = fechaDeNacimiento;
     this.direccion = direccion;
     this.medioDeContacto = requireNonNull(medioDeContacto);
     this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+    this.usuario = requireNonNull(usuario);
     this.historialDeColaboraciones = new ArrayList<>();
   }
 

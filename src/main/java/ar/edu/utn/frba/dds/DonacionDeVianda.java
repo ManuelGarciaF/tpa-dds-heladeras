@@ -1,16 +1,24 @@
 package ar.edu.utn.frba.dds;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
-//acá hay que crear la vianda como hicieron con el quemepongo 2
-
 public class DonacionDeVianda implements ColaboracionHumana {
-  //no habla de donar varias viandas, sino solo una
-  private Vianda vianda;
+  private List<Vianda> viandas;
+  private Heladera heladera;
+
+  public DonacionDeVianda(List<Vianda> viandas, Heladera heladera) {
+    this.viandas = requireNonNull(viandas);
+    this.heladera = requireNonNull(heladera);
+  }
 
   @Override
   public void realizarColaboracion() {
-    //buscar la manera de que cree la vianda en este metodo
+    heladera.ingresarViandas(viandas);
   }
 
+  public Heladera getHeladera() {
+    return heladera;
+  }
 }
