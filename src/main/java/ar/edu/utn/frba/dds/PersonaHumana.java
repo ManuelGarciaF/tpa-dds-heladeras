@@ -1,35 +1,39 @@
 package ar.edu.utn.frba.dds;
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static java.lang.System.exit;
+import java.util.Set;
 
 public class PersonaHumana {
-    private String nombre;
-    private String apellido;
-    private Date fechaDeNacimiento;
-    private String direccion;
-    //Queda poner el medio de contacto
-   // private List<FormasDeColaboracion> formaDeColaboracion;
-    private List<ColaboracionHumana> formaDeColaboracion;
+  private String nombre;
+  private String apellido;
+  private Date fechaDeNacimiento;
+  private String direccion;
+  private MedioDeContacto medioDeContacto;
 
-    public PersonaHumana(String nombre, String apellido, Date fechaDeNacimiento, String direccion, ColaboracionHumana formaDeColaboracion) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaDeNacimiento = fechaDeNacimiento;
-        this.direccion = direccion;
-        this.formaDeColaboracion.add(formaDeColaboracion);
-    }
-    //Al ejecutar el metodo de colaborar, ejecuta cada tipo de colaboracion PENDIENTE
-    public void colaborarTodoJunto(){
-        this.formaDeColaboracion.forEach(tipoDeColaboracion -> tipoDeColaboracion.realizarColaboracion());
-    }
-    public void colaborar(ColaboracionHumana formaDeColaborar){
-        //Acá verifico si esa forma de colaborar le pertenece al usuario para no poner cualquier verdura
-        if(!this.formaDeColaboracion.contains(formaDeColaborar)){
-            System.out.println("no existe esa forma de colaborar en esta persona");
-            exit(0);
-        }
-        formaDeColaborar.realizarColaboracion();
-    }
+  private Set<FormaDeColaboracionHumana> formasDeColaboracion;
+  private List<ColaboracionHumana> historialDeColaboraciones;
+
+  public PersonaHumana(String nombre,
+                       String apellido,
+                       Date fechaDeNacimiento,
+                       String direccion,
+                       MedioDeContacto medioDeContacto,
+                       Set<FormaDeColaboracionHumana> formasDeColaboracion) {
+    this.nombre = requireNonNull(nombre);
+    this.apellido = requireNonNull(apellido);
+    this.fechaDeNacimiento = fechaDeNacimiento;
+    this.direccion = direccion;
+    this.medioDeContacto = requireNonNull(medioDeContacto);
+    this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+    this.historialDeColaboraciones = new ArrayList<>();
+  }
+
+  public void colaborar(ColaboracionHumana formaDeColaborar) {
+    historialDeColaboraciones.add(formaDeColaborar);
+    formaDeColaborar.realizarColaboracion();
+  }
 }
