@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class PersonaVulnerable {
 	private String nombre;
 	private String domicilio;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private Integer menoresACargo;
 
-	public PersonaVulnerable(String nombre, String domicilio, Date fechaNacimiento, Integer menoresACargo) {
+	public PersonaVulnerable(String nombre, String domicilio, LocalDate fechaNacimiento, Integer menoresACargo) {
 		this.nombre = nombre;
 		this.domicilio = domicilio;
 		this.fechaNacimiento = fechaNacimiento;
@@ -22,7 +22,7 @@ public class PersonaVulnerable {
 		return domicilio;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 

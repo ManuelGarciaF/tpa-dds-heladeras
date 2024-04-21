@@ -1,7 +1,6 @@
 package ar.edu.utn.frba.dds;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import static java.util.Objects.requireNonNull;
 
 public class HacerseCargoHeladera implements ColaboracionJuridica {
@@ -29,7 +28,7 @@ public class HacerseCargoHeladera implements ColaboracionJuridica {
 
 	@Override
 	public void realizarColaboracion() {
-		Heladera heladeraNueva = new Heladera(nombreHeladera, capacidadViandas, new Date(), ubicacion);
+		Heladera heladeraNueva = new Heladera(nombreHeladera, capacidadViandas, LocalDate.now(), ubicacion);
 		MapaHeladeras.instance().agregarHeladera(heladeraNueva);
 	}
 }

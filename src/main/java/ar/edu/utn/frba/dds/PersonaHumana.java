@@ -1,16 +1,16 @@
 package ar.edu.utn.frba.dds;
 
-import static java.util.Objects.requireNonNull;
-
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
+import static java.util.Objects.requireNonNull;
 
 public class PersonaHumana {
   private String nombre;
   private String apellido;
-  private Date fechaDeNacimiento;
+  private LocalDate fechaDeNacimiento;
   private String direccion;
   private MedioDeContacto medioDeContacto;
 
@@ -19,7 +19,7 @@ public class PersonaHumana {
 
   public PersonaHumana(String nombre,
                        String apellido,
-                       Date fechaDeNacimiento,
+                       LocalDate fechaDeNacimiento,
                        String direccion,
                        MedioDeContacto medioDeContacto,
                        Set<FormaDeColaboracionHumana> formasDeColaboracion) {
@@ -40,7 +40,7 @@ public class PersonaHumana {
     return apellido;
   }
 
-  public Date getFechaDeNacimiento() {
+  public LocalDate getFechaDeNacimiento() {
     return fechaDeNacimiento;
   }
 

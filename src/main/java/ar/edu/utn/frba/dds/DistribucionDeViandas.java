@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -11,10 +12,10 @@ public class DistribucionDeViandas implements ColaboracionHumana {
   private Heladera heladeraDestino;
   // este int no me convence, para mi es una lista de viandas y que cuando hagamos el translado de viandas vaya sacando de a una
   private Integer cantidadDeViandas;
-  private Date fechaDeLaDistribucion;
+  private LocalDate fechaDeLaDistribucion;
 
   public DistribucionDeViandas(MotivoDeDistribucion motivoDeDistribucion,
-                               Date fechaDeLaDistribucion,
+                               LocalDate fechaDeLaDistribucion,
                                Integer cantidadDeViandas,
                                Heladera heladeraDestino,
                                Heladera heladeraOrigen) {
@@ -29,5 +30,25 @@ public class DistribucionDeViandas implements ColaboracionHumana {
   public void realizarColaboracion() {
     List<Vianda> viandas = heladeraOrigen.sacarViandas(cantidadDeViandas);
     heladeraDestino.ingresarViandas(viandas);
+  }
+
+  public MotivoDeDistribucion getMotivoDeDistribucion() {
+    return motivoDeDistribucion;
+  }
+
+  public Heladera getHeladeraOrigen() {
+    return heladeraOrigen;
+  }
+
+  public Heladera getHeladeraDestino() {
+    return heladeraDestino;
+  }
+
+  public Integer getCantidadDeViandas() {
+    return cantidadDeViandas;
+  }
+
+  public LocalDate getFechaDeLaDistribucion() {
+    return fechaDeLaDistribucion;
   }
 }

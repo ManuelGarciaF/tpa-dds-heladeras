@@ -3,16 +3,17 @@ package ar.edu.utn.frba.dds;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridica {
 
-  private Date fecha;
+  private LocalDate fecha;
   private Integer monto;
   private Boolean donacionPeriodica;
   private Integer frecuenciaEnDias;
 
-  public DonacionDeDinero(Date fecha, Integer monto, Boolean donacionPeriodica, Integer frecuenciaEnDias) {
+  public DonacionDeDinero(LocalDate fecha, Integer monto, Boolean donacionPeriodica, Integer frecuenciaEnDias) {
     this.fecha = requireNonNull(fecha);
 
     requireNonNull(monto);
@@ -25,7 +26,7 @@ public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridic
     this.frecuenciaEnDias = frecuenciaEnDias;
   }
 
-  public Date getFecha() {
+  public LocalDate getFecha() {
     return fecha;
   }
 
