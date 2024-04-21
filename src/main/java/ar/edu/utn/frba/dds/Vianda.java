@@ -13,12 +13,7 @@ public class Vianda {
   private Integer peso;
   private Boolean fueEntregado = false; // Suponemos que por defecto no fue creada.
 
-  public Vianda(Date fechaVencimiento,
-                Date fechaDeDonacion,
-                Heladera heladeraDondeEstaAlmacenada,
-                PersonaHumana colaborador,
-                int calorias,
-                int peso) {
+  public Vianda(Date fechaVencimiento, Date fechaDeDonacion, Heladera heladeraDondeEstaAlmacenada, PersonaHumana colaborador, int calorias, int peso) {
     this.fechaVencimiento = requireNonNull(fechaVencimiento);
     this.fechaDeDonacion = requireNonNull(fechaDeDonacion);
     this.colaborador = requireNonNull(colaborador);
