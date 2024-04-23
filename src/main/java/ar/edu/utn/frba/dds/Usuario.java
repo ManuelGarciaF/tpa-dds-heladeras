@@ -1,9 +1,8 @@
 package ar.edu.utn.frba.dds;
 
-import com.unicodelabs.jdp.core.DumbPassword;
-import com.unicodelabs.jdp.core.exceptions.IsNullException;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Usuario {
   private String nombre;
@@ -31,19 +30,20 @@ public class Usuario {
 
   private static boolean esSegura(String contrasenia) {
     // Checkear contra las 10000 contraseñas más comunes
-    final DumbPassword dumbPasswords = new DumbPassword();
-    // Necesitamos usar un try-catch para convertir la excepcion checkeada en no-checkeada.
-    try {
-      if (dumbPasswords.checkPassword(contrasenia)) {
-        return false;
-      }
-    } catch (IOException ex) {
-      throw new RuntimeException("No se pudo verificar la contraseña");
-    } catch (IsNullException ex) {
-      throw new ContraseniaInseguraException("La contraseña no puede ser nula");
+    if (estaEnTop10k(contrasenia)) {
+      return false;
     }
 
     // Checkear que tenga al menos 8 caracteres
     return contrasenia.length() >= 8;
+  }
+
+  private static boolean estaEnTop10k(String contrasenia) {
+    try {
+      return Files.lines(Paths.get("./resources/10k-most-common.txt"))
+          .anyMatch(line -> line.equals(contrasenia));
+    } catch (IOException e) {
+      throw new RuntimeException("Hubo un error al leer el archivo de contrasenias");
+    }
   }
 }
