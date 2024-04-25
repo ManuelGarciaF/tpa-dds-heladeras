@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Heladera {
-  //ubicacion
   private String nombre;
   private Integer capacidadViandas;
   private LocalDate fechaCreacion;
   private List<Vianda> viandas;
   private Ubicacion ubicacion;
 
-  //ojo, aca la lista está vacía
   public Heladera(String nombre,
                   Integer capacidadViandas,
                   LocalDate fechaCreacion,
