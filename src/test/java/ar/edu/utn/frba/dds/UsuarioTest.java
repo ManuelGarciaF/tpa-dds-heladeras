@@ -26,4 +26,16 @@ class UsuarioTest {
       new Usuario("fasdfdasff192431", "mati");
     });
   }
+
+  @Test
+  void noVerificaContraseniaIncorrecta() {
+    var mati = new Usuario("fasdfdasff192431", "mati");
+    assertFalse(mati.verificarContrasenia("mati123"));
+  }
+
+  @Test
+  void VerificaContraseniaCorrecta() {
+    var mati = new Usuario("fasdfdasff192431", "mati");
+    assertTrue(mati.verificarContrasenia("fasdfdasff192431"));
+  }
 }

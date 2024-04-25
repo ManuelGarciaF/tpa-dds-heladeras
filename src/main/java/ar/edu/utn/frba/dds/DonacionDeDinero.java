@@ -12,11 +12,10 @@ public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridic
   private Boolean donacionPeriodica;
   private Integer frecuenciaEnDias;
 
-  public DonacionDeDinero(LocalDate fecha,
-                          Integer monto,
-                          Boolean donacionPeriodica,
-                          Integer frecuenciaEnDias) {
-    this.fecha = requireNonNull(fecha);
+  public DonacionDeDinero(Integer monto,
+                         Boolean donacionPeriodica,
+                         Integer frecuenciaEnDias) {
+    this.fecha = LocalDate.now();
 
     requireNonNull(monto);
     if (monto < 0) {
@@ -25,6 +24,10 @@ public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridic
 
     this.monto = monto;
     this.donacionPeriodica = requireNonNull(donacionPeriodica);
+    if (donacionPeriodica && frecuenciaEnDias == null) {
+      throw new IllegalArgumentException(
+          "La donacion es periodica pero no se indico la frecuencia");
+    }
     this.frecuenciaEnDias = frecuenciaEnDias;
   }
 

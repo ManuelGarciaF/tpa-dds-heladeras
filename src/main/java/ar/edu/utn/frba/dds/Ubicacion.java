@@ -3,19 +3,19 @@ package ar.edu.utn.frba.dds;
 import static java.util.Objects.requireNonNull;
 
 public class Ubicacion {
-  private int latitud;
-  private int longitud;
+  private Double latitud;
+  private Double longitud;
 
-  public Ubicacion(int latitud, int longitud) {
+  public Ubicacion(Double latitud, Double longitud) {
     this.latitud = requireNonNull(latitud);
     this.longitud = requireNonNull(longitud);
   }
 
-  public int getLatitud() {
+  public Double getLatitud() {
     return latitud;
   }
 
-  public int getLongitud() {
+  public Double getLongitud() {
     return longitud;
   }
 }

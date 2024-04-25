@@ -34,7 +34,6 @@ public class HacerseCargoHeladera implements ColaboracionJuridica {
     Heladera heladeraNueva = new Heladera(
         nombreHeladera,
         capacidadViandas,
-        LocalDate.now(),
         ubicacion);
     MapaHeladeras.instance().agregarHeladera(heladeraNueva);
   }

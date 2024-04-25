@@ -16,13 +16,13 @@ public class DistribucionDeViandas implements ColaboracionHumana {
   public DistribucionDeViandas(MotivoDeDistribucion motivoDeDistribucion,
                                LocalDate fechaDeLaDistribucion,
                                Integer cantidadDeViandas,
-                               Heladera heladeraDestino,
-                               Heladera heladeraOrigen) {
+                               Heladera heladeraOrigen,
+                               Heladera heladeraDestino) {
     this.motivoDeDistribucion = requireNonNull(motivoDeDistribucion);
     this.fechaDeLaDistribucion = requireNonNull(fechaDeLaDistribucion);
     this.cantidadDeViandas = requireNonNull(cantidadDeViandas);
-    this.heladeraDestino = requireNonNull(heladeraDestino);
     this.heladeraOrigen = requireNonNull(heladeraOrigen);
+    this.heladeraDestino = requireNonNull(heladeraDestino);
   }
 
   @Override
