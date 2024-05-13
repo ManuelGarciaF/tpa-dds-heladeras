@@ -3,10 +3,15 @@ package ar.edu.utn.frba.dds;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Usuario {
   private String nombre;
   private String contrasenia;
+  private static final List<ValidacionContrasenia> validaciones = List.of(
+      new ValidacionLongitud(8),
+      new ValidacionTop10k()
+  );
 
   public Usuario(String contrasenia, String nombre) {
     this.nombre = nombre;
@@ -29,21 +34,6 @@ public class Usuario {
   }
 
   private static boolean esSegura(String contrasenia) {
-    // Checkear contra las 10000 contraseñas más comunes
-    if (estaEnTop10k(contrasenia)) {
-      return false;
-    }
-
-    // Checkear que tenga al menos 8 caracteres
-    return contrasenia.length() >= 8;
-  }
-
-  private static boolean estaEnTop10k(String contrasenia) {
-    try {
-      return Files.lines(Paths.get("./resources/10k-most-common.txt"))
-          .anyMatch(line -> line.equals(contrasenia));
-    } catch (IOException e) {
-      throw new RuntimeException("Hubo un error al leer el archivo de contrasenias");
-    }
+    return validaciones.stream().allMatch(validacion -> validacion.validar(contrasenia));
   }
 }
