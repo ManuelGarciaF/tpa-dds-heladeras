@@ -47,8 +47,4 @@ public class DonacionDeDinero implements Colaboracion {
     return frecuenciaEnDias;
   }
 
-  @Override
-  public void realizarColaboracion() {
-    // Por ahora no hace nada solo queda registrada en el historial de colaboraciones.
-  }
 }

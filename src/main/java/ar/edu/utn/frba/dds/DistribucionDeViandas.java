@@ -24,12 +24,6 @@ public class DistribucionDeViandas implements Colaboracion {
     this.heladeraDestino = requireNonNull(heladeraDestino);
   }
 
-  @Override
-  public void realizarColaboracion() {
-    List<Vianda> viandas = heladeraOrigen.sacarViandas(cantidadDeViandas);
-    heladeraDestino.ingresarViandas(viandas);
-  }
-
   public MotivoDeDistribucion getMotivoDeDistribucion() {
     return motivoDeDistribucion;
   }

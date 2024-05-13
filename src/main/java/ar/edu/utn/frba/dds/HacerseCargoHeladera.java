@@ -29,13 +29,5 @@ public class HacerseCargoHeladera implements Colaboracion {
     return ubicacion;
   }
 
-  @Override
-  public void realizarColaboracion() {
-    Heladera heladeraNueva = new Heladera(
-        nombreHeladera,
-        capacidadViandas,
-        ubicacion);
-    MapaHeladeras.instance().agregarHeladera(heladeraNueva);
-  }
 }
 

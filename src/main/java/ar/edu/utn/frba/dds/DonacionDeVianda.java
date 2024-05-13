@@ -13,11 +13,6 @@ public class DonacionDeVianda implements Colaboracion {
     this.heladera = requireNonNull(heladera);
   }
 
-  @Override
-  public void realizarColaboracion() {
-    heladera.ingresarViandas(viandas);
-  }
-
   public Heladera getHeladera() {
     return heladera;
   }
