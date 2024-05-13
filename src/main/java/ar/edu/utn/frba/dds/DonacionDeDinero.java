@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 
-public class DonacionDeDinero implements ColaboracionHumana, ColaboracionJuridica {
+public class DonacionDeDinero implements Colaboracion {
 
   private LocalDate fecha;
   private Integer monto;

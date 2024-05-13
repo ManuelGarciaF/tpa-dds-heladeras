@@ -6,15 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class PersonaJuridica {
+public class PersonaJuridica extends Colaborador {
   private String razonSocial;
   private TipoPersonaJuridica tipo;
   private String rubro;
-  private MedioDeContacto medioDeContacto;
-  private String direccion;
   private Set<FormaDeColaboracionJuridica> formasDeColaboracion;
-  private List<ColaboracionJuridica> historialDeColaboraciones;
-  private Usuario usuario;
 
   public PersonaJuridica(String razonSocial,
                          TipoPersonaJuridica tipo,
@@ -23,14 +19,11 @@ public class PersonaJuridica {
                          String direccion,
                          Set<FormaDeColaboracionJuridica> formasDeColaboracion,
                          Usuario usuario) {
+    super(direccion, medioDeContacto, usuario);
     this.razonSocial = requireNonNull(razonSocial);
     this.tipo = requireNonNull(tipo);
     this.rubro = requireNonNull(rubro);
-    this.medioDeContacto = requireNonNull(medioDeContacto);
-    this.direccion = direccion;
     this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
-    this.usuario = requireNonNull(usuario);
-    this.historialDeColaboraciones = new ArrayList<>();
   }
 
   public String getRazonSocial() {
@@ -45,24 +38,8 @@ public class PersonaJuridica {
     return rubro;
   }
 
-  public MedioDeContacto getMedioDeContacto() {
-    return medioDeContacto;
-  }
-
-  public String getDireccion() {
-    return direccion;
-  }
-
   public Set<FormaDeColaboracionJuridica> getFormasDeColaboracion() {
     return formasDeColaboracion;
   }
-
-  public List<ColaboracionJuridica> getHistorialDeColaboraciones() {
-    return historialDeColaboraciones;
-  }
-
-  public void colaborar(ColaboracionJuridica unaColaboracion) {
-    unaColaboracion.realizarColaboracion();
-    historialDeColaboraciones.add(unaColaboracion);
-  }
+  
 }

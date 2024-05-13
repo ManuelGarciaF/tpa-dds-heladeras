@@ -3,10 +3,9 @@ package ar.edu.utn.frba.dds;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
-public class DistribucionDeViandas implements ColaboracionHumana {
+public class DistribucionDeViandas implements Colaboracion {
   private MotivoDeDistribucion motivoDeDistribucion;
   private Heladera heladeraOrigen;
   private Heladera heladeraDestino;

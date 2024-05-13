@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-public class DonacionDeVianda implements ColaboracionHumana {
+public class DonacionDeVianda implements Colaboracion {
   private List<Vianda> viandas;
   private Heladera heladera;
 
