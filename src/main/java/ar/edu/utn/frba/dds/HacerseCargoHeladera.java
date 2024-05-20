@@ -9,6 +9,8 @@ public class HacerseCargoHeladera implements Colaboracion {
   private Integer capacidadViandas;
   private Ubicacion ubicacion;
 
+  private static final Double COEFICIENTE_PUNTAJE = 5.0;
+
   public HacerseCargoHeladera(String nombreHeladera,
                               Integer capacidadViandas,
                               Ubicacion ubicacion) {
@@ -29,5 +31,10 @@ public class HacerseCargoHeladera implements Colaboracion {
     return ubicacion;
   }
 
+  @Override
+  public Double puntaje() {
+    Heladera heladera = MapaHeladeras.instance().buscarHeladera(nombreHeladera);
+    return heladera.mesesActivos() * heladera.getUsos() * COEFICIENTE_PUNTAJE;
+  }
 }
 

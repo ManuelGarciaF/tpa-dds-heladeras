@@ -8,6 +8,8 @@ public class DonacionDeVianda implements Colaboracion {
   private List<Vianda> viandas;
   private Heladera heladera;
 
+  private static final double COEFICIENTE_PUNTAJE = 1.5;
+
   public DonacionDeVianda(List<Vianda> viandas, Heladera heladera) {
     this.viandas = requireNonNull(viandas);
     this.heladera = requireNonNull(heladera);
@@ -15,5 +17,10 @@ public class DonacionDeVianda implements Colaboracion {
 
   public Heladera getHeladera() {
     return heladera;
+  }
+
+  @Override
+  public Double puntaje() {
+    return viandas.stream().mapToInt(Vianda::semanasFresca).sum() * COEFICIENTE_PUNTAJE;
   }
 }

@@ -31,4 +31,10 @@ public abstract class Colaborador {
   public MedioDeContacto getMedioDeContacto() {
     return medioDeContacto;
   }
+
+  public Double puntaje() {
+    return historialDeColaboraciones.stream().mapToDouble(Colaboracion::puntaje).sum();
+  }
+
+  public abstract boolean esDeDocumento();
 }

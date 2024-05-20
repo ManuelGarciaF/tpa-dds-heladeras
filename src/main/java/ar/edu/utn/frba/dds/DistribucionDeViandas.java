@@ -12,6 +12,8 @@ public class DistribucionDeViandas implements Colaboracion {
   private Integer cantidadDeViandas;
   private LocalDate fechaDeLaDistribucion;
 
+  private static final Double COEFICIENTE_PUNTAJE = 1.0;
+
   public DistribucionDeViandas(MotivoDeDistribucion motivoDeDistribucion,
                                LocalDate fechaDeLaDistribucion,
                                Integer cantidadDeViandas,
@@ -42,5 +44,10 @@ public class DistribucionDeViandas implements Colaboracion {
 
   public LocalDate getFechaDeLaDistribucion() {
     return fechaDeLaDistribucion;
+  }
+
+  @Override
+  public Double puntaje() {
+    return cantidadDeViandas * COEFICIENTE_PUNTAJE;
   }
 }

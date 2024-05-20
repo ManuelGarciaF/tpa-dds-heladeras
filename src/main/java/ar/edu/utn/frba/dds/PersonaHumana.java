@@ -11,18 +11,24 @@ public class PersonaHumana extends Colaborador {
   private String apellido;
   private LocalDate fechaDeNacimiento;
   private Set<FormaDeColaboracionHumana> formasDeColaboracion;
+  private TipoDocumento tipoDocumento;
+  private Integer numeroDocumento;
 
   public PersonaHumana(String nombre,
                        String apellido,
                        LocalDate fechaDeNacimiento,
                        String direccion,
                        MedioDeContacto medioDeContacto,
-                       Set<FormaDeColaboracionHumana> formasDeColaboracion) {
+                       Set<FormaDeColaboracionHumana> formasDeColaboracion,
+                       TipoDocumento tipoDocumento,
+                       Integer numeroDocumento) {
     super(direccion, medioDeContacto);
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);
     this.fechaDeNacimiento = fechaDeNacimiento;
     this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+    this.tipoDocumento = requireNonNull(tipoDocumento);
+    this.numeroDocumento = requireNonNull(numeroDocumento);
   }
 
   public String getNombre() {
@@ -41,4 +47,8 @@ public class PersonaHumana extends Colaborador {
     return formasDeColaboracion;
   }
 
+  @Override
+  public boolean esDeDocumento() {
+    return false;
+  }
 }

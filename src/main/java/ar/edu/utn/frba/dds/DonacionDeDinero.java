@@ -12,6 +12,8 @@ public class DonacionDeDinero implements Colaboracion {
   private Boolean donacionPeriodica;
   private Integer frecuenciaEnDias;
 
+  private static final Double COEFICIENTE_PUNTAJE = 0.5;
+
   public DonacionDeDinero(Integer monto,
                          Boolean donacionPeriodica,
                          Integer frecuenciaEnDias) {
@@ -47,4 +49,8 @@ public class DonacionDeDinero implements Colaboracion {
     return frecuenciaEnDias;
   }
 
+  @Override
+  public Double puntaje() {
+    return monto.doubleValue() * COEFICIENTE_PUNTAJE;
+  }
 }

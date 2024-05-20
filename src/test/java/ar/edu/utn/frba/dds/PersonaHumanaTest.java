@@ -18,7 +18,10 @@ class PersonaHumanaTest {
         LocalDate.of(1995, 10, 10),
         "Calle Falsa 123",
         new MedioDeContacto(null, "test@gmail.com", null),
-        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA));
+        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
+        TipoDocumento.DNI,
+        180924102
+    );
   }
 
   @Test

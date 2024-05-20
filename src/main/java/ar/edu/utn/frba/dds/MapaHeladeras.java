@@ -26,4 +26,11 @@ public class MapaHeladeras {
   public void quitarHeladera(Heladera heladera) {
     this.heladeras.remove(heladera);
   }
+
+  public Heladera buscarHeladera(String nombreHeladera) {
+    return heladeras.stream()
+        .filter(heladera -> heladera.tieneNombre(nombreHeladera))
+        .findFirst()
+        .orElse(null);
+  }
 }

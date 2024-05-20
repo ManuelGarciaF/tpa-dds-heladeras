@@ -40,5 +40,10 @@ public class PersonaJuridica extends Colaborador {
   public Set<FormaDeColaboracionJuridica> getFormasDeColaboracion() {
     return formasDeColaboracion;
   }
-  
+
+  @Override
+  public boolean esDeDocumento() {
+    // No tiene documento
+    return false;
+  }
 }

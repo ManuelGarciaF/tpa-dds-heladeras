@@ -12,6 +12,7 @@ public class Heladera {
   private LocalDate fechaCreacion;
   private List<Vianda> viandas;
   private Ubicacion ubicacion;
+  private Integer usos;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -21,6 +22,7 @@ public class Heladera {
     this.fechaCreacion = LocalDate.now();
     this.viandas = new ArrayList<Vianda>();
     this.ubicacion = requireNonNull(ubicacion);
+    this.usos = 0;
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -43,19 +45,19 @@ public class Heladera {
     return viandas;
   }
 
-  public String getNombre() {
-    return nombre;
+  public void incrementarUsos() {
+    this.usos++;
   }
 
-  public Integer getCapacidadViandas() {
-    return capacidadViandas;
+  public boolean tieneNombre(String nombreHeladera) {
+    return this.nombre.equals(nombreHeladera);
   }
 
-  public LocalDate getFechaCreacion() {
-    return fechaCreacion;
+  public Integer getUsos() {
+    return this.usos;
   }
 
-  public Ubicacion getUbicacion() {
-    return ubicacion;
+  public Double mesesActivos() {
+    return (double) (LocalDate.now().toEpochDay() - fechaCreacion.toEpochDay()) / 30;
   }
 }

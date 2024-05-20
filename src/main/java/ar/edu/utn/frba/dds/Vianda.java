@@ -42,4 +42,8 @@ public class Vianda {
   public Boolean getFueEntregado() {
     return fueEntregado;
   }
+
+  public int semanasFresca() {
+    return (int) (fechaVencimiento.toEpochDay() - fechaDeDonacion.toEpochDay()) / 7;
+  }
 }
