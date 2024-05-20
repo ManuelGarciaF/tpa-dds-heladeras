@@ -36,5 +36,5 @@ public abstract class Colaborador {
     return historialDeColaboraciones.stream().mapToDouble(Colaboracion::puntaje).sum();
   }
 
-  public abstract boolean esDeDocumento();
+  public abstract boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento);
 }

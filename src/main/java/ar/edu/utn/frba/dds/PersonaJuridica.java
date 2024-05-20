@@ -42,7 +42,7 @@ public class PersonaJuridica extends Colaborador {
   }
 
   @Override
-  public boolean esDeDocumento() {
+  public boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento) {
     // No tiene documento
     return false;
   }

@@ -48,7 +48,7 @@ public class PersonaHumana extends Colaborador {
   }
 
   @Override
-  public boolean esDeDocumento() {
-    return false;
+  public boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento) {
+    return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
   }
 }

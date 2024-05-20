@@ -22,8 +22,8 @@ public class DistribucionDeViandas implements Colaboracion {
     this.motivoDeDistribucion = requireNonNull(motivoDeDistribucion);
     this.fechaDeLaDistribucion = requireNonNull(fechaDeLaDistribucion);
     this.cantidadDeViandas = requireNonNull(cantidadDeViandas);
-    this.heladeraOrigen = requireNonNull(heladeraOrigen);
-    this.heladeraDestino = requireNonNull(heladeraDestino);
+    this.heladeraOrigen = heladeraOrigen;
+    this.heladeraDestino = heladeraDestino;
   }
 
   public MotivoDeDistribucion getMotivoDeDistribucion() {
