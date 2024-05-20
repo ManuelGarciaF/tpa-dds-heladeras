@@ -9,12 +9,10 @@ public abstract class Colaborador {
   private String direccion;
   private MedioDeContacto medioDeContacto;
   private List<Colaboracion> historialDeColaboraciones;
-  private Usuario usuario;
 
-  public Colaborador(String direccion, MedioDeContacto medioDeContacto, Usuario usuario) {
+  public Colaborador(String direccion, MedioDeContacto medioDeContacto) {
     this.direccion = requireNonNull(direccion);
     this.medioDeContacto = requireNonNull(medioDeContacto);
-    this.usuario = requireNonNull(usuario);
     this.historialDeColaboraciones = new ArrayList<Colaboracion>();
   }
 

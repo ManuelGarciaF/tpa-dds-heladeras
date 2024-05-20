@@ -17,9 +17,8 @@ public class PersonaHumana extends Colaborador {
                        LocalDate fechaDeNacimiento,
                        String direccion,
                        MedioDeContacto medioDeContacto,
-                       Set<FormaDeColaboracionHumana> formasDeColaboracion,
-                       Usuario usuario) {
-    super(direccion, medioDeContacto, usuario);
+                       Set<FormaDeColaboracionHumana> formasDeColaboracion) {
+    super(direccion, medioDeContacto);
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);
     this.fechaDeNacimiento = fechaDeNacimiento;

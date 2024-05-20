@@ -18,8 +18,7 @@ class PersonaJuridicaTest {
         "Automotores",
         new MedioDeContacto(null, "test@gmail.com", null),
         "Triunvirato 55894",
-        Set.of(FormaDeColaboracionJuridica.DONACION_DINERO),
-        new Usuario("fdsafasdfsd98439r5", "matisrl"));
+        Set.of(FormaDeColaboracionJuridica.DONACION_DINERO));
   }
 
   @Test

@@ -18,8 +18,7 @@ class PersonaHumanaTest {
         LocalDate.of(1995, 10, 10),
         "Calle Falsa 123",
         new MedioDeContacto(null, "test@gmail.com", null),
-        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
-        new Usuario("al;dfsafjl;dsfa10-23", "mati123facha"));
+        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA));
   }
 
   @Test

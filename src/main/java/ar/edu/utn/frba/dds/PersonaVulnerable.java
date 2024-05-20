@@ -10,16 +10,13 @@ public class PersonaVulnerable {
   private LocalDate fechaNacimiento;
   private LocalDate fechaRegistro;
   private Integer menoresAcargo;
-  private Usuario usuario;
 
   public PersonaVulnerable(String nombre,
                            String domicilio,
                            LocalDate fechaNacimiento,
-                           Integer menoresAcargo,
-                           Usuario usuario) {
+                           Integer menoresAcargo) {
     this.nombre = requireNonNull(nombre);
     this.domicilio = domicilio;
-    this.usuario = requireNonNull(usuario);
     this.fechaNacimiento = requireNonNull(fechaNacimiento);
     this.fechaRegistro = LocalDate.now();
     this.menoresAcargo = requireNonNull(menoresAcargo);
