@@ -2,13 +2,14 @@ package ar.edu.utn.frba.dds;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.colaboraciones.Colaboracion;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Colaborador {
-  private String direccion;
-  private MedioDeContacto medioDeContacto;
-  private List<Colaboracion> historialDeColaboraciones;
+  private final String direccion;
+  private final MedioDeContacto medioDeContacto;
+  private final List<Colaboracion> historialDeColaboraciones;
 
   public Colaborador(String direccion, MedioDeContacto medioDeContacto) {
     this.direccion = requireNonNull(direccion);
@@ -33,7 +34,8 @@ public abstract class Colaborador {
   }
 
   public Double puntaje() {
-    return historialDeColaboraciones.stream().mapToDouble(Colaboracion::puntaje).sum();
+    return historialDeColaboraciones.stream()
+        .mapToDouble(Colaboracion::puntaje).sum();
   }
 
   public abstract boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento);

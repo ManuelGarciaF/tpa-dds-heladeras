@@ -17,13 +17,14 @@ public class PersonaVulnerable {
   public PersonaVulnerable(String nombre,
                            String domicilio,
                            LocalDate fechaNacimiento,
+                           LocalDate fechaRegistro,
                            Integer menoresAcargo,
                            String codigoTarjeta,
                            List<UsoTarjeta> usosTarjeta) {
     this.nombre = requireNonNull(nombre);
     this.domicilio = domicilio;
     this.fechaNacimiento = requireNonNull(fechaNacimiento);
-    this.fechaRegistro = LocalDate.now();
+    this.fechaRegistro = requireNonNull(fechaRegistro);
     this.menoresAcargo = requireNonNull(menoresAcargo);
     this.codigoTarjeta = requireNonNull(codigoTarjeta);
     this.usosTarjeta = requireNonNull(usosTarjeta);
@@ -38,12 +39,11 @@ public class PersonaVulnerable {
   }
 
   private int usosHoy() {
-    return (int) usosTarjeta.stream().filter(u -> u.getFecha().equals(LocalDate.now())).count();
+    return (int) usosTarjeta.stream().filter(u -> u.fecha().equals(LocalDate.now())).count();
   }
 
   public void agregarUsoTarjeta(UsoTarjeta usoTarjeta) {
     this.usosTarjeta.add(usoTarjeta);
-    usoTarjeta.incrementarUsosEnHeladera();
   }
 
   public Integer puntajeBaseColaboracion() {
@@ -51,7 +51,8 @@ public class PersonaVulnerable {
   }
 
   private Integer mesesActivos() {
-    return (int) (fechaRegistro.toEpochDay() - fechaNacimiento.toEpochDay()) / 30;
+    int diasDesdeRegistro = (int) (LocalDate.now().toEpochDay() - fechaRegistro.toEpochDay());
+    return (int) diasDesdeRegistro / 30;
   }
 
 }

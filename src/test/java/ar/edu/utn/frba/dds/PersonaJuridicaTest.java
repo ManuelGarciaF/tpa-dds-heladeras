@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.time.LocalDate;
+import ar.edu.utn.frba.dds.colaboraciones.DonacionDeDinero;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

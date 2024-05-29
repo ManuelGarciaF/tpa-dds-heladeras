@@ -1,12 +1,12 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
+import ar.edu.utn.frba.dds.PersonaVulnerable;
 import java.util.List;
 
 public class RegistroDePersonaVulnerable implements Colaboracion {
-  private List<PersonaVulnerable> personasRegistradas;
+  private final List<PersonaVulnerable> personasRegistradas;
 
   private static final Double COEFICIENTE_PUNTAJE = 2.0;
 

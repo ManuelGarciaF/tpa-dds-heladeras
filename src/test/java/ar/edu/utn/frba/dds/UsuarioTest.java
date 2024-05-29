@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UsuarioTest {

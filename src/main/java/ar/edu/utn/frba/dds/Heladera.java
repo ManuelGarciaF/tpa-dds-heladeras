@@ -7,21 +7,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Heladera {
-  private String nombre;
-  private Integer capacidadViandas;
-  private LocalDate fechaCreacion;
-  private List<Vianda> viandas;
-  private Ubicacion ubicacion;
+  private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
+
+  private final String nombre;
+  private final Integer capacidadViandas;
+  private final LocalDate fechaCreacion;
+  private final List<Vianda> viandas;
+  private final Ubicacion ubicacion;
+  private final String numeroDeSerie;
+  private final Integer temperaturaMaximaAceptable;
+  private final ProveedorPeso proveedorPeso;
+  private final ProveedorTemperatura proveedorTemperatura;
   private Integer usos;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
-                  Ubicacion ubicacion) {
+                  Ubicacion ubicacion,
+                  String numeroDeSerie,
+                  Integer temperaturaMaximaAceptable,
+                  ProveedorPeso proveedorPeso,
+                  ProveedorTemperatura proveedorTemperatura) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
+    this.ubicacion = requireNonNull(ubicacion);
+    this.numeroDeSerie = requireNonNull(numeroDeSerie);
+    this.temperaturaMaximaAceptable = requireNonNull(temperaturaMaximaAceptable);
+    this.proveedorPeso = proveedorPeso;
+    this.proveedorTemperatura = proveedorTemperatura;
+
     this.fechaCreacion = LocalDate.now();
     this.viandas = new ArrayList<Vianda>();
-    this.ubicacion = requireNonNull(ubicacion);
     this.usos = 0;
   }
 
@@ -57,7 +72,21 @@ public class Heladera {
     return this.usos;
   }
 
+  public Ubicacion getUbicacion() {
+    return this.ubicacion;
+  }
+
   public Double mesesActivos() {
     return (double) (LocalDate.now().toEpochDay() - fechaCreacion.toEpochDay()) / 30;
+  }
+
+  public NivelLlenado nivelLlenado() {
+    Double capacidadTotalGramos = capacidadViandas * PESO_ESTANDAR_VIANDA_GRAMOS;
+    return NivelLlenado.of(proveedorPeso.obtenerPesoGramos(numeroDeSerie), capacidadTotalGramos);
+  }
+
+  public boolean requiereAtencion() {
+    return proveedorTemperatura.ultimas3Temperaturas().stream()
+        .allMatch(temperatura -> temperatura > temperaturaMaximaAceptable); // Si todas son mayores a la maxima
   }
 }

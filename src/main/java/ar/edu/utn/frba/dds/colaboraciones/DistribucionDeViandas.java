@@ -1,9 +1,10 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.Heladera;
+import ar.edu.utn.frba.dds.MotivoDeDistribucion;
 import java.time.LocalDate;
-import java.util.List;
 
 public class DistribucionDeViandas implements Colaboracion {
   private MotivoDeDistribucion motivoDeDistribucion;

@@ -1,7 +1,9 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.Heladera;
+import ar.edu.utn.frba.dds.Vianda;
 import java.util.List;
 
 public class DonacionDeVianda implements Colaboracion {
@@ -21,6 +23,6 @@ public class DonacionDeVianda implements Colaboracion {
 
   @Override
   public Double puntaje() {
-    return viandas.stream().mapToInt(Vianda::semanasFresca).sum() * COEFICIENTE_PUNTAJE;
+    return viandas.size() * viandas.stream().mapToInt(Vianda::semanasFresca).sum() * COEFICIENTE_PUNTAJE;
   }
 }

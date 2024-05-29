@@ -4,21 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 
-public class UsoTarjeta {
-  private Heladera heladera;
-  private LocalDate fecha;
-
+public record UsoTarjeta(Heladera heladera, LocalDate fecha) {
   public UsoTarjeta(Heladera heladera, LocalDate fecha) {
-    this.heladera = requireNonNull(heladera);
-    this.fecha = requireNonNull(fecha);
-  }
-
-  public Heladera getHeladera() {
-    return heladera;
-  }
-
-  public LocalDate getFecha() {
-    return fecha;
+    this.heladera = heladera;
+    this.fecha = fecha;
   }
 
   public void incrementarUsosEnHeladera() {

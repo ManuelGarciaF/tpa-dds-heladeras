@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.colaboraciones.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -7,10 +8,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class ListaColaboradores {
-  private List<Colaborador> colaboradores;
+  private final List<Colaborador> colaboradores;
   private static final ListaColaboradores INSTANCE = new ListaColaboradores();
 
   public static ListaColaboradores instance() {
@@ -42,10 +44,22 @@ public class ListaColaboradores {
   private void parsearColaboracionCsv(String line) {
     String[] campos = parsearCampos(line);
 
+    Colaborador colaborador = obtenerCrearColaborador(campos);
+
+    LocalDate fechaColaboracion = LocalDate.parse(
+        campos[5],
+        DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    Integer cantidad = Integer.parseInt(campos[7]);
+
+    crearColaboracionSegunStringCsv(colaborador, campos[6], cantidad, fechaColaboracion);
+  }
+
+  private Colaborador obtenerCrearColaborador(String[] campos) {
     TipoDocumento tipoDocumento = parsearTipoDocumento(campos[0]);
     Integer documento = Integer.parseInt(campos[1]);
 
     Colaborador colaborador = buscarColaborador(tipoDocumento, documento);
+    // Si el colaborador no existe, crearlo y agregarlo a la lista
     if (colaborador == null) {
       String nombre = campos[2];
       String apellido = campos[3];
@@ -54,18 +68,13 @@ public class ListaColaboradores {
           apellido,
           null,
           null,
-          null,
-          null,
+          new MedioDeContacto(null, mail, null),
+          Set.of(), // No sabemos las formas de colaboracion, pasamos un set vacio
           tipoDocumento,
           documento);
+      agregarColaborador(colaborador);
     }
-
-    LocalDate fechaColaboracion = LocalDate.parse(
-        campos[5],
-        DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-    Integer cantidad = Integer.parseInt(campos[7]);
-
-    crearColaboracionSegunStringCsv(colaborador, campos[6], cantidad, fechaColaboracion);
+    return colaborador;
   }
 
   private void crearColaboracionSegunStringCsv(Colaborador colaborador,

@@ -3,7 +3,7 @@ package ar.edu.utn.frba.dds;
 import static java.util.Objects.requireNonNull;
 
 public class ValidacionLongitud implements ValidacionContrasenia {
-  private Integer minimo;
+  private final Integer minimo;
 
   public ValidacionLongitud(Integer minimo) {
     this.minimo = requireNonNull(minimo);
