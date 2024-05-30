@@ -2,13 +2,9 @@ package ar.edu.utn.frba.dds.dominio;
 
 import ar.edu.utn.frba.dds.cargamasiva.FilaCsv;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class ListaColaboradores {
   private final List<Colaborador> colaboradores;
@@ -31,7 +27,7 @@ public class ListaColaboradores {
   }
 
   public void cargarDeCsv(String path) {
-    List<FilaCsv> filas = filasColaboracionFromCsv(path);
+    List<FilaCsv> filas = FilaCsv.fromCsv(path);
 
     filas.forEach(fila -> {
       Colaborador colaborador = obtenerCrearColaborador(fila);
@@ -39,21 +35,6 @@ public class ListaColaboradores {
       colaborador.colaborar(colaboracion);
     });
 
-  }
-
-  private List<FilaCsv> filasColaboracionFromCsv(String path) {
-    List<FilaCsv> filas = new ArrayList<>();
-    try {
-      Stream<String> stream = Files.lines(Paths.get(path));
-      stream.forEach(linea -> {
-        FilaCsv fila = FilaCsv.fromString(linea);
-        filas.add(fila);
-      });
-      stream.close();
-    } catch (IOException e) {
-      throw new RuntimeException("Hubo un error al leer el archivo de colaboraciones: " + path, e);
-    }
-    return filas;
   }
 
   private Colaborador obtenerCrearColaborador(FilaCsv fila) {
