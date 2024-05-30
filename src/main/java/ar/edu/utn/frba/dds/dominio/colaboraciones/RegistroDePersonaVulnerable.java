@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.PersonaVulnerable;
 import java.util.List;
 
@@ -25,5 +26,11 @@ public class RegistroDePersonaVulnerable implements Colaboracion {
 
   public List<PersonaVulnerable> getPersonasRegistradas() {
     return personasRegistradas;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    // El colaborador debe tener una dirección registrada
+    return colaborador.getDireccion() != null;
   }
 }

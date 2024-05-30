@@ -8,13 +8,8 @@ import java.util.Set;
 
 public class ListaColaboradores {
   private final List<Colaborador> colaboradores;
-  private static final ListaColaboradores INSTANCE = new ListaColaboradores();
 
-  public static ListaColaboradores instance() {
-    return INSTANCE;
-  }
-
-  private ListaColaboradores() {
+  public ListaColaboradores() {
     this.colaboradores = new ArrayList<>();
   }
 

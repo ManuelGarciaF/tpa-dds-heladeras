@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MotivoDeDistribucion;
 import java.time.LocalDate;
@@ -50,5 +51,10 @@ public class DistribucionDeViandas implements Colaboracion {
   @Override
   public Double puntaje() {
     return cantidadDeViandas * COEFICIENTE_PUNTAJE;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    return true; // No tiene condiciones para ser realizada
   }
 }

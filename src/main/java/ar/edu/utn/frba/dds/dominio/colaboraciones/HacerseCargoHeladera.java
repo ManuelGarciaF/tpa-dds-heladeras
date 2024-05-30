@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
@@ -42,6 +43,11 @@ public class HacerseCargoHeladera implements Colaboracion {
   public Double puntaje() {
     Heladera heladera = mapaHeladeras.buscarHeladera(nombreHeladera);
     return heladera.mesesActivos() * heladera.getUsos() * COEFICIENTE_PUNTAJE;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    return true; // No tiene condiciones para ser realizada
   }
 }
 

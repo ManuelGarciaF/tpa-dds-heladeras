@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion;
+import ar.edu.utn.frba.dds.exceptions.ColaboracionException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public abstract class Colaborador {
   private final List<Colaboracion> historialDeColaboraciones;
 
   public Colaborador(String direccion, MedioDeContacto medioDeContacto) {
-    this.direccion = requireNonNull(direccion);
+    this.direccion = direccion;
     this.medioDeContacto = requireNonNull(medioDeContacto);
     this.historialDeColaboraciones = new ArrayList<Colaboracion>();
   }
@@ -22,6 +23,10 @@ public abstract class Colaborador {
   }
 
   public void colaborar(Colaboracion unaColaboracion) {
+    if (!unaColaboracion.puedeSerRealizadaPor(this)) {
+      throw new ColaboracionException(
+          "Esta colaboración no puede ser realizada por este colaborador");
+    }
     historialDeColaboraciones.add(unaColaboracion);
   }
 

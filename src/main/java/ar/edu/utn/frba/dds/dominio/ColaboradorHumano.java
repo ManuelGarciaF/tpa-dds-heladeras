@@ -25,7 +25,7 @@ public class ColaboradorHumano extends Colaborador {
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);
     this.fechaDeNacimiento = fechaDeNacimiento;
-    this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+    this.formasDeColaboracion = formasDeColaboracion;
     this.tipoDocumento = requireNonNull(tipoDocumento);
     this.numeroDocumento = requireNonNull(numeroDocumento);
   }

@@ -2,6 +2,8 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
+
 public class RegistroDePersonaVulnerableHistorico implements Colaboracion {
   private Integer cantidad;
 
@@ -16,5 +18,10 @@ public class RegistroDePersonaVulnerableHistorico implements Colaboracion {
   @Override
   public Double puntaje() {
     return cantidad * USOS_PROMEDIO * MESES_ACTIVAS_PROMEDIO * COEFICIENTE_PUNTAJE;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    return true; // No tiene condiciones para ser realizada
   }
 }

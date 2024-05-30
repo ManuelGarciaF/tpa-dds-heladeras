@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
 import java.time.LocalDate;
 
 public class DonacionDeDinero implements Colaboracion {
@@ -51,5 +52,10 @@ public class DonacionDeDinero implements Colaboracion {
   @Override
   public Double puntaje() {
     return monto.doubleValue() * COEFICIENTE_PUNTAJE;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    return true; // No tiene condiciones para ser realizada
   }
 }

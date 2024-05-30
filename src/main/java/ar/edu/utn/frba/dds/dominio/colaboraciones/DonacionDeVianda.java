@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.Vianda;
 import java.util.List;
@@ -26,5 +27,10 @@ public class DonacionDeVianda implements Colaboracion {
     return viandas.size()
         * viandas.stream().mapToInt(Vianda::semanasFresca).sum()
         * COEFICIENTE_PUNTAJE;
+  }
+
+  @Override
+  public boolean puedeSerRealizadaPor(Colaborador colaborador) {
+    return true; // No tiene condiciones para ser realizada
   }
 }
