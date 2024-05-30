@@ -2,22 +2,20 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-public class PersonaJuridica extends Colaborador {
+public class ColaboradorJuridico extends Colaborador {
   private String razonSocial;
   private TipoPersonaJuridica tipo;
   private String rubro;
   private Set<FormaDeColaboracionJuridica> formasDeColaboracion;
 
-  public PersonaJuridica(String razonSocial,
-                         TipoPersonaJuridica tipo,
-                         String rubro,
-                         MedioDeContacto medioDeContacto,
-                         String direccion,
-                         Set<FormaDeColaboracionJuridica> formasDeColaboracion) {
+  public ColaboradorJuridico(String razonSocial,
+                             TipoPersonaJuridica tipo,
+                             String rubro,
+                             MedioDeContacto medioDeContacto,
+                             String direccion,
+                             Set<FormaDeColaboracionJuridica> formasDeColaboracion) {
     super(direccion, medioDeContacto);
     this.razonSocial = requireNonNull(razonSocial);
     this.tipo = requireNonNull(tipo);

@@ -3,10 +3,9 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
-public class PersonaHumana extends Colaborador {
+public class ColaboradorHumano extends Colaborador {
   private String nombre;
   private String apellido;
   private LocalDate fechaDeNacimiento;
@@ -14,14 +13,14 @@ public class PersonaHumana extends Colaborador {
   private TipoDocumento tipoDocumento;
   private Integer numeroDocumento;
 
-  public PersonaHumana(String nombre,
-                       String apellido,
-                       LocalDate fechaDeNacimiento,
-                       String direccion,
-                       MedioDeContacto medioDeContacto,
-                       Set<FormaDeColaboracionHumana> formasDeColaboracion,
-                       TipoDocumento tipoDocumento,
-                       Integer numeroDocumento) {
+  public ColaboradorHumano(String nombre,
+                           String apellido,
+                           LocalDate fechaDeNacimiento,
+                           String direccion,
+                           MedioDeContacto medioDeContacto,
+                           Set<FormaDeColaboracionHumana> formasDeColaboracion,
+                           TipoDocumento tipoDocumento,
+                           Integer numeroDocumento) {
     super(direccion, medioDeContacto);
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);

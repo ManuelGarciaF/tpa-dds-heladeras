@@ -60,7 +60,7 @@ public class ListaColaboradores {
     Colaborador colaborador = buscarColaborador(fila.tipoDocumento(), fila.numeroDocumento());
     // Si el colaborador no existe, crearlo y agregarlo a la lista
     if (colaborador == null) {
-      colaborador = new PersonaHumana(fila.nombre(),
+      colaborador = new ColaboradorHumano(fila.nombre(),
           fila.apellido(),
           null,
           null,
