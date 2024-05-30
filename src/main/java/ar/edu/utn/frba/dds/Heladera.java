@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
