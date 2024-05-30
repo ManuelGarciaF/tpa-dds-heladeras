@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds;
 
+import ar.edu.utn.frba.dds.externo.TSensor;
 import java.util.List;
 
 public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
@@ -7,7 +8,8 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
 
   public ProveedorTemperaturaSensor(TSensor api, String numeroDeSerie) {
     api.connect(numeroDeSerie);
-    api.onTemperatureChange(this::agregarLectura); // Le pasamos el método agregarLectura como callback
+    // Le pasamos el método agregarLectura como callback
+    api.onTemperatureChange(this::agregarLectura);
   }
 
   @Override

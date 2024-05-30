@@ -23,6 +23,8 @@ public class DonacionDeVianda implements Colaboracion {
 
   @Override
   public Double puntaje() {
-    return viandas.size() * viandas.stream().mapToInt(Vianda::semanasFresca).sum() * COEFICIENTE_PUNTAJE;
+    return viandas.size()
+        * viandas.stream().mapToInt(Vianda::semanasFresca).sum()
+        * COEFICIENTE_PUNTAJE;
   }
 }

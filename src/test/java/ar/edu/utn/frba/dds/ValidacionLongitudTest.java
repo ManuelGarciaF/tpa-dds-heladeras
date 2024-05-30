@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ar.edu.utn.frba.dds.validaciones.ValidacionLongitud;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

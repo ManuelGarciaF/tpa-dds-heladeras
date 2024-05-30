@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds;
+package ar.edu.utn.frba.dds.validaciones;
 
 import static java.util.Objects.requireNonNull;
 

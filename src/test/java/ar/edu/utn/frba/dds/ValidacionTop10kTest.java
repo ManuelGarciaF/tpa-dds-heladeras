@@ -3,9 +3,10 @@ package ar.edu.utn.frba.dds;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import ar.edu.utn.frba.dds.validaciones.ValidacionTop10k;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,12 +33,11 @@ class ValidacionTop10kTest {
   }
 
   private String obtenerContraseniaTop10k() {
-    try {
-      // Obtener contrasenia random del archivo
-      return Files.lines(Paths.get("./resources/10k-most-common.txt"))
-          .toList().get(random.nextInt(10001));
-    } catch (IOException e) {
-      throw new RuntimeException("Hubo un error al leer el archivo de contrasenias");
+    InputStream inputStream = getClass().getClassLoader().getResourceAsStream("10k-most-common.txt");
+    if (inputStream == null) {
+      throw new RuntimeException("No se pudo abrir el archivo de contrasenias");
     }
+    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    return reader.lines().toList().get(random.nextInt(10001));
   }
 }

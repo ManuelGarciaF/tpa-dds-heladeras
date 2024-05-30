@@ -86,7 +86,8 @@ public class Heladera {
   }
 
   public boolean requiereAtencion() {
+    // Si todas son mayores a la maxima
     return proveedorTemperatura.ultimas3Temperaturas().stream()
-        .allMatch(temperatura -> temperatura > temperaturaMaximaAceptable); // Si todas son mayores a la maxima
+        .allMatch(temperatura -> temperatura > temperaturaMaximaAceptable);
   }
 }

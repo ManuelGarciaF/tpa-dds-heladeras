@@ -1,8 +1,9 @@
 package ar.edu.utn.frba.dds;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import ar.edu.utn.frba.dds.exceptions.ContraseniaInseguraException;
+import ar.edu.utn.frba.dds.validaciones.ValidacionContrasenia;
+import ar.edu.utn.frba.dds.validaciones.ValidacionLongitud;
+import ar.edu.utn.frba.dds.validaciones.ValidacionTop10k;
 import java.util.List;
 
 public class Usuario {

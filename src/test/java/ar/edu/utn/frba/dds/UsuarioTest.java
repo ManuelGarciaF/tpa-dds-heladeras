@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ar.edu.utn.frba.dds.exceptions.ContraseniaInseguraException;
 import org.junit.jupiter.api.Test;
 
 class UsuarioTest {
