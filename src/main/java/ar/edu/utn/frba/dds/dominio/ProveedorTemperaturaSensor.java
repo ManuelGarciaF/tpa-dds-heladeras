@@ -17,18 +17,7 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
   }
 
   @Override
-  public Double obtenerUltimaTemperatura() {
-    if (ultimasTresTemperaturas.isEmpty()) {
-      throw new TemperaturaNoDisponibleException("Temperatura no disponible");
-    }
-    return ultimasTresTemperaturas.get(ultimasTresTemperaturas.size() - 1);
-  }
-
-  @Override
   public List<Double> ultimas3Temperaturas() {
-    if (ultimasTresTemperaturas.size() < 3) {
-      throw new TemperaturaNoDisponibleException("No hay suficientes temperaturas");
-    }
     return ultimasTresTemperaturas;
   }
 

@@ -14,8 +14,20 @@ class DistribucionDeViandasTest {
 
   @BeforeEach
   void setUp() {
-    Heladera heladeraOrigen = new Heladera("Origen", 40, new Ubicacion(0.1, 0.0), "kd993j", 23, null, null);
-    Heladera heladeraDestino = new Heladera("Origen", 40, new Ubicacion(0.1, 0.0), "kd993j", 23, null, null);
+    Heladera heladeraOrigen = new Heladera("Origen",
+        40,
+        new Ubicacion(0.1, 0.0),
+        "kd993j",
+        23,
+        null,
+        null);
+    Heladera heladeraDestino = new Heladera("Destino",
+        40,
+        new Ubicacion(0.1, 0.0),
+        "kd993j",
+        23,
+        null,
+        null);
     distribucionDeViandas = new DistribucionDeViandas(
         MotivoDeDistribucion.DESPERFECTO_HELADERA,
         LocalDate.now(),

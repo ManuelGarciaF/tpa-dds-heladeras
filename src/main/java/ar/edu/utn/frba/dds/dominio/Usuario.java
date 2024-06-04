@@ -1,8 +1,8 @@
 package ar.edu.utn.frba.dds.dominio;
 
 import ar.edu.utn.frba.dds.dominio.validaciones.ValidacionContrasenia;
-import ar.edu.utn.frba.dds.dominio.validaciones.ValidacionLongitud;
 import ar.edu.utn.frba.dds.dominio.validaciones.ValidacionContraseniasComunes;
+import ar.edu.utn.frba.dds.dominio.validaciones.ValidacionLongitud;
 import ar.edu.utn.frba.dds.exceptions.ContraseniaInseguraException;
 import java.util.List;
 

@@ -25,14 +25,14 @@ public class RepoColaboradores {
     List<FilaCsv> filas = FilaCsv.fromCsv(path);
 
     filas.forEach(fila -> {
-      Colaborador colaborador = obtenerCrearColaborador(fila);
+      Colaborador colaborador = findOrCreateColaborador(fila);
       Colaboracion colaboracion = fila.crearColaboracion();
       colaborador.colaborar(colaboracion);
     });
 
   }
 
-  private Colaborador obtenerCrearColaborador(FilaCsv fila) {
+  private Colaborador findOrCreateColaborador(FilaCsv fila) {
     Colaborador colaborador = buscarColaborador(fila.tipoDocumento(), fila.numeroDocumento());
     // Si el colaborador no existe, crearlo y agregarlo a la lista
     if (colaborador == null) {

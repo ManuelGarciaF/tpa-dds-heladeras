@@ -22,27 +22,16 @@ class ProveedorTemperaturaSensorTest {
   }
 
   @Test
-  void puedoObtenerLaUltimaTemperaturaSiYaHuboUnaActualizacionDelSensor() {
-    proveedorTemperaturaSensor.agregarLectura(20.0);
-    assertEquals(20.0, proveedorTemperaturaSensor.obtenerUltimaTemperatura());
-  }
 
-  @Test
-  void noPuedoObtenerLaUltimaTemperaturaSiNoHuboActualizaciones() {
-    assertThrows(TemperaturaNoDisponibleException.class,
-        () -> proveedorTemperaturaSensor.obtenerUltimaTemperatura());
-  }
-
-  @Test
   void noPuedoObtenerLasUltimasTresTemperaturasSiHayMenosLecturas() {
     proveedorTemperaturaSensor.agregarLectura(20.0);
     proveedorTemperaturaSensor.agregarLectura(21.0);
-    assertThrows(TemperaturaNoDisponibleException.class,
-        () -> proveedorTemperaturaSensor.ultimas3Temperaturas());
+    assertEquals(List.of(20.0, 21.0), proveedorTemperaturaSensor.ultimas3Temperaturas());
   }
 
   @Test
   void puedoObtenerLasUltimasTresTemperaturas() {
+    proveedorTemperaturaSensor.agregarLectura(19.0);
     proveedorTemperaturaSensor.agregarLectura(20.0);
     proveedorTemperaturaSensor.agregarLectura(21.0);
     proveedorTemperaturaSensor.agregarLectura(22.0);
