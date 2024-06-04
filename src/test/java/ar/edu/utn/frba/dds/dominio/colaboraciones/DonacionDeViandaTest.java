@@ -16,22 +16,26 @@ class DonacionDeViandaTest {
   @BeforeEach
   void setUp() {
     donacionDeVianda = new DonacionDeVianda(
-        List.of(
-            vianda("Milanesa", 2, 500, 200),
-            vianda("Ensalada", 1, 100, 100)
-        ),
-        new Heladera("Heladera Origen", 20, new Ubicacion(0.0, 0.0), "123", 5, null, null)
+        vianda("Milanesa", 2, 500, 200),
+        new Heladera(
+            "Heladera Origen",
+            20,
+            new Ubicacion(0.0, 0.0),
+            "123",
+            5,
+            null,
+            null
+        )
     );
   }
 
 
   @Test
   void elPuntajeSeCalculaCorrectamente() {
-    // [VIANDAS_DONADAS] * [suma SEMANAS_FRESCA] * 1,5 = 2 * 3 * 1,5 = 9
-    assertEquals(9.0, donacionDeVianda.puntaje(), 0);
+    assertEquals(3.0, donacionDeVianda.puntaje(), 0);
   }
 
-
+  // Devuelve una vianda con los datos ingresados
   private Vianda vianda(String nombre, int semanasFresca, int calorias, int peso) {
     var vencimiento = LocalDate.now().plusWeeks(semanasFresca);
     return new Vianda(nombre, vencimiento, calorias, peso);

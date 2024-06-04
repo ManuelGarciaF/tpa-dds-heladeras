@@ -7,25 +7,21 @@ import ar.edu.utn.frba.dds.dominio.PersonaVulnerable;
 import java.util.List;
 
 public class RegistroDePersonaVulnerable implements Colaboracion {
-  private final List<PersonaVulnerable> personasRegistradas;
+  private final PersonaVulnerable personaRegistrada;
 
   private static final Double COEFICIENTE_PUNTAJE = 2.0;
 
-  public RegistroDePersonaVulnerable(List<PersonaVulnerable> personasRegistradas) {
-    this.personasRegistradas = requireNonNull(personasRegistradas);
+  public RegistroDePersonaVulnerable(PersonaVulnerable personaRegistrada) {
+    this.personaRegistrada = requireNonNull(personaRegistrada);
   }
 
   @Override
   public Double puntaje() {
-    Double puntajeBase = personasRegistradas.stream()
-        .mapToDouble(PersonaVulnerable::puntajeBaseColaboracion)
-        .sum();
-
-    return puntajeBase * COEFICIENTE_PUNTAJE;
+    return personaRegistrada.puntajeBaseColaboracion() * COEFICIENTE_PUNTAJE;
   }
 
-  public List<PersonaVulnerable> getPersonasRegistradas() {
-    return personasRegistradas;
+  public PersonaVulnerable getpersonaRegistradas() {
+    return personaRegistrada;
   }
 
   @Override

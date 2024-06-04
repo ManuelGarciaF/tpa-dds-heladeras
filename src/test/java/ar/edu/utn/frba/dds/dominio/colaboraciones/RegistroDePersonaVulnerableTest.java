@@ -12,7 +12,6 @@ import ar.edu.utn.frba.dds.dominio.UsoTarjeta;
 class RegistroDePersonaVulnerableTest {
   private RegistroDePersonaVulnerable registroDePersonaVulnerable;
   private PersonaVulnerable persona1;
-  private PersonaVulnerable persona2;
 
   @BeforeEach
   void setUp() {
@@ -23,14 +22,7 @@ class RegistroDePersonaVulnerableTest {
         0,
         "fasfsd",
         new ArrayList<>());
-    persona2 = new PersonaVulnerable("Juana",
-        null,
-        LocalDate.of(1991, 1, 1),
-        LocalDate.now().minusMonths(3),
-        0,
-        "fasfsddafs",
-        new ArrayList<>());
-    registroDePersonaVulnerable = new RegistroDePersonaVulnerable(List.of(persona1, persona2));
+    registroDePersonaVulnerable = new RegistroDePersonaVulnerable(persona1);
   }
 
   @Test
@@ -38,9 +30,8 @@ class RegistroDePersonaVulnerableTest {
     persona1.agregarUsoTarjeta(new UsoTarjeta(null, LocalDate.now()));
     persona1.agregarUsoTarjeta(new UsoTarjeta(null, LocalDate.now()));
     persona1.agregarUsoTarjeta(new UsoTarjeta(null, LocalDate.now()));
-    persona2.agregarUsoTarjeta(new UsoTarjeta(null, LocalDate.now()));
 
-    // persona 1 tiene 3 usos y 2 meses, persona 2 tiene 1 uso y 3 meses
-    Assertions.assertEquals(18.0, registroDePersonaVulnerable.puntaje(), 0);
+    // persona 1 tiene 3 usos y 2 meses activa
+    Assertions.assertEquals(12.0, registroDePersonaVulnerable.puntaje(), 0);
   }
 }

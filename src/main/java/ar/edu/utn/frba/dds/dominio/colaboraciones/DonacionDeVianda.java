@@ -8,13 +8,13 @@ import ar.edu.utn.frba.dds.dominio.Vianda;
 import java.util.List;
 
 public class DonacionDeVianda implements Colaboracion {
-  private List<Vianda> viandas;
+  private Vianda vianda;
   private Heladera heladera;
 
   private static final double COEFICIENTE_PUNTAJE = 1.5;
 
-  public DonacionDeVianda(List<Vianda> viandas, Heladera heladera) {
-    this.viandas = requireNonNull(viandas);
+  public DonacionDeVianda(Vianda vianda, Heladera heladera) {
+    this.vianda = requireNonNull(vianda);
     this.heladera = requireNonNull(heladera);
   }
 
@@ -24,9 +24,7 @@ public class DonacionDeVianda implements Colaboracion {
 
   @Override
   public Double puntaje() {
-    return viandas.size()
-        * viandas.stream().mapToInt(Vianda::semanasFresca).sum()
-        * COEFICIENTE_PUNTAJE;
+    return vianda.semanasFresca() * COEFICIENTE_PUNTAJE;
   }
 
   @Override
