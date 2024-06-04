@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ListaColaboradores {
+public class RepoColaboradores {
   private final List<Colaborador> colaboradores;
 
-  public ListaColaboradores() {
+  public RepoColaboradores() {
     this.colaboradores = new ArrayList<>();
   }
 
