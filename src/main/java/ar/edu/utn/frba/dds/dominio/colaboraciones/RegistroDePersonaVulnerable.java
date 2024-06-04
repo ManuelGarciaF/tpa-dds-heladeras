@@ -17,7 +17,7 @@ public class RegistroDePersonaVulnerable implements Colaboracion {
 
   @Override
   public Double puntaje() {
-    return personaRegistrada.puntajeBaseColaboracion() * COEFICIENTE_PUNTAJE;
+    return personaRegistrada.mesesActivos() * personaRegistrada.usosTarjeta() * COEFICIENTE_PUNTAJE;
   }
 
   public PersonaVulnerable getpersonaRegistradas() {

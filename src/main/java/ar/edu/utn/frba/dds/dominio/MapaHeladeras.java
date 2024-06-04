@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapaHeladeras {
-  private List<Heladera> heladeras;
+  private final List<Heladera> heladeras;
   private static final MapaHeladeras INSTANCE = new MapaHeladeras();
 
   public static MapaHeladeras instance() {
@@ -32,5 +32,11 @@ public class MapaHeladeras {
         .filter(heladera -> heladera.tieneNombre(nombreHeladera))
         .findFirst()
         .orElse(null);
+  }
+
+  public List<UsoTarjeta> encontrarUsosDeTarjeta(String codigotarjeta) {
+    return heladeras.stream()
+        .flatMap(heladera -> heladera.usosDeTarjeta(codigotarjeta).stream())
+        .toList();
   }
 }

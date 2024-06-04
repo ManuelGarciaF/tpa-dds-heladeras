@@ -54,7 +54,8 @@
             MissingJavadocType,
             NonEmptyAtclauseDescription,
             JavadocParagraph,
-            SummaryJavadoc
+            SummaryJavadoc,
+            AbbreviationAsWordInName
           </violationIgnore>
         </configuration>
         <executions>

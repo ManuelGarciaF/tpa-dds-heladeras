@@ -2,7 +2,9 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.exceptions.UsoTarjetaException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class PersonaVulnerable {
@@ -11,23 +13,20 @@ public class PersonaVulnerable {
   private LocalDate fechaRegistro;
   private String domicilio;
   private Integer menoresAcargo;
-  private String codigoTarjeta;
-  private List<UsoTarjeta> usosTarjeta;
+  private Tarjeta tarjeta;
 
   public PersonaVulnerable(String nombre,
                            String domicilio,
                            LocalDate fechaNacimiento,
                            LocalDate fechaRegistro,
                            Integer menoresAcargo,
-                           String codigoTarjeta,
-                           List<UsoTarjeta> usosTarjeta) {
+                           Tarjeta tarjeta) {
     this.nombre = requireNonNull(nombre);
     this.domicilio = domicilio;
     this.fechaNacimiento = requireNonNull(fechaNacimiento);
     this.fechaRegistro = requireNonNull(fechaRegistro);
     this.menoresAcargo = requireNonNull(menoresAcargo);
-    this.codigoTarjeta = requireNonNull(codigoTarjeta);
-    this.usosTarjeta = requireNonNull(usosTarjeta);
+    this.tarjeta = requireNonNull(tarjeta);
   }
 
   public Integer usosMaximosDiarios() {
@@ -35,24 +34,22 @@ public class PersonaVulnerable {
   }
 
   public Boolean tieneUsosDisponibles() {
-    return usosHoy() < usosMaximosDiarios();
+    return tarjeta.usosHoy() < usosMaximosDiarios();
   }
 
-  private int usosHoy() {
-    return (int) usosTarjeta.stream().filter(u -> u.fecha().equals(LocalDate.now())).count();
+  public Integer mesesActivos() {
+    return (int) ChronoUnit.MONTHS.between(fechaRegistro, LocalDate.now());
   }
 
-  public void agregarUsoTarjeta(UsoTarjeta usoTarjeta) {
-    this.usosTarjeta.add(usoTarjeta);
+  public Integer usosTarjeta() {
+    return tarjeta.cantidadUsos();
   }
 
-  public Integer puntajeBaseColaboracion() {
-    return mesesActivos() * usosTarjeta.size();
-  }
-
-  private Integer mesesActivos() {
-    int diasDesdeRegistro = (int) (LocalDate.now().toEpochDay() - fechaRegistro.toEpochDay());
-    return (int) diasDesdeRegistro / 30;
+  public void agregarUsoTarjeta(Heladera heladera) {
+    if (!tieneUsosDisponibles()) {
+      throw new UsoTarjetaException("No tiene usos disponibles");
+    }
+    heladera.agregarUso(new UsoTarjeta(tarjeta, LocalDate.now()));
   }
 
 }

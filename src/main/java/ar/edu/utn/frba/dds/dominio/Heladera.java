@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Heladera {
   private final Integer temperaturaMaximaAceptable;
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
-  private Integer usos;
+  private final List<UsoTarjeta> usos;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -27,7 +28,8 @@ public class Heladera {
                   String numeroDeSerie,
                   Integer temperaturaMaximaAceptable,
                   ProveedorPeso proveedorPeso,
-                  ProveedorTemperatura proveedorTemperatura) {
+                  ProveedorTemperatura proveedorTemperatura,
+                  LocalDate fechaCreacion) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.ubicacion = requireNonNull(ubicacion);
@@ -35,10 +37,10 @@ public class Heladera {
     this.temperaturaMaximaAceptable = requireNonNull(temperaturaMaximaAceptable);
     this.proveedorPeso = proveedorPeso;
     this.proveedorTemperatura = proveedorTemperatura;
+    this.fechaCreacion = fechaCreacion;
 
-    this.fechaCreacion = LocalDate.now();
-    this.viandas = new ArrayList<Vianda>();
-    this.usos = 0;
+    this.viandas = new ArrayList<>();
+    this.usos = new ArrayList<>();
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -61,15 +63,15 @@ public class Heladera {
     return viandas;
   }
 
-  public void incrementarUsos() {
-    this.usos++;
+  public void registrarUso(UsoTarjeta uso) {
+    this.usos.add(uso);
   }
 
   public boolean tieneNombre(String nombreHeladera) {
     return this.nombre.equals(nombreHeladera);
   }
 
-  public Integer getUsos() {
+  public List<UsoTarjeta> getUsos() {
     return this.usos;
   }
 
@@ -77,8 +79,8 @@ public class Heladera {
     return this.ubicacion;
   }
 
-  public Double mesesActivos() {
-    return (double) (LocalDate.now().toEpochDay() - fechaCreacion.toEpochDay()) / 30;
+  public Integer mesesActivos() {
+    return (int) ChronoUnit.MONTHS.between(fechaCreacion, LocalDate.now());
   }
 
   public NivelLlenado nivelLlenado() {
@@ -92,5 +94,17 @@ public class Heladera {
     // Si tenemos al menos 3 temperaturas y todas son mayores a la maxima
     return temperaturas.size() >= 3
         && temperaturas.stream().allMatch(temperatura -> temperatura > temperaturaMaximaAceptable);
+  }
+
+  public Integer cantidadUsos() {
+    return usos.size();
+  }
+
+  public void agregarUso(UsoTarjeta uso) {
+    this.usos.add(uso);
+  }
+
+  public List<UsoTarjeta> usosDeTarjeta(String codigotarjeta) {
+    return usos.stream().filter(u -> u.tarjeta().esDeCodigo(codigotarjeta)).toList();
   }
 }

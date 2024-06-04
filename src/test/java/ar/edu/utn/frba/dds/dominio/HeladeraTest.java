@@ -28,7 +28,8 @@ class HeladeraTest {
         "kd993j",
         23,
         new ProveedorPesoSensor(wSensor),
-        proveedorTemperaturaSensor);
+        proveedorTemperaturaSensor,
+        null);
   }
 
   @Test

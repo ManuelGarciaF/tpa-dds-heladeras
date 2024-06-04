@@ -20,12 +20,14 @@ class DistribucionDeViandasTest {
         "kd993j",
         23,
         null,
+        null,
         null);
     Heladera heladeraDestino = new Heladera("Destino",
         40,
         new Ubicacion(0.1, 0.0),
         "kd993j",
         23,
+        null,
         null,
         null);
     distribucionDeViandas = new DistribucionDeViandas(
