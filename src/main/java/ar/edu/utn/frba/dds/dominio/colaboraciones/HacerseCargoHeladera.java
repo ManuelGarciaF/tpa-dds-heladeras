@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
-import ar.edu.utn.frba.dds.dominio.Ubicacion;
 
 public class HacerseCargoHeladera implements Colaboracion {
   private final Heladera heladera;

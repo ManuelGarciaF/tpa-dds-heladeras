@@ -5,13 +5,8 @@ import java.util.List;
 
 public class MapaHeladeras {
   private final List<Heladera> heladeras;
-  private static final MapaHeladeras INSTANCE = new MapaHeladeras();
 
-  public static MapaHeladeras instance() {
-    return INSTANCE;
-  }
-
-  private MapaHeladeras() {
+  public MapaHeladeras() {
     this.heladeras = new ArrayList<>();
   }
 

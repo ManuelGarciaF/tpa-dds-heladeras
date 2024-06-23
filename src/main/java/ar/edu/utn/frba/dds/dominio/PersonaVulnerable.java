@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.exceptions.UsoTarjetaException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 public class PersonaVulnerable {
   private String nombre;
