@@ -3,7 +3,9 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
+import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +16,18 @@ public class Heladera {
   private final String nombre;
   private final Integer capacidadViandas;
   private final LocalDate fechaCreacion;
-  private final List<Vianda> viandas;
   private final Ubicacion ubicacion;
   private final String numeroDeSerie;
   private final Integer temperaturaMaximaAceptable;
+
+  private final List<UsoTarjetaPersonaVulnerable> usos = new ArrayList<>();
+  private final List<Vianda> viandas = new ArrayList<>();
+  private final List<AperturaHeladera> aperturasPendientes = new ArrayList<>();
+  private final List<AperturaHeladera> aperturasCompletadas = new ArrayList<>();
+
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
-  private final List<UsoTarjetaPersonaVulnerable> usos;
+  private final ControladorDeAcceso controladorDeAcceso;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -29,7 +36,8 @@ public class Heladera {
                   Integer temperaturaMaximaAceptable,
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
-                  LocalDate fechaCreacion) {
+                  LocalDate fechaCreacion,
+                  ControladorDeAcceso controladorDeAcceso) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.ubicacion = requireNonNull(ubicacion);
@@ -38,9 +46,7 @@ public class Heladera {
     this.proveedorPeso = proveedorPeso;
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
-
-    this.viandas = new ArrayList<>();
-    this.usos = new ArrayList<>();
+    this.controladorDeAcceso = controladorDeAcceso;
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -107,6 +113,44 @@ public class Heladera {
   public List<UsoTarjetaPersonaVulnerable> usosDeTarjeta(String codigotarjeta) {
     return usos.stream()
         .filter(u -> u.tarjetaPersonaVulnerable().esDeCodigo(codigotarjeta))
+        .toList();
+  }
+
+  public void agregarSolicitudApertura(AperturaHeladera apertura) {
+    if (apertura.getTarjetaColaborador() == null) {
+      throw new HeladeraException("El colaborador debe tener una tarjeta para poder solicitar una apertura");
+    }
+    // Notificar al controlador de acceso
+    controladorDeAcceso.notificarTarjetasColaboradoraHabilitada(apertura.getTarjetaColaborador().getCodigoTarjeta());
+    aperturasPendientes.add(apertura);
+  }
+
+  public void registrarApertura(ColaboradorHumano colaborador, LocalDateTime fechaApertura) {
+    AperturaHeladera apertura = buscarAperturaValida(colaborador, fechaApertura);
+
+    aperturasPendientes.remove(apertura);
+    apertura.setFechaApertura(fechaApertura);
+    aperturasCompletadas.add(apertura);
+  }
+
+  private AperturaHeladera buscarAperturaValida(ColaboradorHumano colaborador, LocalDateTime fechaApertura) {
+    return aperturasPendientes.stream()
+        .filter(a -> a.getColaboradorHumano().equals(colaborador) && a.esValida(fechaApertura))
+        .findFirst()
+        .orElseThrow(() -> new HeladeraException("No hay aperturas validas para este colaborador"));
+  }
+
+  public List<AperturaHeladera> getAperturasCompletadas() {
+    return aperturasCompletadas;
+  }
+
+  public List<AperturaHeladera> getAperturasPendientes() {
+    return aperturasPendientes;
+  }
+
+  public List<AperturaHeladera> getAperturasValidas() {
+    return aperturasPendientes.stream()
+        .filter(AperturaHeladera::esValidaAhora)
         .toList();
   }
 }

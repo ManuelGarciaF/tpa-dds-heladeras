@@ -22,7 +22,9 @@ class HacerseCargoHeladeraTest {
         23,
         null,
         null,
-        LocalDate.now().minusMonths(2));
+        LocalDate.now().minusMonths(2),
+        null
+    );
     hacerseCargoHeladera = new HacerseCargoHeladera(heladera);
   }
 

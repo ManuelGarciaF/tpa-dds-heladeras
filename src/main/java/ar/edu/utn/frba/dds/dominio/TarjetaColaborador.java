@@ -7,7 +7,7 @@ public class TarjetaColaborador {
     this.codigoTarjeta = codigoTarjeta;
   }
 
-  public boolean esDeCodigo(String codigoTarjeta) {
-    return this.codigoTarjeta.equals(codigoTarjeta);
+  public String getCodigoTarjeta() {
+    return codigoTarjeta;
   }
 }
