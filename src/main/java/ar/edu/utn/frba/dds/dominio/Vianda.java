@@ -7,25 +7,25 @@ import java.time.temporal.ChronoUnit;
 
 public class Vianda {
   private String tipoComida;
-  private LocalDate fechaVencimiento;
+  private LocalDate fechaDeVencimiento;
   private LocalDate fechaDeDonacion;
   private Integer calorias;
   private Integer peso;
   private Boolean fueEntregado = false; // Suponemos que por defecto no fue entregada.
 
   public Vianda(String tipoComida,
-                LocalDate fechaVencimiento,
+                LocalDate fechaDeVencimiento,
                 Integer calorias,
                 Integer peso) {
     this.tipoComida = tipoComida;
-    this.fechaVencimiento = requireNonNull(fechaVencimiento);
+    this.fechaDeVencimiento = requireNonNull(fechaDeVencimiento);
     this.fechaDeDonacion = LocalDate.now();
     this.peso = peso;
     this.calorias = calorias;
   }
 
-  public LocalDate getFechaVencimiento() {
-    return fechaVencimiento;
+  public LocalDate getFechaDeVencimiento() {
+    return fechaDeVencimiento;
   }
 
   public LocalDate getFechaDeDonacion() {
@@ -45,6 +45,6 @@ public class Vianda {
   }
 
   public int semanasFresca() {
-    return (int) ChronoUnit.WEEKS.between(fechaVencimiento, fechaDeDonacion);
+    return (int) ChronoUnit.WEEKS.between(fechaDeDonacion, fechaDeVencimiento);
   }
 }
