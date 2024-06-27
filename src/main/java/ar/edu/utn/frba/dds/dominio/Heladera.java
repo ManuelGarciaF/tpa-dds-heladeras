@@ -20,7 +20,7 @@ public class Heladera {
   private final Integer temperaturaMaximaAceptable;
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
-  private final List<UsoTarjeta> usos;
+  private final List<UsoTarjetaPersonaVulnerable> usos;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -63,7 +63,7 @@ public class Heladera {
     return viandas;
   }
 
-  public void registrarUso(UsoTarjeta uso) {
+  public void registrarUso(UsoTarjetaPersonaVulnerable uso) {
     this.usos.add(uso);
   }
 
@@ -71,7 +71,7 @@ public class Heladera {
     return this.nombre.equals(nombreHeladera);
   }
 
-  public List<UsoTarjeta> getUsos() {
+  public List<UsoTarjetaPersonaVulnerable> getUsos() {
     return this.usos;
   }
 
@@ -100,11 +100,13 @@ public class Heladera {
     return usos.size();
   }
 
-  public void agregarUso(UsoTarjeta uso) {
+  public void agregarUso(UsoTarjetaPersonaVulnerable uso) {
     this.usos.add(uso);
   }
 
-  public List<UsoTarjeta> usosDeTarjeta(String codigotarjeta) {
-    return usos.stream().filter(u -> u.tarjeta().esDeCodigo(codigotarjeta)).toList();
+  public List<UsoTarjetaPersonaVulnerable> usosDeTarjeta(String codigotarjeta) {
+    return usos.stream()
+        .filter(u -> u.tarjetaPersonaVulnerable().esDeCodigo(codigotarjeta))
+        .toList();
   }
 }

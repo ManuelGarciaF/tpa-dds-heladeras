@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ar.edu.utn.frba.dds.dominio.UsoTarjeta;
+import ar.edu.utn.frba.dds.dominio.UsoTarjetaPersonaVulnerable;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +28,9 @@ class HacerseCargoHeladeraTest {
 
   @Test
   void elPuntajeSeCalculaCorrectamente() {
-    heladera.agregarUso(new UsoTarjeta(null, LocalDate.now()));
-    heladera.agregarUso(new UsoTarjeta(null, LocalDate.now()));
-    heladera.agregarUso(new UsoTarjeta(null, LocalDate.now()));
+    heladera.agregarUso(new UsoTarjetaPersonaVulnerable(null, LocalDate.now()));
+    heladera.agregarUso(new UsoTarjetaPersonaVulnerable(null, LocalDate.now()));
+    heladera.agregarUso(new UsoTarjetaPersonaVulnerable(null, LocalDate.now()));
 
     // El puntaje de hacerse cargo de una heladera debe ser mesesActivos * usos * 5
     assertEquals(30.0, hacerseCargoHeladera.puntaje(), 0);

@@ -5,11 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Tarjeta {
+public class TarjetaPersonaVulnerable {
   private final String codigoTarjeta;
   private final MapaHeladeras mapaHeladeras;
 
-  public Tarjeta(String codigoTarjeta, MapaHeladeras mapaHeladeras) {
+  public TarjetaPersonaVulnerable(String codigoTarjeta, MapaHeladeras mapaHeladeras) {
     this.codigoTarjeta = requireNonNull(codigoTarjeta);
     this.mapaHeladeras = requireNonNull(mapaHeladeras);
   }
@@ -26,7 +26,7 @@ public class Tarjeta {
     return usosTarjeta().size();
   }
 
-  private List<UsoTarjeta> usosTarjeta() {
+  private List<UsoTarjetaPersonaVulnerable> usosTarjeta() {
     return mapaHeladeras.encontrarUsosDeTarjeta(codigoTarjeta);
   }
 }
