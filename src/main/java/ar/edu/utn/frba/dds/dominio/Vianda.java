@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Vianda {
   private String tipoComida;
@@ -44,6 +45,6 @@ public class Vianda {
   }
 
   public int semanasFresca() {
-    return (int) (fechaVencimiento.toEpochDay() - fechaDeDonacion.toEpochDay()) / 7;
+    return (int) ChronoUnit.WEEKS.between(fechaVencimiento, fechaDeDonacion);
   }
 }
