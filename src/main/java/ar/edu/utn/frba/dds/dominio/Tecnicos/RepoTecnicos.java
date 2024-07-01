@@ -1,2 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.Tecnicos;public class RepoTecnicos {
+package ar.edu.utn.frba.dds.dominio.Tecnicos;
+
+public class RepoTecnicos {
 }

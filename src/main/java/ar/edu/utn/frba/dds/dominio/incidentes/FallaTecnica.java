@@ -1,2 +1,5 @@
-package ar.edu.utn.frba.dds.dominio.incidentes;public class FallaTecnica {
+package ar.edu.utn.frba.dds.dominio.incidentes;
+
+public class FallaTecnica {
+
 }

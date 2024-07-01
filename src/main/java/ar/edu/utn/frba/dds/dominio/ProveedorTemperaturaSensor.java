@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.dominio;
 
+import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
 import ar.edu.utn.frba.dds.exceptions.TemperaturaNoDisponibleException;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import java.util.ArrayList;
@@ -29,4 +30,27 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
     // Agregar la temperatura nueva al final
     ultimasTresTemperaturas.add(temperatura);
   }
+
+  // Entrega 3
+  private Heladera heladera;
+  List<MedicionDeTemperatura> medicionesDeTemperatura;
+
+  public void suscribirHeladera(Heladera heladera) {
+    this.heladera = heladera;
+  }
+
+  public void desuscribirHeladera() {
+    heladera = null;
+  }
+
+  public void notificarTemperatura(MedicionDeTemperatura temperatura) {
+    heladera.recibirMedicionDeTemperatura(temperatura);
+  }
+
+  public void agregarMedicion(MedicionDeTemperatura temperatura) {
+    medicionesDeTemperatura.add(temperatura);
+    notificarTemperatura(temperatura);
+  }
+
+
 }

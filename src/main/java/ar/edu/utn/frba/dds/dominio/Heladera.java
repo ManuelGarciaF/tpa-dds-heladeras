@@ -2,6 +2,9 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
+import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
+import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,6 +21,7 @@ public class Heladera {
   private final Ubicacion ubicacion;
   private final String numeroDeSerie;
   private final Integer temperaturaMaximaAceptable;
+  private final Integer temperaturaMinimaAceptable;
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
   private final List<UsoTarjeta> usos;
@@ -27,6 +31,7 @@ public class Heladera {
                   Ubicacion ubicacion,
                   String numeroDeSerie,
                   Integer temperaturaMaximaAceptable,
+                  Integer temperaturaMinimaAceptable,
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   LocalDate fechaCreacion) {
@@ -35,6 +40,7 @@ public class Heladera {
     this.ubicacion = requireNonNull(ubicacion);
     this.numeroDeSerie = requireNonNull(numeroDeSerie);
     this.temperaturaMaximaAceptable = requireNonNull(temperaturaMaximaAceptable);
+    this.temperaturaMinimaAceptable = requireNonNull(temperaturaMinimaAceptable);
     this.proveedorPeso = proveedorPeso;
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
@@ -107,4 +113,20 @@ public class Heladera {
   public List<UsoTarjeta> usosDeTarjeta(String codigotarjeta) {
     return usos.stream().filter(u -> u.tarjeta().esDeCodigo(codigotarjeta)).toList();
   }
+
+
+  //Entrega 3
+
+  private List<Incidente> incidentesActivos;
+
+  public void recibirMedicionDeTemperatura(MedicionDeTemperatura medicionDeTemperatura) {
+    if (
+        medicionDeTemperatura.getTemperatura() < temperaturaMinimaAceptable ||
+            medicionDeTemperatura.getTemperatura() > temperaturaMaximaAceptable
+    ) {
+      AlertaTemperatura alerta = new AlertaTemperatura(this);
+      incidentesActivos.add(alerta);
+    }
+  }
+
 }

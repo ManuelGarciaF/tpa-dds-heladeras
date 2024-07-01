@@ -23,6 +23,7 @@ class DonacionDeViandaTest {
             new Ubicacion(0.0, 0.0),
             "123",
             5,
+            3,
             null,
             null,
             null

@@ -1,2 +1,5 @@
-package ar.edu.utn.frba.dds.dominio.incidentes;public class AlertaFallaConexion {
+package ar.edu.utn.frba.dds.dominio.incidentes;
+
+public class AlertaFallaConexion {
+
 }
