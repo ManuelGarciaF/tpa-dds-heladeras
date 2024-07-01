@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
 import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
+import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -44,7 +45,7 @@ public class MapaHeladeras {
     OffsetDateTime fecha = OffsetDateTime.now();
     heladeras.forEach(heladera -> {
       if (heladera.sePasoDeQuinceMinutos(fecha)) {
-        heladera.nuevaFallaDeConexion();
+        heladera.nuevaFallaDeConexion(TipoDeFalla.SENSOR_DE_TEMPERATURA);
       }
     });
   }

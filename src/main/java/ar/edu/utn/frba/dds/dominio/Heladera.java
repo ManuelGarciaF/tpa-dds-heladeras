@@ -2,10 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
-import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
-import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
-import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
-import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
+import ar.edu.utn.frba.dds.dominio.incidentes.*;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -135,8 +132,18 @@ public class Heladera {
     incidentesActivos.add(alerta);
   }
 
-  public void nuevaFallaDeConexion() {
-    FallaTecnica alerta = new FallaTecnica(this);
+  public void nuevaFallaDeConexion(TipoDeFalla tipo) {
+    AlertaFallaConexion alerta = new AlertaFallaConexion(this, tipo);
+    incidentesActivos.add(alerta);
+  }
+
+  public void nuevaFallaTecnica(
+      Colaborador colaborador, Heladera heladera,
+      OffsetDateTime fecha, String descripcion, String urlFoto
+  ) {
+    FallaTecnica alerta = new FallaTecnica(
+        colaborador, heladera, fecha,
+        descripcion,urlFoto);
     incidentesActivos.add(alerta);
   }
 
