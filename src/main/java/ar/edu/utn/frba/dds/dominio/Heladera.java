@@ -3,10 +3,12 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
+import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,8 @@ public class Heladera {
   private final String numeroDeSerie;
   private final Integer temperaturaMaximaAceptable;
   private final Integer temperaturaMinimaAceptable;
-  private final ProveedorPeso proveedorPeso;
-  private final ProveedorTemperatura proveedorTemperatura;
+  private final ProveedorPesoSensor proveedorPeso;
+  private final ProveedorTemperaturaSensor proveedorTemperatura;
   private final List<UsoTarjeta> usos;
 
   public Heladera(String nombre,
@@ -32,8 +34,8 @@ public class Heladera {
                   String numeroDeSerie,
                   Integer temperaturaMaximaAceptable,
                   Integer temperaturaMinimaAceptable,
-                  ProveedorPeso proveedorPeso,
-                  ProveedorTemperatura proveedorTemperatura,
+                  ProveedorPesoSensor proveedorPeso,
+                  ProveedorTemperaturaSensor proveedorTemperatura,
                   LocalDate fechaCreacion) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
@@ -124,9 +126,26 @@ public class Heladera {
         medicionDeTemperatura.getTemperatura() < temperaturaMinimaAceptable ||
             medicionDeTemperatura.getTemperatura() > temperaturaMaximaAceptable
     ) {
-      AlertaTemperatura alerta = new AlertaTemperatura(this);
-      incidentesActivos.add(alerta);
+      nuevaAlertaDeTemperatura();
     }
   }
 
+  public void nuevaAlertaDeTemperatura() {
+    AlertaTemperatura alerta = new AlertaTemperatura(this);
+    incidentesActivos.add(alerta);
+  }
+
+  public void nuevaFallaDeConexion() {
+    FallaTecnica alerta = new FallaTecnica(this);
+    incidentesActivos.add(alerta);
+  }
+
+  public ProveedorTemperatura getProveedorTemperatura() {
+    return proveedorTemperatura;
+  }
+
+  public boolean sePasoDeQuinceMinutos(OffsetDateTime instanteDeLaRevision) {
+    int diferencia = instanteDeLaRevision.getMinute() - proveedorTemperatura.getUltimaMedicionDeTemperatura().getFecha().getMinute();
+    return diferencia > 15;
+  }
 }

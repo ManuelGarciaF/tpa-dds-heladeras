@@ -2,21 +2,21 @@ package ar.edu.utn.frba.dds.dominio.incidentes;
 
 
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 public class AlertaTemperatura implements Incidente {
-  private LocalDate fecha;
+  private OffsetDateTime fecha;
   private Heladera heladera;
 
 
   //CONSTRUCTOR
   public AlertaTemperatura(Heladera heladera) {
     this.heladera = heladera;
-    this.fecha = LocalDate.now();
+    this.fecha = OffsetDateTime.now();
   }
 
   @Override
-  public LocalDate getFecha() {
+  public OffsetDateTime getFecha() {
     return fecha;
   }
 

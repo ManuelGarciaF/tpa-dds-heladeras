@@ -1,11 +1,11 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 public interface Incidente {
 
-  public LocalDate getFecha();
+  public OffsetDateTime getFecha();
 
   public Heladera getHeladera();
 }

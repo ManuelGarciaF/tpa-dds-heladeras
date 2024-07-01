@@ -31,6 +31,7 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
     ultimasTresTemperaturas.add(temperatura);
   }
 
+
   // Entrega 3
   private Heladera heladera;
   List<MedicionDeTemperatura> medicionesDeTemperatura;
@@ -50,6 +51,11 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
   public void agregarMedicion(MedicionDeTemperatura temperatura) {
     medicionesDeTemperatura.add(temperatura);
     notificarTemperatura(temperatura);
+  }
+
+  @Override
+  public MedicionDeTemperatura getUltimaMedicionDeTemperatura() {
+    return medicionesDeTemperatura.get(medicionesDeTemperatura.size() - 1);
   }
 
 

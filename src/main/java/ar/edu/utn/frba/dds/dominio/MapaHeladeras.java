@@ -1,5 +1,10 @@
 package ar.edu.utn.frba.dds.dominio;
 
+import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
+import ar.edu.utn.frba.dds.dominio.incidentes.MedicionDeTemperatura;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +38,14 @@ public class MapaHeladeras {
     return heladeras.stream()
         .flatMap(heladera -> heladera.usosDeTarjeta(codigotarjeta).stream())
         .toList();
+  }
+
+  public void revisarSensoresDeTemperatura() {
+    OffsetDateTime fecha = OffsetDateTime.now();
+    heladeras.forEach(heladera -> {
+      if (heladera.sePasoDeQuinceMinutos(fecha)) {
+        heladera.nuevaFallaDeConexion();
+      }
+    });
   }
 }
