@@ -41,6 +41,8 @@ public class MapaHeladeras {
         .toList();
   }
 
+
+  // Entrega 3
   public void revisarSensoresDeTemperatura() {
     OffsetDateTime fecha = OffsetDateTime.now();
     heladeras.forEach(heladera -> {

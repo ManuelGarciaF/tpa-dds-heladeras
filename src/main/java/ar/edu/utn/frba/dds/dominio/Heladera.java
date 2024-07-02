@@ -118,12 +118,14 @@ public class Heladera {
 
   private List<Incidente> incidentesActivos;
 
+  private IncidenteHandler incidenteHandler = new IncidenteHandler();
+
   public void recibirMedicionDeTemperatura(MedicionDeTemperatura medicionDeTemperatura) {
     if (
         medicionDeTemperatura.getTemperatura() < temperaturaMinimaAceptable ||
             medicionDeTemperatura.getTemperatura() > temperaturaMaximaAceptable
     ) {
-      nuevaAlertaDeTemperatura();
+      this.nuevaAlertaDeTemperatura();
     }
   }
 
@@ -138,11 +140,13 @@ public class Heladera {
   }
 
   public void nuevaFallaTecnica(
-      Colaborador colaborador, Heladera heladera,
-      OffsetDateTime fecha, String descripcion, String urlFoto
+      Colaborador colaborador,
+      OffsetDateTime fecha,
+      String descripcion,
+      String urlFoto
   ) {
     FallaTecnica alerta = new FallaTecnica(
-        colaborador, heladera, fecha,
+        colaborador, this, fecha,
         descripcion,urlFoto);
     incidentesActivos.add(alerta);
   }
