@@ -11,11 +11,11 @@ public class DonacionDeVianda implements Colaboracion {
   private Vianda vianda;
   private Heladera heladera;
 
-  private static final double COEFICIENTE_PUNTAJE = 1.5;
+  public static final double COEFICIENTE_PUNTAJE = 1.5;
 
   public DonacionDeVianda(Vianda vianda, Heladera heladera) {
-    this.vianda = requireNonNull(vianda);
-    this.heladera = requireNonNull(heladera);
+    this.vianda = vianda;
+    this.heladera = heladera;
   }
 
   public Heladera getHeladera() {

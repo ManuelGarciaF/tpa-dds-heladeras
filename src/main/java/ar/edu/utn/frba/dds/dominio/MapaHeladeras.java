@@ -31,7 +31,7 @@ public class MapaHeladeras {
 
   public List<UsoTarjetaPersonaVulnerable> encontrarUsosDeTarjeta(String codigotarjeta) {
     return heladeras.stream()
-        .flatMap(heladera -> heladera.usosDeTarjeta(codigotarjeta).stream())
+        .flatMap(heladera -> heladera.usosDeTarjetaPersonaVulnerable(codigotarjeta).stream())
         .toList();
   }
 }

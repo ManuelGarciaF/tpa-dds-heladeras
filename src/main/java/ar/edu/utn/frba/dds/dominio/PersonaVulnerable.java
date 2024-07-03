@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class PersonaVulnerable {
-  private String nombre;
+  private final String nombre;
   private LocalDate fechaNacimiento;
   private LocalDate fechaRegistro;
   private String domicilio;

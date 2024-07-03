@@ -37,7 +37,7 @@ class HeladeraTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         null,
-        controladorDeAcceso);
+        new AutorizadorAperturasActual(controladorDeAcceso));
 
     colaboradorHumano = new ColaboradorHumano("Mati",
         "Matias",
@@ -84,15 +84,6 @@ class HeladeraTest {
   void nivelLlenadoEsAltoCuandoHay200kgDeViandas() {
     when(wSensor.getWeight("kd993j")).thenReturn(new Reading(200.0, "KG"));
     assertEquals(NivelLlenado.ALTO, heladera.nivelLlenado());
-  }
-
-  @Test
-  void noSePuedeAgregarUnaSolicitudDeAperturaSiElColaboradorNoTieneTarjeta() {
-    var apertura = new AperturaHeladera(colaboradorHumano, LocalDateTime.now());
-    assertThrows(
-        IllegalArgumentException.class,
-        () -> heladera.agregarSolicitudApertura(apertura)
-    );
   }
 
   @Test

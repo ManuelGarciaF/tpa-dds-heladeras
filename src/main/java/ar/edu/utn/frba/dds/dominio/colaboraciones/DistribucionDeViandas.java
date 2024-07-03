@@ -14,7 +14,7 @@ public class DistribucionDeViandas implements Colaboracion {
   private Integer cantidadDeViandas;
   private LocalDate fechaDeLaDistribucion;
 
-  private static final Double COEFICIENTE_PUNTAJE = 1.0;
+  public static final Double COEFICIENTE_PUNTAJE = 1.0;
 
   public DistribucionDeViandas(MotivoDeDistribucion motivoDeDistribucion,
                                LocalDate fechaDeLaDistribucion,

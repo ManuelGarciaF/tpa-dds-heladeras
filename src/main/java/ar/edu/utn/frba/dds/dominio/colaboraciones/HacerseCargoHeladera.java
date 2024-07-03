@@ -8,7 +8,7 @@ import ar.edu.utn.frba.dds.dominio.Heladera;
 public class HacerseCargoHeladera implements Colaboracion {
   private final Heladera heladera;
 
-  private static final Double COEFICIENTE_PUNTAJE = 5.0;
+  public static final Double COEFICIENTE_PUNTAJE = 5.0;
 
   public HacerseCargoHeladera(Heladera heladera) {
     this.heladera = requireNonNull(heladera);
