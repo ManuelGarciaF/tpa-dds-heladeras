@@ -117,11 +117,8 @@ public class Heladera {
   }
 
   public void agregarSolicitudApertura(AperturaHeladera apertura) {
-    if (apertura.getTarjetaColaborador() == null) {
-      throw new HeladeraException("El colaborador debe tener una tarjeta para poder solicitar una apertura");
-    }
     // Notificar al controlador de acceso
-    controladorDeAcceso.notificarTarjetasColaboradoraHabilitada(apertura.getTarjetaColaborador().getCodigoTarjeta());
+    controladorDeAcceso.notificarTarjetasColaboradoraHabilitada(apertura.getCodigoTarjetaColaborador());
     aperturasPendientes.add(apertura);
   }
 

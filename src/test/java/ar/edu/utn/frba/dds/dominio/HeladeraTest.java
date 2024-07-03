@@ -90,7 +90,7 @@ class HeladeraTest {
   void noSePuedeAgregarUnaSolicitudDeAperturaSiElColaboradorNoTieneTarjeta() {
     var apertura = new AperturaHeladera(colaboradorHumano, LocalDateTime.now());
     assertThrows(
-        HeladeraException.class,
+        IllegalArgumentException.class,
         () -> heladera.agregarSolicitudApertura(apertura)
     );
   }

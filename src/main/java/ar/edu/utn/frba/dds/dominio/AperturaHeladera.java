@@ -11,6 +11,9 @@ public class AperturaHeladera {
   private LocalDateTime fechaApertura;
 
   public AperturaHeladera(ColaboradorHumano colaboradorHumano, LocalDateTime fechaSolicitud) {
+    if (colaboradorHumano == null || colaboradorHumano.getTarjetaColaborador() == null) {
+      throw new IllegalArgumentException("El colaborador humano debe tener una tarjeta de colaborador asociada");
+    }
     this.colaboradorHumano = colaboradorHumano;
     this.fechaSolicitud = fechaSolicitud;
   }
@@ -23,16 +26,8 @@ public class AperturaHeladera {
     return colaboradorHumano;
   }
 
-  public LocalDateTime getFechaSolicitud() {
-    return fechaSolicitud;
-  }
-
-  public LocalDateTime getFechaApertura() {
-    return fechaApertura;
-  }
-
-  public TarjetaColaborador getTarjetaColaborador() {
-    return colaboradorHumano.getTarjetaColaborador();
+  public String getCodigoTarjetaColaborador() {
+    return colaboradorHumano.getTarjetaColaborador().getCodigoTarjeta();
   }
 
   public boolean esValida(LocalDateTime fechaApertura) {
