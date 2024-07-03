@@ -9,7 +9,7 @@ public class RegistroDePersonaVulnerableHistorico implements Colaboracion {
 
   private static final Integer USOS_PROMEDIO = 2;
   private static final Integer MESES_ACTIVAS_PROMEDIO = 2;
-  private static final Double COEFICIENTE_PUNTAJE = 2.0;
+  public static final Double COEFICIENTE_PUNTAJE = 2.0;
 
   public RegistroDePersonaVulnerableHistorico(Integer cantidad) {
     this.cantidad = requireNonNull(cantidad);

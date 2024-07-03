@@ -12,6 +12,7 @@ public class ColaboradorHumano extends Colaborador {
   private Set<FormaDeColaboracionHumana> formasDeColaboracion;
   private TipoDocumento tipoDocumento;
   private Integer numeroDocumento;
+  private TarjetaColaborador tarjetaColaborador;
 
   public ColaboradorHumano(String nombre,
                            String apellido,
@@ -30,6 +31,10 @@ public class ColaboradorHumano extends Colaborador {
     this.numeroDocumento = requireNonNull(numeroDocumento);
   }
 
+  public void setTarjetaColaborador(TarjetaColaborador tarjetaColaborador) {
+    this.tarjetaColaborador = requireNonNull(tarjetaColaborador);
+  }
+
   public String getNombre() {
     return nombre;
   }
@@ -44,6 +49,10 @@ public class ColaboradorHumano extends Colaborador {
 
   public Set<FormaDeColaboracionHumana> getFormasDeColaboracion() {
     return formasDeColaboracion;
+  }
+
+  public TarjetaColaborador getTarjetaColaborador() {
+    return tarjetaColaborador;
   }
 
   @Override

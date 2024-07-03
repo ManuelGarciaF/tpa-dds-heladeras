@@ -7,25 +7,25 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class PersonaVulnerable {
-  private String nombre;
+  private final String nombre;
   private LocalDate fechaNacimiento;
   private LocalDate fechaRegistro;
   private String domicilio;
   private Integer menoresAcargo;
-  private Tarjeta tarjeta;
+  private TarjetaPersonaVulnerable tarjeta;
 
   public PersonaVulnerable(String nombre,
                            String domicilio,
                            LocalDate fechaNacimiento,
                            LocalDate fechaRegistro,
                            Integer menoresAcargo,
-                           Tarjeta tarjeta) {
+                           TarjetaPersonaVulnerable tarjetaPersonaVulnerable) {
     this.nombre = requireNonNull(nombre);
     this.domicilio = domicilio;
     this.fechaNacimiento = requireNonNull(fechaNacimiento);
     this.fechaRegistro = requireNonNull(fechaRegistro);
     this.menoresAcargo = requireNonNull(menoresAcargo);
-    this.tarjeta = requireNonNull(tarjeta);
+    this.tarjeta = requireNonNull(tarjetaPersonaVulnerable);
   }
 
   public Integer usosMaximosDiarios() {
@@ -48,7 +48,7 @@ public class PersonaVulnerable {
     if (!tieneUsosDisponibles()) {
       throw new UsoTarjetaException("No tiene usos disponibles");
     }
-    heladera.agregarUso(new UsoTarjeta(tarjeta, LocalDate.now()));
+    heladera.agregarUso(new UsoTarjetaPersonaVulnerable(tarjeta, LocalDate.now()));
   }
 
 }
