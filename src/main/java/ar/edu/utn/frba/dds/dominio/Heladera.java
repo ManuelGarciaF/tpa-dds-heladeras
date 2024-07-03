@@ -2,8 +2,10 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.incidentes.*;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Heladera {
   private final Ubicacion ubicacion;
   private final String numeroDeSerie;
   private final Integer temperaturaMaximaAceptable;
+  private final Integer temperaturaMinimaAceptable;
 
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
   private final List<Vianda> viandas = new ArrayList<>();
@@ -33,6 +36,7 @@ public class Heladera {
                   Ubicacion ubicacion,
                   String numeroDeSerie,
                   Integer temperaturaMaximaAceptable,
+                  Integer temperaturaMinimaAceptable,
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   LocalDate fechaCreacion,
@@ -42,6 +46,7 @@ public class Heladera {
     this.ubicacion = requireNonNull(ubicacion);
     this.numeroDeSerie = requireNonNull(numeroDeSerie);
     this.temperaturaMaximaAceptable = requireNonNull(temperaturaMaximaAceptable);
+    this.temperaturaMinimaAceptable = requireNonNull(temperaturaMinimaAceptable);
     this.proveedorPeso = proveedorPeso;
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
@@ -149,5 +154,53 @@ public class Heladera {
     return aperturasPendientes.stream()
         .filter(AperturaHeladera::esValidaAhora)
         .toList();
+  }
+
+
+  //Entrega 3
+
+  private List<Incidente> incidentesActivos;
+
+  private IncidenteHandler incidenteHandler = new IncidenteHandler();
+
+  public void recibirMedicionDeTemperatura(MedicionDeTemperatura medicionDeTemperatura) {
+    if (
+        medicionDeTemperatura.getTemperatura() < temperaturaMinimaAceptable ||
+            medicionDeTemperatura.getTemperatura() > temperaturaMaximaAceptable
+    ) {
+      this.nuevaAlertaDeTemperatura();
+    }
+  }
+
+  public void nuevaAlertaDeTemperatura() {
+    AlertaTemperatura alerta = new AlertaTemperatura(this);
+    incidentesActivos.add(alerta);
+  }
+
+  public void nuevaFallaDeConexion(TipoDeFalla tipo) {
+    AlertaFallaConexion alerta = new AlertaFallaConexion(this, tipo);
+    incidentesActivos.add(alerta);
+  }
+
+  public void nuevaFallaTecnica(
+      Colaborador colaborador,
+      OffsetDateTime fecha,
+      String descripcion,
+      String urlFoto
+  ) {
+    FallaTecnica alerta = new FallaTecnica(
+        colaborador, this, fecha,
+        descripcion,
+        urlFoto);
+    incidentesActivos.add(alerta);
+  }
+
+  public ProveedorTemperatura getProveedorTemperatura() {
+    return proveedorTemperatura;
+  }
+
+  public boolean sePasoDeQuinceMinutos(OffsetDateTime instanteDeLaRevision) {
+    int diferencia = instanteDeLaRevision.getMinute() - proveedorTemperatura.getUltimaMedicionDeTemperatura().getFecha().getMinute();
+    return diferencia > 15;
   }
 }
