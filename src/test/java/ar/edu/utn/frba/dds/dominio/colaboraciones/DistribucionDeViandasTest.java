@@ -22,6 +22,7 @@ class DistribucionDeViandasTest {
         17,
         null,
         null,
+        null,
         null);
     Heladera heladeraDestino = new Heladera("Destino",
         40,
@@ -29,6 +30,7 @@ class DistribucionDeViandasTest {
         "kd993j",
         23,
         17,
+        null,
         null,
         null,
         null);

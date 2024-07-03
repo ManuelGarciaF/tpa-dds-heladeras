@@ -35,9 +35,9 @@ public class MapaHeladeras {
         .orElse(null);
   }
 
-  public List<UsoTarjeta> encontrarUsosDeTarjeta(String codigotarjeta) {
+  public List<UsoTarjetaPersonaVulnerable> encontrarUsosDeTarjeta(String codigotarjeta) {
     return heladeras.stream()
-        .flatMap(heladera -> heladera.usosDeTarjeta(codigotarjeta).stream())
+        .flatMap(heladera -> heladera.usosDeTarjetaPersonaVulnerable(codigotarjeta).stream())
         .toList();
   }
 

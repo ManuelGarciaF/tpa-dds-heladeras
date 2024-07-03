@@ -12,7 +12,7 @@ public class DonacionDeDinero implements Colaboracion {
   private Boolean donacionPeriodica;
   private Integer frecuenciaEnDias;
 
-  private static final Double COEFICIENTE_PUNTAJE = 0.5;
+  public static final Double COEFICIENTE_PUNTAJE = 0.5;
 
   public DonacionDeDinero(Integer monto,
                          Boolean donacionPeriodica,

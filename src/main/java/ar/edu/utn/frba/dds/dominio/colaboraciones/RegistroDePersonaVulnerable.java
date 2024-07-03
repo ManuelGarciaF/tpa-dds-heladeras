@@ -9,7 +9,7 @@ import java.util.List;
 public class RegistroDePersonaVulnerable implements Colaboracion {
   private final PersonaVulnerable personaRegistrada;
 
-  private static final Double COEFICIENTE_PUNTAJE = 2.0;
+  public static final Double COEFICIENTE_PUNTAJE = 2.0;
 
   public RegistroDePersonaVulnerable(PersonaVulnerable personaRegistrada) {
     this.personaRegistrada = requireNonNull(personaRegistrada);
