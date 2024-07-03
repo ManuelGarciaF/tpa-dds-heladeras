@@ -1,28 +1,29 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
-import ar.edu.utn.frba.dds.dominio.Heladera;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 public class AlertaFallaConexion implements Incidente {
-  private Heladera heladera;
-  private OffsetDateTime fecha;
+  private LocalDateTime fecha;
   private TipoDeFalla tipo;
 
-
   // CONSTRUCTOR
-  public AlertaFallaConexion(Heladera heladera, TipoDeFalla tipo) {
-    this.heladera = heladera;
+  public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo) {
+    this.fecha = fecha;
     this.tipo = tipo;
-    this.fecha = OffsetDateTime.now();
   }
 
   @Override
-  public OffsetDateTime getFecha() {
+  public LocalDateTime getFecha() {
     return this.fecha;
   }
 
   @Override
-  public Heladera getHeladera() {
-    return heladera;
+  public String getDescripcion() {
+    return switch (this.tipo) {
+      case SENSOR_DE_PESO ->
+          "El sensor de peso de la heladera no esta funcionando correctamente.";
+      case SENSOR_DE_TEMPERATURA ->
+          "El sensor de temperatura de la heladera no esta funcionando correctamente.";
+    };
   }
 }

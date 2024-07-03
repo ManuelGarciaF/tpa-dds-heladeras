@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ar.edu.utn.frba.dds.dominio.Heladera;
+import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import ar.edu.utn.frba.dds.dominio.UsoTarjetaPersonaVulnerable;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ar.edu.utn.frba.dds.dominio.Heladera;
-import ar.edu.utn.frba.dds.dominio.Ubicacion;
 
 class HacerseCargoHeladeraTest {
   private HacerseCargoHeladera hacerseCargoHeladera;
@@ -19,11 +19,10 @@ class HacerseCargoHeladeraTest {
         40,
         new Ubicacion(0.1, 0.0),
         "kd993j",
-        23,
-        17,
-        null,
-        null,
         LocalDate.now().minusMonths(2),
+        null,
+        null,
+        null,
         null
     );
     hacerseCargoHeladera = new HacerseCargoHeladera(heladera);

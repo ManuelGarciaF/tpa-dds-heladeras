@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IncidenteHandler {
-  private List<IncidenteObserver> incidentesObservers;
-
-
+  private final List<IncidenteObserver> incidentesObservers = new ArrayList<IncidenteObserver>();
 
   public void agregarObserver(IncidenteObserver observer) {
     incidentesObservers.add(observer);
@@ -16,15 +14,10 @@ public class IncidenteHandler {
     incidentesObservers.remove(observer);
   }
 
-  public void notificar() {
+  public void notificar(Incidente incidente) {
     incidentesObservers.forEach(
-        observer -> observer.avisar()
+        observer -> observer.avisar(incidente)
     );
   }
 
-
-  //CONSTRUCTOR
-  public IncidenteHandler(){
-    incidentesObservers = new ArrayList<IncidenteObserver>();
-  }
 }

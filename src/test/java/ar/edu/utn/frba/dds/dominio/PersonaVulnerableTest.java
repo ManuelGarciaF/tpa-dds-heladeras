@@ -20,7 +20,7 @@ class PersonaVulnerableTest {
             40,
             new Ubicacion(0.1, 0.0),
             "kd993j",
-            23,
+            LocalDate.now(),
             null,
             null,
             null,

@@ -22,13 +22,11 @@ class DonacionDeViandaTest {
             20,
             new Ubicacion(0.0, 0.0),
             "123",
-            5,
-            3,
+            LocalDate.now(),
             null,
             null,
             null,
-            null
-        )
+            null)
     );
   }
 
