@@ -1,8 +1,14 @@
 package ar.edu.utn.frba.dds.dominio;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable;
+import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +16,8 @@ import org.junit.jupiter.api.Test;
 class ColaboradorJuridicoTest {
 
   ColaboradorJuridico colaboradorJuridico;
+  Heladera heladera;
+  MapaHeladeras mapaHeladeras;
 
   @BeforeEach
   void setUp() {
@@ -19,6 +27,18 @@ class ColaboradorJuridicoTest {
         new MedioDeContacto(null, "test@gmail.com", null),
         "Triunvirato 55894",
         Set.of(FormaDeColaboracionJuridica.DONACION_DINERO));
+
+    heladera = new Heladera("heladera1",
+            40,
+            new Ubicacion(0.1, 0.0),
+            "kd993j",
+            LocalDate.now().minusMonths(4),
+            null,
+            null,
+            null,
+            null);
+    mapaHeladeras = new MapaHeladeras();
+    mapaHeladeras.agregarHeladera(heladera);
   }
 
   @Test
@@ -26,6 +46,28 @@ class ColaboradorJuridicoTest {
     var colaboracion = new DonacionDeDinero(420, false, null);
     colaboradorJuridico.colaborar(colaboracion);
     assertTrue(colaboradorJuridico.getHistorialDeColaboraciones().contains(colaboracion));
+  }
+
+  @Test
+  void elPuntajeSeCalculaCorrectamente() {
+    colaboradorJuridico.colaborar(new DonacionDeDinero(420, false, null));
+    colaboradorJuridico.colaborar(new HacerseCargoHeladera(heladera));
+
+    var tarjeta = new TarjetaPersonaVulnerable("123", mapaHeladeras);
+    var personaVulnerable = new PersonaVulnerable("Mati",
+        "Calle Falsa 123",
+        LocalDate.of(1892, 10, 10),
+        LocalDate.now().minusMonths(10),
+        100,
+        tarjeta);
+
+    personaVulnerable.agregarUsoTarjeta(heladera);
+    personaVulnerable.agregarUsoTarjeta(heladera);
+
+    Double valorEsperado = 420 * DonacionDeDinero.COEFICIENTE_PUNTAJE
+        + 1 * 4 * 2 * HacerseCargoHeladera.COEFICIENTE_PUNTAJE;
+    
+    assertEquals(valorEsperado, colaboradorJuridico.puntaje());
   }
 }
 
