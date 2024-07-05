@@ -39,6 +39,7 @@ class PersonaVulnerableTest {
     personaVulnerable.agregarUsoTarjeta(heladera);
     personaVulnerable.agregarUsoTarjeta(heladera);
     assertEquals(2, personaVulnerable.usosTarjeta());
+    assertEquals(2, heladera.usosDeTarjetaPersonaVulnerable("123").size());
   }
 
   @Test
