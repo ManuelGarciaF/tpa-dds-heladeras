@@ -20,7 +20,7 @@ public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
 
 
   @Override
-  public void notificar(Heladera heladera) throws InvalidTelephoneNumberException {
+  public void notificar(Heladera heladera){
     if(heladera.cantidadDeViandas() <= viandasDisponibles){
       despachadorDeMensajes.enviarMensaje(metodoDeEnvio, colaborador.getMedioDeContacto().getTelefono(), "Faltan viandas");
     }

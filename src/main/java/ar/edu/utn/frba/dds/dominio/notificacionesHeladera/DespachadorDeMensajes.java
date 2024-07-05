@@ -8,7 +8,7 @@ import ar.edu.utn.frba.dds.externo.InvalidTelephoneNumberException;
 public class DespachadorDeMensajes implements DespachadorDeMensajeria{
   private InstantMessageSender instantMessageSender;
 
-  public void enviarMensaje(InstantMessageApp provider, String telephone, String message) throws InvalidTelephoneNumberException {
+  public void enviarMensaje(InstantMessageApp provider, String telephone, String message)  {
     instantMessageSender.sendMessage(provider, telephone, message);
   }
 }

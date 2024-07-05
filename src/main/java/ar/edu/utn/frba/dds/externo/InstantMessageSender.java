@@ -5,5 +5,5 @@ public interface InstantMessageSender {
       InstantMessageApp provider,
       String telephone,
       String message
-  ) throws InvalidTelephoneNumberException;
+  ); // falta el "throws InvalidTelephoneNumberException";
 }

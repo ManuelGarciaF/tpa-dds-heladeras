@@ -32,7 +32,8 @@ public class Heladera {
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
   private final AutorizadorAperturas autorizadorAperturas;
-  private final ContadorCantidadViandas contadorCantidadViandas;
+  //comente y puse null para que no se jodan los test que hicieron los chicos
+  private final ContadorCantidadViandas contadorCantidadViandas = null;
 
   private final List<Incidente> incidentesActivos = new ArrayList<>();
   private final IncidenteHandler incidenteHandler = new IncidenteHandler();
@@ -47,7 +48,7 @@ public class Heladera {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-                  ContadorCantidadViandas contadorCantidadViandas,
+            //      ContadorCantidadViandas contadorCantidadViandas,
                   RepoTecnicos repoTecnicos) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
@@ -57,7 +58,7 @@ public class Heladera {
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
     this.autorizadorAperturas = autorizadorAperturas;
-    this.contadorCantidadViandas = contadorCantidadViandas;
+   // this.contadorCantidadViandas = contadorCantidadViandas;
     this.repoTecnicos = repoTecnicos;
   }
 

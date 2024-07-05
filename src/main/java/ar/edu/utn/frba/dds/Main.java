@@ -32,7 +32,6 @@ public class Main {
         null,
         null,
         null,
-        null,
         null
     );
     mapa.agregarHeladera(unaHeladera);
