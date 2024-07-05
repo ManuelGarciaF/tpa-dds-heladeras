@@ -17,7 +17,8 @@ import org.junit.jupiter.api.Test;
 
 class ColaboradorHumanoTest {
 
-  ColaboradorHumano colaboradorHumano;
+  private ColaboradorHumano colaboradorHumano;
+  private MapaHeladeras mapaHeladeras;
 
   @BeforeEach
   void setUp() {
@@ -30,6 +31,29 @@ class ColaboradorHumanoTest {
         TipoDocumento.DNI,
         180924102
     );
+
+    mapaHeladeras = new MapaHeladeras();
+    mapaHeladeras.agregarHeladera(
+        new Heladera("heladera1",
+            40,
+            new Ubicacion(0.1, 0.0),
+            "kd993j",
+            LocalDate.now(),
+            null,
+            null,
+            null,
+            null));
+
+    mapaHeladeras.agregarHeladera(
+        new Heladera("heladera2",
+            39,
+            new Ubicacion(0.2, 0.0),
+            "kd393j",
+            LocalDate.now(),
+            null,
+            null,
+            null,
+            null));
   }
 
   @Test
@@ -52,7 +76,6 @@ class ColaboradorHumanoTest {
         new Vianda("Vianda", LocalDate.now().plusWeeks(2), 10, 10),
         null));
 
-    var mapaHeladeras = mock(MapaHeladeras.class);
     var tarjeta = new TarjetaPersonaVulnerable("123", mapaHeladeras);
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
@@ -60,9 +83,9 @@ class ColaboradorHumanoTest {
         LocalDate.now().minusMonths(10),
         100,
         tarjeta);
-    when(mapaHeladeras.encontrarUsosDeTarjeta("123")).thenReturn(List.of(
-        new UsoTarjetaPersonaVulnerable(tarjeta, LocalDate.now()),
-        new UsoTarjetaPersonaVulnerable(tarjeta, LocalDate.now())));
+    personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera1"));
+    personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera2"));
+
     colaboradorHumano.colaborar(new RegistroDePersonaVulnerable(personaVulnerable));
 
     Double valorEsperado = 10 * DistribucionDeViandas.COEFICIENTE_PUNTAJE
