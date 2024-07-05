@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.externo;
 
-interface InstantMessageSender {
+public interface InstantMessageSender {
   void sendMessage(
       InstantMessageApp provider,
       String telephone,
