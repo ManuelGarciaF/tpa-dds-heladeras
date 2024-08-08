@@ -18,4 +18,6 @@ public class Ubicacion {
   public Double getLongitud() {
     return longitud;
   }
+
+
 }

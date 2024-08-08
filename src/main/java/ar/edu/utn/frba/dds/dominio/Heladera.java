@@ -161,7 +161,7 @@ public class Heladera {
         .toList();
   }
 
-  //Entrega 3
+  //Entrega 3 //TODO: revisar esto
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
     incidenteHandler.notificar(incidente);
