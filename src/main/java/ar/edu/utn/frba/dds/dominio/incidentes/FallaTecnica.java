@@ -25,6 +25,7 @@ public class FallaTecnica implements Incidente {
     this.fecha = fecha;
     this.descripcion = descripcion;
     this.urlFoto = urlFoto;
+    this.heladeraDefectuosa = heladeraDefectuosa;
     this.ubicacionDelIncidente = heladeraDefectuosa.getUbicacion();
   }
 
@@ -35,6 +36,10 @@ public class FallaTecnica implements Incidente {
   @Override
   public LocalDateTime getFecha() {
     return fecha;
+  }
+
+  public Heladera getHeladeraDefectuosa() {
+    return heladeraDefectuosa;
   }
 
   @Override

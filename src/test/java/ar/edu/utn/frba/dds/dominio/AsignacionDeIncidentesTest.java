@@ -12,6 +12,7 @@ import static org.mockito.Mockito.when;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertarTecnicos;
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.dominio.incidentes.IncidenteHandler;
+import ar.edu.utn.frba.dds.dominio.incidentes.ReportarIncidente;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
@@ -36,6 +37,8 @@ class AsignacionDeIncidentesTest {
   private ColaboradorHumano colaboradorHumano;
   private IncidenteHandler incidenteHandler;
   private AlertarTecnicos alertarTecnicos;
+  private ReportarIncidente reportarIncidente;
+
 
   @BeforeEach
   void setUp() {
@@ -111,6 +114,7 @@ class AsignacionDeIncidentesTest {
     alertarTecnicos = new AlertarTecnicos(repoTecnicos);
     heladera.getIncidenteHandler().agregarObserver(alertarTecnicos);
 
+    //En el caso de que haya una falla de sensor
     proveedorTemperaturaSensor.agregarLectura(24.0);
     proveedorTemperaturaSensor.agregarLectura(25.0);
     proveedorTemperaturaSensor.agregarLectura(123.0);
@@ -118,5 +122,35 @@ class AsignacionDeIncidentesTest {
     assertEquals(3, repoTecnicos.obtenerTecnicos().size());
     assertEquals(1, heladera.getIncidentesActivos().size());
     assertEquals(1, juan.getVisitasPendientes().size());
+  }
+
+
+  //Cuando reporto un incidente como usuario, quiero que se le notifique al tecnico mas cercano
+  @Test
+  void cuandoReportoUnIncedenteSeAsignaAlTecnicoMasCercano() {
+    Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
+    Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
+    Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
+    RepoTecnicos repoTecnicos = new RepoTecnicos();
+    repoTecnicos.agregarTecnico(ricardo);
+    repoTecnicos.agregarTecnico(juan);
+    repoTecnicos.agregarTecnico(ramon);
+    reportarIncidente = new ReportarIncidente(repoTecnicos);
+    heladera.getIncidenteHandler().agregarObserver(reportarIncidente);
+
+    //En el caso en el que se reporte una heladera
+    reportarIncidente.reportarIncidente(new FallaTecnica(
+        colaboradorHumano,
+        LocalDateTime.now(),
+        heladera,
+        "La heladera no tiene gas",
+        "instagram.com/uwu"
+    ));
+
+
+    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
+    assertEquals(1, heladera.getIncidentesActivos().size());
+    assertEquals(1, juan.getVisitasPendientes().size());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
   }
 }

@@ -30,14 +30,4 @@ public class RepoTecnicos {
     Tecnico tecnicoASignar = tecnicos.get(0);
     tecnicoASignar.asignarIncidenteParaResolver(incidente);
   }
-  //hay que filtrar ubicaciones, y luego darsela al que este mas proximo
-  //Por el momento se me ocurrió usar un sistema de coordenadas plano (luego veré si uso una api de google maps o una formula mas avanzada para usar coordenadas reales)
-  /*public double calcularDistanciaEntreUbicaciones(Ubicacion ubicacion1, Ubicacion ubicacion2){
-
-    double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion1.getLatitud()),2);
-    double diferenciaEntreLongitud = Math.pow((ubicacion2.getLongitud() - ubicacion1.getLongitud()),2);
-    return Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
-  }*/
-
-  //para comparar, voy a agarrar el repo, hacer un foreach con la distancia y el que tenga menor distancia va a ser notificado
 }
