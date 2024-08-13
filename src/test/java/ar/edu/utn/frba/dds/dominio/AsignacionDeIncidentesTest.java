@@ -10,17 +10,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ar.edu.utn.frba.dds.dominio.incidentes.AlertarTecnicos;
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
-import ar.edu.utn.frba.dds.dominio.incidentes.IncidenteHandler;
-import ar.edu.utn.frba.dds.dominio.incidentes.ReportarIncidente;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Visita;
-import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import ar.edu.utn.frba.dds.exceptions.VisitaTecnicoException;
 import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
-import ar.edu.utn.frba.dds.externo.Reading;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import ar.edu.utn.frba.dds.externo.WSensor;
 import org.junit.jupiter.api.BeforeEach;
@@ -154,7 +149,7 @@ class AsignacionDeIncidentesTest {
     assertEquals(3, repoTecnicos.obtenerTecnicos().size());
     assertEquals(1, heladera.getIncidentesActivos().size());
     assertEquals(1, juan.getVisitasPendientes().size());
-    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcionDelError());
   }
 
   @Test
@@ -183,7 +178,7 @@ class AsignacionDeIncidentesTest {
     assertEquals(3, repoTecnicos.obtenerTecnicos().size());
     assertEquals(1, heladera.getIncidentesActivos().size());
     assertEquals(1, juan.getVisitasPendientes().size());
-    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcionDelError());
     assertFalse(heladera.estaActiva());
     Visita visitaHeladera = new Visita(fallaTecnica, "se ha remplazado una manguera de gas", LocalDateTime.now(), heladera, true);
     juan.registrarVisita(visitaHeladera);
@@ -219,7 +214,7 @@ class AsignacionDeIncidentesTest {
     assertEquals(3, repoTecnicos.obtenerTecnicos().size());
     assertEquals(1, heladera.getIncidentesActivos().size());
     assertEquals(1, juan.getVisitasPendientes().size());
-    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcionDelError());
     assertFalse(heladera.estaActiva());
     Visita visitaHeladera = new Visita(null, "se ha remplazado una manguera de gas", LocalDateTime.now(), heladera, true);
     assertThrows(VisitaTecnicoException.class,() -> juan.registrarVisita(visitaHeladera));
@@ -259,7 +254,7 @@ class AsignacionDeIncidentesTest {
     assertEquals(3, repoTecnicos.obtenerTecnicos().size());
     assertEquals(2, heladera.getIncidentesActivos().size());
     assertEquals(2, juan.getVisitasPendientes().size());
-    assertEquals("La heladera no tiene aire", juan.getVisitasPendientes().get(1).getDescripcion());
+    assertEquals("La heladera no tiene aire", juan.getVisitasPendientes().get(1).getDescripcionDelError());
     assertFalse(heladera.estaActiva());
     Visita visitaHeladera = new Visita(fallaTecnica, "se ha remplazado una manguera de aire", LocalDateTime.now(), heladera, true);
     juan.registrarVisita(visitaHeladera);

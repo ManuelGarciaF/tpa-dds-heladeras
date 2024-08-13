@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 public class AlertaFallaConexion implements Incidente {
   private LocalDateTime fecha;
   private TipoDeFalla tipo;
-  //TODO: esto es algo provisorio?? porque quizas podriamos delegar las tareas desde la heladera para ahorrarnos hacer esto
   private Ubicacion ubicacionDelIncidente;
 
   // CONSTRUCTOR
@@ -26,7 +25,7 @@ public class AlertaFallaConexion implements Incidente {
   }
 
   @Override
-  public String getDescripcion() {
+  public String getDescripcionDelError() {
     return switch (this.tipo) {
       case SENSOR_DE_PESO ->
           "El sensor de peso de la heladera no esta funcionando correctamente.";

@@ -6,8 +6,8 @@ import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
 public class AlertaTemperatura implements Incidente {
-  private LocalDateTime fecha;
-  private Ubicacion ubicacionDelIncidente;
+  private final LocalDateTime fecha;
+  private final Ubicacion ubicacionDelIncidente;
 
   //CONSTRUCTOR
   public AlertaTemperatura(LocalDateTime fecha, Ubicacion ubicacionDelIncidente) {
@@ -25,7 +25,7 @@ public class AlertaTemperatura implements Incidente {
   }
 
   @Override
-  public String getDescripcion() {
+  public String getDescripcionDelError() {
     return "La temperatura de la heladera salio afuera de los limites permitidos.";
   }
 }

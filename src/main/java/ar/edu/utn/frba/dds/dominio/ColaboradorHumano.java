@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -58,5 +59,11 @@ public class ColaboradorHumano extends Colaborador {
   @Override
   public boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento) {
     return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
+  }
+
+  //E3
+  public void reportarIncidente(FallaTecnica fallaTecnica){
+    //repositorio.avisar(fallaTecnica);
+    fallaTecnica.getHeladeraDefectuosa().nuevoIncidente(fallaTecnica);
   }
 }

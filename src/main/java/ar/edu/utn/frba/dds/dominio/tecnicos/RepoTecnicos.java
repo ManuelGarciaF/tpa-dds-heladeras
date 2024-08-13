@@ -7,8 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class RepoTecnicos {
-  //TODO: graficar DC
-  private List<Tecnico> tecnicos;
+  private final List<Tecnico> tecnicos;
 
   public RepoTecnicos() {
     this.tecnicos = new ArrayList<Tecnico>();
@@ -22,12 +21,16 @@ public class RepoTecnicos {
     this.tecnicos.add(tecnico);
   }
 
-  //TODO terminar
   public void delegarIncidente(Incidente incidente) {
+    //Primero se obtiene todas las distancias de los tecnicos al incidente
     tecnicos.forEach(tecnico -> {tecnico.calcularDistancia(incidente.getUbicacionDelIncidente());});
+    //Se ordena de mayor a menor
     Collections.sort(tecnicos);
+    //Se invierte el orden para elegir al que esté más cerca
     Collections.reverse(tecnicos);
-    Tecnico tecnicoASignar = tecnicos.get(0);
-    tecnicoASignar.asignarIncidenteParaResolver(incidente);
+    //Se obtiene el primero
+    Tecnico tecnicoElegido = tecnicos.get(0);
+    //Se asigna el incidente
+    tecnicoElegido.asignarIncidenteParaResolver(incidente);
   }
 }

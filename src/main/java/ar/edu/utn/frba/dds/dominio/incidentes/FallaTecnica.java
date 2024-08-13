@@ -6,24 +6,24 @@ import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
 
-//TODO:podemos hacer que un usuario carge una heladera, y el incidente se añada a la lista de esta
+
 public class FallaTecnica implements Incidente {
   private Colaborador colaborador;
   private LocalDateTime fecha;
-  private Heladera heladeraDefectuosa; // TODO: revisar y preguntar porque no se cargaria una heladera aca
-
-  private String descripcion;
+  private Heladera heladeraDefectuosa;
+  private String descripcionDelError;
   private String urlFoto;
   private Ubicacion ubicacionDelIncidente;
-  //se va a crear cuando el colaborador reporte un incidente
+
+  //se va a crear cuando un colaborador reporte un incidente
   public FallaTecnica(Colaborador colaborador,
                       LocalDateTime fecha,
                       Heladera heladeraDefectuosa,
-                      String descripcion,
+                      String descripcionDelError,
                       String urlFoto) {
     this.colaborador = colaborador;
     this.fecha = fecha;
-    this.descripcion = descripcion;
+    this.descripcionDelError = descripcionDelError;
     this.urlFoto = urlFoto;
     this.heladeraDefectuosa = heladeraDefectuosa;
     this.ubicacionDelIncidente = heladeraDefectuosa.getUbicacion();
@@ -43,8 +43,8 @@ public class FallaTecnica implements Incidente {
   }
 
   @Override
-  public String getDescripcion() {
-    return descripcion;
+  public String getDescripcionDelError() {
+    return descripcionDelError;
   }
 
   public Colaborador getColaborador() {

@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
-import ar.edu.utn.frba.dds.dominio.incidentes.IncidenteHandler;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
@@ -32,11 +31,8 @@ public class Heladera {
   private final ProveedorPeso proveedorPeso;
   private final ProveedorTemperatura proveedorTemperatura;
   private final AutorizadorAperturas autorizadorAperturas;
-  //comente y puse null para que no se jodan los test que hicieron los chicos
-  private final ContadorCantidadViandas contadorCantidadViandas = null;
 
   private final List<Incidente> incidentesActivos = new ArrayList<>();
-  private final IncidenteHandler incidenteHandler = new IncidenteHandler();
 
   private final RepoTecnicos repoTecnicos;
 
@@ -48,7 +44,6 @@ public class Heladera {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-            //      ContadorCantidadViandas contadorCantidadViandas,
                   RepoTecnicos repoTecnicos) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
@@ -58,7 +53,6 @@ public class Heladera {
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
     this.autorizadorAperturas = autorizadorAperturas;
-   // this.contadorCantidadViandas = contadorCantidadViandas;
     this.repoTecnicos = repoTecnicos;
   }
 
@@ -164,7 +158,7 @@ public class Heladera {
   //Entrega 3 //TODO: revisar esto
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-    incidenteHandler.notificar(incidente);
+    repoTecnicos.delegarIncidente(incidente);
   }
 
   public void checkearDesconexionSensorTemperatura() {
@@ -187,15 +181,8 @@ public class Heladera {
     return numeroDeSerie;
   }
 
-  public Integer cantidadDeViandas(){
-    return contadorCantidadViandas.getCantidad();
-  }
 
   public List<Incidente> getIncidentesActivos() {
     return incidentesActivos;
-  }
-  //TODO ver
-  public IncidenteHandler getIncidenteHandler() {
-    return incidenteHandler;
   }
 }
