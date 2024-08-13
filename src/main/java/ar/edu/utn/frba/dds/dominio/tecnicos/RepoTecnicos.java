@@ -24,6 +24,7 @@ public class RepoTecnicos {
 
   //TODO terminar
   public void delegarIncidente(Incidente incidente) {
+    tecnicos.forEach(tecnico -> {tecnico.calcularDistancia(incidente.getUbicacionDelIncidente());});
     Collections.sort(tecnicos);
     Collections.reverse(tecnicos);
     Tecnico tecnicoASignar = tecnicos.get(0);

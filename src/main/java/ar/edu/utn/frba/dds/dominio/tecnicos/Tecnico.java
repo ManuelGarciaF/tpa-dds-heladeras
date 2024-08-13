@@ -12,7 +12,7 @@ public class Tecnico implements Comparable<Tecnico>{
   //TODO: mirar comentario de notion
   private List<Incidente> visitasPendientes;
   private final List<Visita> visitas = new ArrayList<>();
-  private double distanciaDelTecnico;
+  private double distanciaDelTecnicoDeUnaUbicacion;
 
   public Tecnico(String nombre, Ubicacion ubicacion) {
     this.nombre = nombre;
@@ -28,19 +28,21 @@ public class Tecnico implements Comparable<Tecnico>{
     this.visitasPendientes.add(incidente);
   }
 
-  public double getDistanciaDelTecnico() {
-    return distanciaDelTecnico;
+  public double getDistanciaDelTecnicoDeUnaUbicacion() {
+    return distanciaDelTecnicoDeUnaUbicacion;
   }
 
   public double calcularDistancia(Ubicacion ubicacion2){
 
     double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion.getLatitud()),2);
     double diferenciaEntreLongitud = Math.pow((ubicacion2.getLongitud() - ubicacion.getLongitud()),2);
-    return Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
+    double distancia = Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
+    this.distanciaDelTecnicoDeUnaUbicacion = distancia;
+    return distancia;
   }
 
   @Override
   public int compareTo(Tecnico otroTecnico) {
-    return Double.compare(otroTecnico.getDistanciaDelTecnico(), this.distanciaDelTecnico);
+    return Double.compare(otroTecnico.getDistanciaDelTecnicoDeUnaUbicacion(), this.distanciaDelTecnicoDeUnaUbicacion);
   }
 }

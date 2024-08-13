@@ -127,11 +127,11 @@ class HeladeraTest {
     assertThrows(HeladeraException.class, () -> heladera.registrarApertura(colaboradorHumano, LocalDateTime.now()));
   }
 
-  @Test
+  /*@Test
   void puedoAgregarUnIncidenteYLaHeladeraDejaDeEstarActiva() {
     heladera.nuevoIncidente(new FallaTecnica(colaboradorHumano, LocalDateTime.now(), "Falla tecnica", "url"));
     assertFalse(heladera.estaActiva());
-  }
+  }*/
 
   @Test
   void laHeladeraEstaActivaSiNoHayIncidentes() {

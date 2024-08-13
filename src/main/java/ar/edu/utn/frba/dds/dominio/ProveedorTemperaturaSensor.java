@@ -66,7 +66,7 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
 
     // Si la temperatura es menor a la mínima o mayor a la máxima, se genera una alerta
     if (requiereAtencion()) {
-      heladera.nuevoIncidente(new AlertaTemperatura(LocalDateTime.now()));
+      heladera.nuevoIncidente(new AlertaTemperatura(LocalDateTime.now(), heladera.getUbicacion()));
     }
   }
 }

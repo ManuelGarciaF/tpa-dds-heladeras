@@ -1,20 +1,28 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
+import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
 public class AlertaFallaConexion implements Incidente {
   private LocalDateTime fecha;
   private TipoDeFalla tipo;
+  //TODO: esto es algo provisorio?? porque quizas podriamos delegar las tareas desde la heladera para ahorrarnos hacer esto
+  private Ubicacion ubicacionDelIncidente;
 
   // CONSTRUCTOR
-  public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo) {
+  public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo, Ubicacion ubicacionDelIncidente) {
     this.fecha = fecha;
     this.tipo = tipo;
+    this.ubicacionDelIncidente = ubicacionDelIncidente;
   }
 
   @Override
   public LocalDateTime getFecha() {
     return this.fecha;
+  }
+
+  public Ubicacion getUbicacionDelIncidente() {
+    return ubicacionDelIncidente;
   }
 
   @Override

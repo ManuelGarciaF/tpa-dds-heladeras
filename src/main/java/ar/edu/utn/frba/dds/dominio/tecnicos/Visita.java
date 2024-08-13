@@ -32,6 +32,7 @@ public class Visita {
 
   public void activarHeladera(Heladera heladera) {
     //remover de los incidentes activos a esta heladera (consultar si puedo hacer un repo de incidentes)
+
   }
 
 }
