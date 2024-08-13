@@ -10,8 +10,8 @@ public class RepoTecnicos {
   //TODO: graficar DC
   private List<Tecnico> tecnicos;
 
-  public RepoTecnicos(List<Tecnico> tecnicos) {
-    this.tecnicos = new ArrayList<>();
+  public RepoTecnicos() {
+    this.tecnicos = new ArrayList<Tecnico>();
   }
 
   public List<Tecnico> obtenerTecnicos() {

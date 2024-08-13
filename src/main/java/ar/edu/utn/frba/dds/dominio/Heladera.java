@@ -190,4 +190,8 @@ public class Heladera {
   public List<Incidente> getIncidentesActivos() {
     return incidentesActivos;
   }
+  //TODO ver
+  public IncidenteHandler getIncidenteHandler() {
+    return incidenteHandler;
+  }
 }

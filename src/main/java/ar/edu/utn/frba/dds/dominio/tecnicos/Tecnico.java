@@ -10,8 +10,8 @@ public class Tecnico implements Comparable<Tecnico>{
   private final String nombre;
   private final Ubicacion ubicacion;
   //TODO: mirar comentario de notion
-  private List<Incidente> visitasPendientes;
-  private final List<Visita> visitas = new ArrayList<>();
+  private List<Incidente> visitasPendientes = new ArrayList<Incidente>();
+  private final List<Visita> visitas = new ArrayList<Visita>();
   private double distanciaDelTecnicoDeUnaUbicacion;
 
   public Tecnico(String nombre, Ubicacion ubicacion) {
@@ -30,6 +30,10 @@ public class Tecnico implements Comparable<Tecnico>{
 
   public double getDistanciaDelTecnicoDeUnaUbicacion() {
     return distanciaDelTecnicoDeUnaUbicacion;
+  }
+
+  public List<Incidente> getVisitasPendientes() {
+    return visitasPendientes;
   }
 
   public double calcularDistancia(Ubicacion ubicacion2){

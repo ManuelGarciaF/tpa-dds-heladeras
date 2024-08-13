@@ -7,6 +7,11 @@ public class AlertarTecnicos implements IncidenteObserver {
     // pendientes o algo por el estilos)
     //PARA TESTEAR
     private RepoTecnicos repositorio;
+
+    public AlertarTecnicos(RepoTecnicos repositorio) {
+      this.repositorio = repositorio;
+    }
+
     @Override
     public void avisar(Incidente incidente) {
       //TODO: hacer al repositoriosDeTecnicos un singleton??

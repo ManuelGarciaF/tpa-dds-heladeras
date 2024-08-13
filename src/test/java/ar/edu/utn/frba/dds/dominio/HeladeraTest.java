@@ -156,4 +156,7 @@ class HeladeraTest {
     assertEquals(1, heladera.getIncidentesActivos().size());
   }
 
+  //TODO: yo quiero testear si efectivamente se le asigna el incidente al tecnico mas cercano
+
+
 }
