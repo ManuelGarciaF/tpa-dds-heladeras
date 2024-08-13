@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+/*package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 
 import static ar.edu.utn.frba.dds.Main.despachadorDeMensajes;
 
@@ -25,4 +25,4 @@ public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
       despachadorDeMensajes.enviarMensaje(metodoDeEnvio, colaborador.getMedioDeContacto().getTelefono(), "Faltan viandas");
     }
   }
-}
+}*/

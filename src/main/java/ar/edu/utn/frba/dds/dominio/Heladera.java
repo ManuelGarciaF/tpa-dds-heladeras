@@ -181,7 +181,6 @@ public class Heladera {
     return numeroDeSerie;
   }
 
-
   public List<Incidente> getIncidentesActivos() {
     return incidentesActivos;
   }

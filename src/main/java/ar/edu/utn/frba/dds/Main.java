@@ -3,12 +3,10 @@ package ar.edu.utn.frba.dds;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
-import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.DespachadorDeMensajes;
 import java.time.LocalDate;
 
 public class Main {
   private static MapaHeladeras mapa;
-  public static DespachadorDeMensajes despachadorDeMensajes = new DespachadorDeMensajes();
   public static void main(String[] args) {
 
     if (args == null || args.length == 0) {

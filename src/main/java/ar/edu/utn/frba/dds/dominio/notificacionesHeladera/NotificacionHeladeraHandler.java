@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+/*package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 import ar.edu.utn.frba.dds.dominio.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,4 +20,4 @@ public class NotificacionHeladeraHandler {
     );
   }
 
-}
+}*/
