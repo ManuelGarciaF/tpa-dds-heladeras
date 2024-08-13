@@ -179,6 +179,10 @@ public class Heladera {
     return incidentesActivos.isEmpty();
   }
 
+  public void retirarIncidente(Incidente incidente) {
+    incidentesActivos.remove(incidente);
+  }
+
   public String getNumeroDeSerie() {
     return numeroDeSerie;
   }

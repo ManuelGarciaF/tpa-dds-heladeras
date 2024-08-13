@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.dominio.tecnicos;
 
 import ar.edu.utn.frba.dds.dominio.Heladera;
+import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import java.time.LocalDateTime;
 
 public class Visita {
@@ -19,20 +20,24 @@ public class Visita {
   private Heladera heladeraAsistida;
   private String urlDeLaImagen; // podriamos crear una clase foto?? (asi el usuario puede subir un link o subir la foto en el sistema)
   private Boolean incidenteSolucionado;
+  private Incidente incidenteProblematico;
 
-  public Visita(String reporteDeLaVisita, LocalDateTime fechaDeLaVisita, Heladera heladeraAsistida, Boolean incidenteSolucionado) {
+  public Visita(Incidente incidenteProblematico, String reporteDeLaVisita, LocalDateTime fechaDeLaVisita, Heladera heladeraAsistida, Boolean incidenteSolucionado) {
     this.reporteDeLaVisita = reporteDeLaVisita;
     this.fechaDeLaVisita = fechaDeLaVisita;
     this.heladeraAsistida = heladeraAsistida;
     this.incidenteSolucionado = incidenteSolucionado;
-
-    //Si el sistema fue solucionado se le borra el incidente???
-    if(incidenteSolucionado) activarHeladera(heladeraAsistida);
+    this.incidenteProblematico = incidenteProblematico;
+    //Si el sistema fue solucionado se le borra el incidente de la heladera, esta se va a activar
+    //cuando se solucionen todos los incidentes que tiene
+    if(incidenteSolucionado) heladeraAsistida.retirarIncidente(incidenteProblematico);
   }
 
-  public void activarHeladera(Heladera heladera) {
-    //remover de los incidentes activos a esta heladera (consultar si puedo hacer un repo de incidentes)
-
+  public Incidente getIncidenteProblematico() {
+    return incidenteProblematico;
   }
 
+  public String getReporteDeLaVisita() {
+    return reporteDeLaVisita;
+  }
 }

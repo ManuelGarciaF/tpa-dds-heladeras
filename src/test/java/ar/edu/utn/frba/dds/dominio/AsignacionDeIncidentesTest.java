@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -15,7 +16,9 @@ import ar.edu.utn.frba.dds.dominio.incidentes.IncidenteHandler;
 import ar.edu.utn.frba.dds.dominio.incidentes.ReportarIncidente;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
+import ar.edu.utn.frba.dds.dominio.tecnicos.Visita;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
+import ar.edu.utn.frba.dds.exceptions.VisitaTecnicoException;
 import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
 import ar.edu.utn.frba.dds.externo.Reading;
 import ar.edu.utn.frba.dds.externo.TSensor;
@@ -153,4 +156,117 @@ class AsignacionDeIncidentesTest {
     assertEquals(1, juan.getVisitasPendientes().size());
     assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
   }
+
+  @Test
+  void AlEfectuarUnaVisitaSeTieneQueActivarLaHeladera() {
+    Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
+    Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
+    Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
+    RepoTecnicos repoTecnicos = new RepoTecnicos();
+    repoTecnicos.agregarTecnico(ricardo);
+    repoTecnicos.agregarTecnico(juan);
+    repoTecnicos.agregarTecnico(ramon);
+    reportarIncidente = new ReportarIncidente(repoTecnicos);
+    heladera.getIncidenteHandler().agregarObserver(reportarIncidente);
+    FallaTecnica fallaTecnica = new FallaTecnica(
+        colaboradorHumano,
+        LocalDateTime.now(),
+        heladera,
+        "La heladera no tiene gas",
+        "instagram.com/uwu"
+    );
+
+    //En el caso en el que se reporte una heladera
+    reportarIncidente.reportarIncidente(fallaTecnica);
+
+
+    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
+    assertEquals(1, heladera.getIncidentesActivos().size());
+    assertEquals(1, juan.getVisitasPendientes().size());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
+    assertFalse(heladera.estaActiva());
+    Visita visitaHeladera = new Visita(fallaTecnica, "se ha remplazado una manguera de gas", LocalDateTime.now(), heladera, true);
+    juan.registrarVisita(visitaHeladera);
+    assertEquals(0, juan.getVisitasPendientes().size());
+    assertEquals("se ha remplazado una manguera de gas", juan.getVisitas().get(0).getReporteDeLaVisita());
+    assertTrue(heladera.estaActiva());
+  }
+
+
+  @Test
+  void HayUnaExcepcionAlEfectuarUnaVisitaQueNoCorresponde() {
+    Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
+    Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
+    Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
+    RepoTecnicos repoTecnicos = new RepoTecnicos();
+    repoTecnicos.agregarTecnico(ricardo);
+    repoTecnicos.agregarTecnico(juan);
+    repoTecnicos.agregarTecnico(ramon);
+    reportarIncidente = new ReportarIncidente(repoTecnicos);
+    heladera.getIncidenteHandler().agregarObserver(reportarIncidente);
+    FallaTecnica fallaTecnica = new FallaTecnica(
+        colaboradorHumano,
+        LocalDateTime.now(),
+        heladera,
+        "La heladera no tiene gas",
+        "instagram.com/uwu"
+    );
+
+    //En el caso en el que se reporte una heladera
+    reportarIncidente.reportarIncidente(fallaTecnica);
+
+
+    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
+    assertEquals(1, heladera.getIncidentesActivos().size());
+    assertEquals(1, juan.getVisitasPendientes().size());
+    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcion());
+    assertFalse(heladera.estaActiva());
+    Visita visitaHeladera = new Visita(null, "se ha remplazado una manguera de gas", LocalDateTime.now(), heladera, true);
+    assertThrows(VisitaTecnicoException.class,() -> juan.registrarVisita(visitaHeladera));
+  }
+
+  @Test
+  void SiUnTecnicoSolucionaUnSoloErrorLaHeladeraSigueEstandoInactiva() {
+    Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
+    Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
+    Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
+    RepoTecnicos repoTecnicos = new RepoTecnicos();
+    repoTecnicos.agregarTecnico(ricardo);
+    repoTecnicos.agregarTecnico(juan);
+    repoTecnicos.agregarTecnico(ramon);
+    reportarIncidente = new ReportarIncidente(repoTecnicos);
+    heladera.getIncidenteHandler().agregarObserver(reportarIncidente);
+    FallaTecnica fallaTecnica = new FallaTecnica(
+        colaboradorHumano,
+        LocalDateTime.now(),
+        heladera,
+        "La heladera no tiene gas",
+        "instagram.com/uwu"
+    );
+    FallaTecnica fallaTecnica2 = new FallaTecnica(
+        colaboradorHumano,
+        LocalDateTime.now(),
+        heladera,
+        "La heladera no tiene aire",
+        "instagram.com/uwu"
+    );
+
+    //En el caso en el que se reporte una heladera
+    reportarIncidente.reportarIncidente(fallaTecnica);
+    reportarIncidente.reportarIncidente(fallaTecnica2);
+
+
+    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
+    assertEquals(2, heladera.getIncidentesActivos().size());
+    assertEquals(2, juan.getVisitasPendientes().size());
+    assertEquals("La heladera no tiene aire", juan.getVisitasPendientes().get(1).getDescripcion());
+    assertFalse(heladera.estaActiva());
+    Visita visitaHeladera = new Visita(fallaTecnica, "se ha remplazado una manguera de aire", LocalDateTime.now(), heladera, true);
+    juan.registrarVisita(visitaHeladera);
+    assertEquals(1, juan.getVisitasPendientes().size());
+    assertEquals(1, heladera.getIncidentesActivos().size());
+    assertEquals("se ha remplazado una manguera de aire", juan.getVisitas().get(0).getReporteDeLaVisita());
+    assertFalse(heladera.estaActiva());
+  }
+
 }
