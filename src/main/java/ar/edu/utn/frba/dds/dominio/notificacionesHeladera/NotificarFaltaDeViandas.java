@@ -1,6 +1,5 @@
-/*package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 
-import static ar.edu.utn.frba.dds.Main.despachadorDeMensajes;
 
 import ar.edu.utn.frba.dds.dominio.*;
 import ar.edu.utn.frba.dds.externo.InstantMessageApp;
@@ -21,8 +20,8 @@ public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
 
   @Override
   public void notificar(Heladera heladera){
-    if(heladera.cantidadDeViandas() <= viandasDisponibles){
-      despachadorDeMensajes.enviarMensaje(metodoDeEnvio, colaborador.getMedioDeContacto().getTelefono(), "Faltan viandas");
-    }
+    //if(heladera.cantidadDeViandas() <= viandasDisponibles){
+      //.enviarMensaje(metodoDeEnvio, colaborador.getMedioDeContacto().getTelefono(), "Faltan viandas");
+    //}
   }
-}*/
+}
