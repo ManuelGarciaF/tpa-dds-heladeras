@@ -7,8 +7,7 @@ public class ProveedorCantidadDeViandasSensor implements ProveedorCantidadDeVian
   private Integer cantidadDeViandasParaNotificar;
   private LocalDateTime ultimaLectura;
 
-  public ProveedorCantidadDeViandasSensor(LSensor sensor, Integer cantidadDeViandasParaNotificar) {
-    this.cantidadDeViandasParaNotificar = cantidadDeViandasParaNotificar;
+  public ProveedorCantidadDeViandasSensor(LSensor sensor) {
     sensor.onLunchBoxChanged(this::interpretarLectura);
   }
 
