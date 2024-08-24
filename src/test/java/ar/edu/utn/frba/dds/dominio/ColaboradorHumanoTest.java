@@ -42,6 +42,8 @@ class ColaboradorHumanoTest {
             null,
             null,
             null,
+            null,
+            null,
             null));
 
     mapaHeladeras.agregarHeladera(
@@ -50,6 +52,8 @@ class ColaboradorHumanoTest {
             new Ubicacion(0.2, 0.0),
             "kd393j",
             LocalDate.now(),
+            null,
+            null,
             null,
             null,
             null,

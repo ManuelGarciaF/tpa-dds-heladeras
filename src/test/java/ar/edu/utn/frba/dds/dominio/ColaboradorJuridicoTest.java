@@ -36,7 +36,9 @@ class ColaboradorJuridicoTest {
             null,
             null,
             null,
-            null);
+            null,
+        null,
+        null);
     mapaHeladeras = new MapaHeladeras();
     mapaHeladeras.agregarHeladera(heladera);
   }

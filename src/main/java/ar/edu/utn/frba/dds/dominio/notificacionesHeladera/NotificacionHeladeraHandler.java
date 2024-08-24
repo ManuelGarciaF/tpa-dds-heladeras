@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificacionHeladeraHandler {
-  private static final List<NotificacionHeladeraObserver> heladerasObservers = new ArrayList<NotificacionHeladeraObserver>();
+  private static List<NotificacionHeladeraObserver> heladerasObservers = new ArrayList<NotificacionHeladeraObserver>();
 
-  public static void agregarObserver(NotificacionHeladeraObserver observer) {
+
+  public void agregarObserver(NotificacionHeladeraObserver observer) {
     heladerasObservers.add(observer);
   }
 
@@ -20,4 +21,7 @@ public class NotificacionHeladeraHandler {
     );
   }
 
+  public List<NotificacionHeladeraObserver> getHeladerasObservers() {
+    return heladerasObservers;
+  }
 }

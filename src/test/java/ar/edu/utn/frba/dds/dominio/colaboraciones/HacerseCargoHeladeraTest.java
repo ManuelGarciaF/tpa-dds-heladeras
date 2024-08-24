@@ -23,6 +23,8 @@ class HacerseCargoHeladeraTest {
         null,
         null,
         null,
+        null,
+        null,
         null
     );
     hacerseCargoHeladera = new HacerseCargoHeladera(heladera);

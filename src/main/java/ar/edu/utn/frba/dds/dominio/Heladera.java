@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
@@ -20,7 +21,6 @@ public class Heladera {
   private final Integer capacidadViandas;
   private final LocalDate fechaCreacion;
   private final Ubicacion ubicacion;
-
   private final String numeroDeSerie;
 
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
@@ -35,6 +35,9 @@ public class Heladera {
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
   private final RepoTecnicos repoTecnicos;
+  //E3 REQ5
+  private final ProveedorCantidadDeViandasSensor sensorDeCantidad;
+  private final NotificacionHeladeraHandler  notificacionHeladeraHandler;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -44,7 +47,9 @@ public class Heladera {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-                  RepoTecnicos repoTecnicos) {
+                  RepoTecnicos repoTecnicos,
+                  ProveedorCantidadDeViandasSensor sensorDeCantidad,
+                  NotificacionHeladeraHandler notificacionHeladeraHandler) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.ubicacion = requireNonNull(ubicacion);
@@ -54,6 +59,8 @@ public class Heladera {
     this.fechaCreacion = fechaCreacion;
     this.autorizadorAperturas = autorizadorAperturas;
     this.repoTecnicos = repoTecnicos;
+    this.sensorDeCantidad = sensorDeCantidad;
+    this.notificacionHeladeraHandler = notificacionHeladeraHandler;
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -61,14 +68,20 @@ public class Heladera {
       throw new HeladeraException("Las viandas no entran, capacidad: " + this.capacidadViandas);
     }
     this.viandas.addAll(viandas);
+    //Acá podriamos agregar la cantidad de viandas
+    sensorDeCantidad.agregarViandas(viandas.size());
+    notificacionHeladeraHandler.notificar(this);
   }
 
-  public List<Vianda> sacarViandas(int cantidad) {
+  public List<Vianda> sacarViandas(Integer cantidad) {
     if (cantidad > this.viandas.size()) {
       throw new HeladeraException("No hay suficientes viandas, cantidad: " + this.viandas.size());
     }
     List<Vianda> removidas = new ArrayList<>(this.viandas.subList(0, cantidad));
     this.viandas.subList(0, cantidad).clear();
+
+    //Aca lo mismo
+    sensorDeCantidad.retirarViandas(viandas.size());
     return removidas;
   }
 
@@ -184,4 +197,14 @@ public class Heladera {
   public List<Incidente> getIncidentesActivos() {
     return incidentesActivos;
   }
+
+  public Integer getCantidadDeViandas() {
+    return sensorDeCantidad.getCantidadDeViandas();
+  }
+
+  //E3 REQ 5
+  public NotificacionHeladeraHandler getNotificacionHeladeraHandler() {
+    return notificacionHeladeraHandler;
+  }
+
 }

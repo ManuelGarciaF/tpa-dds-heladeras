@@ -9,15 +9,18 @@ import ar.edu.utn.frba.dds.externo.InstantMessageSender;
 public class DespachadorDeMensajes implements DespachadorDeMensajeria{
   private InstantMessageSender instantMessageSender;
 
+  public DespachadorDeMensajes(InstantMessageSender instantMessageSender) {
+    this.instantMessageSender = instantMessageSender;
+  }
+
   public void enviarMensaje(InstantMessageApp provider, String telephone, String message) throws InvalidTelephoneNumberException {
     //ver como esa persona va a recibir el mensaje, si en forma de noticacion mail, etc...
     if(!esUnNumeroDeTelefonoValido(telephone)) throw new InvalidTelephoneNumberException("El numero ingresado no es valido");
     instantMessageSender.sendMessage(provider, telephone, message);
-
   }
 
   //TODO revisar
-  boolean esUnNumeroDeTelefonoValido(String telephone){
+  public boolean esUnNumeroDeTelefonoValido(String telephone){
     return telephone.matches("^[0-9]{10}$");
   }
 }
