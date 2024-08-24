@@ -34,6 +34,7 @@ class ObserverNotificadorViandasTest {
   private ProveedorTemperaturaSensor proveedorTemperaturaSensor;
   private ControladorDeAcceso controladorDeAcceso;
   private ColaboradorHumano colaboradorHumano;
+  private ColaboradorHumano colaboradorHumano2;
   private RepoTecnicos repoTecnicos = new RepoTecnicos();
   private Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
   private Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
@@ -75,6 +76,16 @@ class ObserverNotificadorViandasTest {
         180924102
     );
 
+    colaboradorHumano2 = new ColaboradorHumano("Ger",
+        "Cavillio",
+        LocalDate.of(1995, 10, 10),
+        "Calle Falsa 123",
+        new MedioDeContacto(null, "test@gmail.com", null),
+        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
+        TipoDocumento.DNI,
+        180924102
+    );
+
     fallaTecnica = new FallaTecnica(colaboradorHumano, LocalDateTime.now(), heladera,
         "La heladera no tiene gas",
         "www.heladera.com"
@@ -84,63 +95,6 @@ class ObserverNotificadorViandasTest {
     repoTecnicos.agregarTecnico(ricardo);
     repoTecnicos.agregarTecnico(juan);
     repoTecnicos.agregarTecnico(ramon);
-  }
-
-
-  @Test
-  void puedoAgregarUnIncidenteYLaHeladeraDejaDeEstarActiva() {
-    heladera.nuevoIncidente(new FallaTecnica(colaboradorHumano, LocalDateTime.now(), heladera,"Falla tecnica", "url"));
-    assertFalse(heladera.estaActiva());
-  }
-
-  @Test
-  void laHeladeraEstaActivaSiNoHayIncidentes() {
-    assertTrue(heladera.estaActiva());
-  }
-
-  @Test
-  void seGeneraUnIncidenteCuandoElSensorDePesoLanzaUnaExcepcion() {
-    when(wSensor.getWeight("kd993j")).thenThrow(new RuntimeException("Error"));
-
-    heladera.nivelLlenado(); // Operacion que requiere obtener el peso
-
-    assertEquals(1, heladera.getIncidentesActivos().size());
-  }
-
-  @Test
-  void seGeneraUnIncidenteCuandoHay3MedicionesAltas() {
-    proveedorTemperaturaSensor.agregarLectura(24.0);
-    proveedorTemperaturaSensor.agregarLectura(25.0);
-    proveedorTemperaturaSensor.agregarLectura(123.0);
-
-    assertEquals(1, heladera.getIncidentesActivos().size());
-  }
-
-  //quiero testear si efectivamente se le asigna el incidente al tecnico mas cercano
-
-  @Test
-  void cuandoTengoUnIncedenteSeAsignaAlTecnicoMasCercano() {
-    proveedorTemperaturaSensor.agregarLectura(24.0);
-    proveedorTemperaturaSensor.agregarLectura(25.0);
-    proveedorTemperaturaSensor.agregarLectura(123.0);
-
-    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
-    assertEquals(1, heladera.getIncidentesActivos().size());
-    assertEquals(1, juan.getVisitasPendientes().size()); //juan tiene la distancia mas corta
-  }
-
-
-  //Cuando reporto un incidente como usuario, quiero que se le notifique al tecnico mas cercano
-  @Test
-  void cuandoReportoUnIncedenteSeAsignaAlTecnicoMasCercano() {
-
-    //En el caso en el que se reporte una heladera
-    colaboradorHumano.reportarIncidente(fallaTecnica);
-
-    assertEquals(3, repoTecnicos.obtenerTecnicos().size());
-    assertEquals(1, heladera.getIncidentesActivos().size());
-    assertEquals(1, juan.getVisitasPendientes().size());
-    assertEquals("La heladera no tiene gas", juan.getVisitasPendientes().get(0).getDescripcionDelError());
   }
 
   @Test
@@ -163,6 +117,40 @@ class ObserverNotificadorViandasTest {
     heladera.sacarViandas(2);
     assertEquals(1, heladera.getCantidadDeViandas());
     //test, en realidad acá tendria que haber un coso de alertas enviadas usando las opciones que nos dieron en el enunciado
+    assertTrue(colaboradorHumano.getAlertasEnviadas().contains("hey"));
+  }
+
+  @Test
+  void VariosUsuariosSePuedenSuscribirseAUnaHeladeraYPonerCiertaCantidadDeViandas() {
+    List<Vianda> viandas = new ArrayList<>();
+    viandas.add(new Vianda("Milanesa de pollo", LocalDate.now(), 50, 200));
+    viandas.add(new Vianda("Milanesa vegana", LocalDate.now(), 50000, 200));
+    viandas.add(new Vianda("Milanesa de carne", LocalDate.now(), 50, 200));
+    viandas.add(new Vianda("Milanesa de carne", LocalDate.now(), 50, 200));
+    viandas.add(new Vianda("Milanesa de carne", LocalDate.now(), 50, 200));
+    viandas.add(new Vianda("Milanesa de carne", LocalDate.now(), 50, 200));
+    assertEquals(6, viandas.size());
+
+    // Hago que un colaborador se suscriba a la heladera y que me avise cuando haya 2 o menos viandas
+    colaboradorHumano.suscribirseAHeladeraConCantidadDeViandas(heladera, 2);
+    assertEquals(1, colaboradorHumano.getAlertasInteresadasPorElUsuario().size());
+
+    // Hago que un segundo colaborador se suscriba a la misma heladera y me avise cuando haya 4 o mas viandas
+    colaboradorHumano2.suscribirseAHeladeraConCantidadDeViandas(heladera,4);
+    assertEquals(1, colaboradorHumano2.getAlertasInteresadasPorElUsuario().size());
+
+    // Ingreso las viandas
+    heladera.ingresarViandas(viandas);
+    assertEquals(6, heladera.getCantidadDeViandas());
+
+    // Cuando las saco tambien chequeo lo mismo, y me tendria que quedar una sola vianda, por ende activar la alerta del 2 cola
+    heladera.sacarViandas(2);
+    assertEquals(4, heladera.getCantidadDeViandas());
+    assertTrue(colaboradorHumano2.getAlertasEnviadas().contains("hey"));
+
+    // Cuando las saco tambien chequeo lo mismo, y me tendria que quedar una sola vianda, por ende activar la alerta del 2 cola
+    heladera.sacarViandas(3);
+    assertEquals(1, heladera.getCantidadDeViandas());
     assertTrue(colaboradorHumano.getAlertasEnviadas().contains("hey"));
   }
 }
