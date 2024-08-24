@@ -99,4 +99,6 @@ public class ColaboradorHumano extends Colaborador {
   public void agregarAlerta(String alerta){
     alertasEnviadas.add(alerta);
   }
+
+
 }

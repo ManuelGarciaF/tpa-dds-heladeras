@@ -25,7 +25,7 @@ public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
 
   @Override
   public void notificar(Heladera heladera){
-    if(heladera.getCantidadDeViandas() < cantidadSeteada){
+    if(heladera.getCantidadDeViandas() <= cantidadSeteada){
       //Aca tendriamos que notificar por mail, pero con motivos de testing voy a hacer que se cargue en una lista
       colaboradorInteresado.agregarAlerta("hey");
     }

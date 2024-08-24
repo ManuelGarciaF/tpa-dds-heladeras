@@ -81,7 +81,8 @@ public class Heladera {
     this.viandas.subList(0, cantidad).clear();
 
     //Aca lo mismo
-    sensorDeCantidad.retirarViandas(viandas.size());
+    sensorDeCantidad.retirarViandas(cantidad);
+    notificacionHeladeraHandler.notificar(this);
     return removidas;
   }
 
