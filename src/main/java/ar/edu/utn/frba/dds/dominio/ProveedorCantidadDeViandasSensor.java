@@ -1,7 +1,9 @@
 package ar.edu.utn.frba.dds.dominio;
+
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.externo.LSensor;
 
-public class ProveedorCantidadDeViandasSensor implements ProveedorCantidadDeViandas{
+public class ProveedorCantidadDeViandasSensor implements ProveedorCantidadDeViandas {
   private Integer cantidadDeViandas;
 
   public ProveedorCantidadDeViandasSensor(LSensor sensor) {
@@ -12,7 +14,7 @@ public class ProveedorCantidadDeViandasSensor implements ProveedorCantidadDeVian
     return cantidadDeViandas;
   }
 
-   private void interpretarLectura(int nuevaCantidad) {
+  private void interpretarLectura(int nuevaCantidad) {
     cantidadDeViandas = nuevaCantidad;
   }
 }

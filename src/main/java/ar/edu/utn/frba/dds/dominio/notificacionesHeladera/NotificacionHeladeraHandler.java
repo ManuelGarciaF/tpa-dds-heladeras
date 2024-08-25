@@ -1,30 +1,38 @@
 package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 import ar.edu.utn.frba.dds.dominio.Heladera;
+import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificacionHeladeraHandler {
-  //en vez de usar la interfaz, tengo dos listas
-  //suscriptores cant viandas
-  //idem incidentes
-  private static List<NotificacionHeladeraObserver> heladerasObservers = new ArrayList<NotificacionHeladeraObserver>();
+  private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas = new ArrayList<>();
+  private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
+  private final MapaHeladeras mapaHeladeras;
 
-
-  public void agregarObserver(NotificacionHeladeraObserver observer) {
-    heladerasObservers.add(observer);
+  public NotificacionHeladeraHandler(MapaHeladeras mapaHeladeras) {
+    this.mapaHeladeras = mapaHeladeras;
   }
 
-  public void quitarObserver(NotificacionHeladeraObserver observer) {
-    heladerasObservers.remove(observer);
+  public void agregarSubscriptorCantidadDeViandas(SubscriptorCantidadDeViandas subscriptorCantidadDeViandas) {
+    subscriptoresCantidadDeViandas.add(subscriptorCantidadDeViandas);
   }
 
-  public void notificar(Heladera heladera) {
-    heladerasObservers.forEach(
+  public void agregarSubscriptorIncidente(SubscriptorIncidente subscriptorIncidente) {
+    subscriptoresIncidentes.add(subscriptorIncidente);
+  }
+
+  public void notificarCambioCantidadDeViandas(Heladera heladera) {
+    subscriptoresCantidadDeViandas.forEach(
         observer -> observer.notificar(heladera)
     );
   }
 
-  public List<NotificacionHeladeraObserver> getHeladerasObservers() {
-    return heladerasObservers;
+  public void notificarIncidente(Heladera heladera) {
+    // Creamos una sola sugerencia para compartir entre todos los subscriptores
+    var sugerenciaTrasladoDeViandas = new SugerenciaTrasladoDeViandas(heladera, mapaHeladeras);
+    subscriptoresIncidentes.forEach(
+        observer -> observer.notificar(sugerenciaTrasladoDeViandas)
+    );
   }
+
 }

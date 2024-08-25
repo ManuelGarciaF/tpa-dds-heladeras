@@ -7,7 +7,6 @@ import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
-import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,8 +35,9 @@ public class Heladera{
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
   private final RepoTecnicos repoTecnicos;
+
   //E3 REQ5
-  private final ProveedorCantidadDeViandasSensor sensorDeCantidad;
+  private final ProveedorCantidadDeViandas proveedorCantidadDeViandas;
   private final NotificacionHeladeraHandler  notificacionHeladeraHandler;
 
   public Heladera(String nombre,
@@ -49,7 +49,7 @@ public class Heladera{
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
                   RepoTecnicos repoTecnicos,
-                  ProveedorCantidadDeViandasSensor sensorDeCantidad,
+                  ProveedorCantidadDeViandas proveedorCantidadDeViandas,
                   NotificacionHeladeraHandler notificacionHeladeraHandler) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
@@ -60,7 +60,7 @@ public class Heladera{
     this.fechaCreacion = fechaCreacion;
     this.autorizadorAperturas = autorizadorAperturas;
     this.repoTecnicos = repoTecnicos;
-    this.sensorDeCantidad = sensorDeCantidad;
+    this.proveedorCantidadDeViandas = proveedorCantidadDeViandas;
     this.notificacionHeladeraHandler = notificacionHeladeraHandler;
   }
 
@@ -165,8 +165,8 @@ public class Heladera{
 
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-    //que delege una heladera
     repoTecnicos.delegarReparacion(this);
+    notificacionHeladeraHandler.notificarIncidente(this);
   }
 
   public void checkearDesconexionSensorTemperatura() {
@@ -194,7 +194,7 @@ public class Heladera{
   }
 
   public Integer getCantidadDeViandas() {
-    return sensorDeCantidad.getCantidadDeViandas();
+    return proveedorCantidadDeViandas.getCantidadDeViandas();
   }
 
   //E3 REQ 5

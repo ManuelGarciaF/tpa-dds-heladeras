@@ -1,20 +1,18 @@
 package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
-import ar.edu.utn.frba.dds.dominio.Heladera;
 
-public class NotificarIncidente implements NotificacionHeladeraObserver{
+public class NotificarIncidente implements SubscriptorIncidente {
+  private final ColaboradorHumano colaboradorInteresado;
 
-  private ColaboradorHumano colaboradorInteresado;
-  //crear algo para las opciones
-
-
+  public NotificarIncidente(ColaboradorHumano colaboradorInteresado) {
+    this.colaboradorInteresado = colaboradorInteresado;
+  }
 
   @Override
-  public void notificar(Heladera heladera) {
-    //crear notificacion
-    if(heladera.estaActiva()){
-      //crear algoritmo de notificacion
-    }
+  public void notificar(SugerenciaTrasladoDeViandas sugerenciaTrasladoDeViandas) {
+    colaboradorInteresado.notificar("Se ha detectado un incidente en la heladera " +
+        sugerenciaTrasladoDeViandas.getHeladeraRota().getNumeroDeSerie());
+    colaboradorInteresado.agregarSugerenciaTrasladoDeViandas(sugerenciaTrasladoDeViandas);
   }
 }
