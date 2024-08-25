@@ -1,28 +1,26 @@
-/*package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 
-import static ar.edu.utn.frba.dds.Main.despachadorDeMensajes;
-
-import ar.edu.utn.frba.dds.dominio.*;
+import ar.edu.utn.frba.dds.dominio.Colaborador;
+import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
+import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.externo.InstantMessageApp;
-import ar.edu.utn.frba.dds.externo.InvalidTelephoneNumberException;
 
 public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
 
-  private Integer viandasDisponibles;
-  private Colaborador colaborador;
-  private InstantMessageApp metodoDeEnvio;
+  //cambiar el colaboradorhumano por colaborador despues
+  private final ColaboradorHumano colaboradorInteresado;
+  private final Integer cantidadSeteada;
 
-  public NotificarFaltaDeViandas(Integer viandasDisponibles, Colaborador colaborador, InstantMessageApp metodoDeEnvio) {
-    this.viandasDisponibles = viandasDisponibles;
-    this.colaborador = colaborador;
-    this.metodoDeEnvio = metodoDeEnvio;
+  public NotificarFaltaDeViandas(ColaboradorHumano colaboradorInteresado, Integer cantidadSeteada) {
+    this.colaboradorInteresado = colaboradorInteresado;
+    this.cantidadSeteada = cantidadSeteada;
   }
-
 
   @Override
   public void notificar(Heladera heladera){
-    if(heladera.cantidadDeViandas() <= viandasDisponibles){
-      despachadorDeMensajes.enviarMensaje(metodoDeEnvio, colaborador.getMedioDeContacto().getTelefono(), "Faltan viandas");
+    if(heladera.getCantidadDeViandas() <= cantidadSeteada){
+      //Aca tendriamos que notificar por mail, pero con motivos de testing voy a hacer que se cargue en una lista
+      colaboradorInteresado.agregarAlerta("hey");
     }
   }
-}*/
+}

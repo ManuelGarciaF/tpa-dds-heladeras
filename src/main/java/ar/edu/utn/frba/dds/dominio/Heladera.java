@@ -5,7 +5,9 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
+import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,14 +15,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heladera {
+public class Heladera{
   private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
 
   private final String nombre;
   private final Integer capacidadViandas;
   private final LocalDate fechaCreacion;
   private final Ubicacion ubicacion;
-
   private final String numeroDeSerie;
 
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
@@ -35,6 +36,9 @@ public class Heladera {
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
   private final RepoTecnicos repoTecnicos;
+  //E3 REQ5
+  private final ProveedorCantidadDeViandasSensor sensorDeCantidad;
+  private final NotificacionHeladeraHandler  notificacionHeladeraHandler;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -44,7 +48,9 @@ public class Heladera {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-                  RepoTecnicos repoTecnicos) {
+                  RepoTecnicos repoTecnicos,
+                  ProveedorCantidadDeViandasSensor sensorDeCantidad,
+                  NotificacionHeladeraHandler notificacionHeladeraHandler) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.ubicacion = requireNonNull(ubicacion);
@@ -54,6 +60,8 @@ public class Heladera {
     this.fechaCreacion = fechaCreacion;
     this.autorizadorAperturas = autorizadorAperturas;
     this.repoTecnicos = repoTecnicos;
+    this.sensorDeCantidad = sensorDeCantidad;
+    this.notificacionHeladeraHandler = notificacionHeladeraHandler;
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -63,7 +71,7 @@ public class Heladera {
     this.viandas.addAll(viandas);
   }
 
-  public List<Vianda> sacarViandas(int cantidad) {
+  public List<Vianda> sacarViandas(Integer cantidad) {
     if (cantidad > this.viandas.size()) {
       throw new HeladeraException("No hay suficientes viandas, cantidad: " + this.viandas.size());
     }
@@ -158,6 +166,7 @@ public class Heladera {
   //Entrega 3 //TODO: revisar esto
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
+    //que delege una heladera
     repoTecnicos.delegarIncidente(incidente);
   }
 
@@ -184,4 +193,30 @@ public class Heladera {
   public List<Incidente> getIncidentesActivos() {
     return incidentesActivos;
   }
+
+  public Integer getCantidadDeViandas() {
+    return sensorDeCantidad.getCantidadDeViandas();
+  }
+
+  //E3 REQ 5
+  public NotificacionHeladeraHandler getNotificacionHeladeraHandler() {
+    return notificacionHeladeraHandler;
+  }
+
+  public Integer espacioRestante(){
+    return capacidadViandas - this.getCantidadDeViandas();
+  }
+
+  //aca estariamos repitiendo logica, podriamos hacer un componente que calcule distancias??
+  public double calcularDistancia(Ubicacion ubicacion2){
+
+    double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion.getLatitud()),2);
+    double diferenciaEntreLongitud = Math.pow((ubicacion2.getLongitud() - ubicacion.getLongitud()),2);
+    return Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
+  }
+
+  //@Override
+  //public int compareTo(Heladera otraHeladera) {
+    //  return Double.compare(otraHeladera.calcularDistancia(this.getUbicacion()), this.calcularDistancia(otraHeladera.getUbicacion()));
+  //}
 }

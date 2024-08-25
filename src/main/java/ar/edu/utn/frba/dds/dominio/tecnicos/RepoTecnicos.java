@@ -21,6 +21,7 @@ public class RepoTecnicos {
     this.tecnicos.add(tecnico);
   }
 
+  //Poner como la sugerencia TODO
   public void delegarIncidente(Incidente incidente) {
     //Primero se obtiene todas las distancias de los tecnicos al incidente
     tecnicos.forEach(tecnico -> {tecnico.calcularDistancia(incidente.getUbicacionDelIncidente());});

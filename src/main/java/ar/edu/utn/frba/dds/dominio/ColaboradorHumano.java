@@ -3,8 +3,16 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraObserver;
+import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificarFaltaDeViandas;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
+// Se me ocurrio que cuando se suscribe a una heladera, que el colaborador tenga las notificaciones a la que fue creado, y podemos ver si nos combiene
+// delegar toda la logica a este
 
 public class ColaboradorHumano extends Colaborador {
   private String nombre;
@@ -14,6 +22,7 @@ public class ColaboradorHumano extends Colaborador {
   private TipoDocumento tipoDocumento;
   private Integer numeroDocumento;
   private TarjetaColaborador tarjetaColaborador;
+  private List<String> alertasEnviadas = new ArrayList<String>();
 
   public ColaboradorHumano(String nombre,
                            String apellido,
@@ -61,9 +70,13 @@ public class ColaboradorHumano extends Colaborador {
     return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
   }
 
-  //E3
-  public void reportarIncidente(FallaTecnica fallaTecnica){
-    //repositorio.avisar(fallaTecnica);
-    fallaTecnica.getHeladeraDefectuosa().nuevoIncidente(fallaTecnica);
+  public List<String> getAlertasEnviadas() {
+    return alertasEnviadas;
   }
+
+  public void agregarAlerta(String alerta){
+    alertasEnviadas.add(alerta);
+  }
+
+
 }

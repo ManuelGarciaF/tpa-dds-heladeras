@@ -12,6 +12,7 @@ public class Visita {
   private String urlDeLaImagen;
 
   //En ves de heladera se podria poner el numero de serie de la heladera y trabajar con esta o asi esta bien?
+  //sacar los incidentes y que se arregle directamente la heladera TODO, para sacar la doble referencia
   public Visita(Incidente incidenteProblematico, String reporteDeLaVisita, LocalDateTime fechaDeLaVisita, Heladera heladeraAsistida, Boolean incidenteSolucionado) {
     this.reporteDeLaVisita = reporteDeLaVisita;
     this.fechaDeLaVisita = fechaDeLaVisita;

@@ -24,6 +24,8 @@ class PersonaVulnerableTest {
             null,
             null,
             null,
+            null,
+            null,
             null));
     personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",

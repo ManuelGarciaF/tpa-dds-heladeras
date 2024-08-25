@@ -41,6 +41,7 @@ public class Tecnico implements Comparable<Tecnico>{
   }
 
   //Usamos la formula para obtener distancia atraves de dos puntos simulando un espacio plano
+  //pasar todo a la clase ubicacion
   public void calcularDistancia(Ubicacion ubicacion2){
 
     double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion.getLatitud()),2);
@@ -53,6 +54,7 @@ public class Tecnico implements Comparable<Tecnico>{
     return distanciaDelTecnicoDeUnaUbicacion;
   }
 
+  //cambiar por como esta el req 5
   @Override
   public int compareTo(Tecnico otroTecnico) {
     return Double.compare(otroTecnico.getDistanciaDelTecnicoDeUnaUbicacion(), this.distanciaDelTecnicoDeUnaUbicacion);

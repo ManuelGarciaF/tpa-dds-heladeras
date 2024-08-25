@@ -54,7 +54,9 @@ class AsignacionDeIncidentesTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
-        repoTecnicos);
+        repoTecnicos,
+        null,
+        null);
     proveedorTemperaturaSensor.setHeladera(heladera);
 
     colaboradorHumano = new ColaboradorHumano("Mati",

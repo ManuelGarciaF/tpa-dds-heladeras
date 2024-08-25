@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
+import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
 import ar.edu.utn.frba.dds.externo.Reading;
@@ -22,6 +24,10 @@ class HeladeraTest {
   private ProveedorTemperaturaSensor proveedorTemperaturaSensor;
   private ControladorDeAcceso controladorDeAcceso;
   private ColaboradorHumano colaboradorHumano;
+  private RepoTecnicos repoTecnicos = new RepoTecnicos();
+  private Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
+  private Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
+  private Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
 
   @BeforeEach
   void setUp() {
@@ -38,6 +44,8 @@ class HeladeraTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
+        repoTecnicos,
+        null,
         null);
     proveedorTemperaturaSensor.setHeladera(heladera);
 
@@ -50,6 +58,10 @@ class HeladeraTest {
         TipoDocumento.DNI,
         180924102
     );
+
+    repoTecnicos.agregarTecnico(ricardo);
+    repoTecnicos.agregarTecnico(juan);
+    repoTecnicos.agregarTecnico(ramon);
   }
 
   @Test
