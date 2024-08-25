@@ -19,5 +19,7 @@ public class Ubicacion {
     return longitud;
   }
 
-
+  public Double distanciaA(Ubicacion ubicacion) {
+    return Math.sqrt(Math.pow(this.latitud - ubicacion.getLatitud(), 2) + Math.pow(this.longitud - ubicacion.getLongitud(), 2));
+  }
 }

@@ -163,11 +163,10 @@ public class Heladera{
         .toList();
   }
 
-  //Entrega 3 //TODO: revisar esto
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
     //que delege una heladera
-    repoTecnicos.delegarIncidente(incidente);
+    repoTecnicos.delegarReparacion(this);
   }
 
   public void checkearDesconexionSensorTemperatura() {
@@ -182,8 +181,8 @@ public class Heladera{
     return incidentesActivos.isEmpty();
   }
 
-  public void retirarIncidente(Incidente incidente) {
-    incidentesActivos.remove(incidente);
+  public void limpiarIncidentes() {
+    incidentesActivos.clear();
   }
 
   public String getNumeroDeSerie() {
@@ -207,16 +206,7 @@ public class Heladera{
     return capacidadViandas - this.getCantidadDeViandas();
   }
 
-  //aca estariamos repitiendo logica, podriamos hacer un componente que calcule distancias??
-  public double calcularDistancia(Ubicacion ubicacion2){
-
-    double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion.getLatitud()),2);
-    double diferenciaEntreLongitud = Math.pow((ubicacion2.getLongitud() - ubicacion.getLongitud()),2);
-    return Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
+  public Double distanciaA(Heladera otra){
+    return this.ubicacion.distanciaA(otra.getUbicacion());
   }
-
-  //@Override
-  //public int compareTo(Heladera otraHeladera) {
-    //  return Double.compare(otraHeladera.calcularDistancia(this.getUbicacion()), this.calcularDistancia(otraHeladera.getUbicacion()));
-  //}
 }

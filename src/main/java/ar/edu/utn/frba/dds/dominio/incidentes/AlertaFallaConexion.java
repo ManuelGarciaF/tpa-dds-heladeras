@@ -3,25 +3,12 @@ package ar.edu.utn.frba.dds.dominio.incidentes;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
-public class AlertaFallaConexion implements Incidente {
-  private LocalDateTime fecha;
+public class AlertaFallaConexion extends Incidente {
   private TipoDeFalla tipo;
-  private Ubicacion ubicacionDelIncidente;
 
-  // CONSTRUCTOR
-  public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo, Ubicacion ubicacionDelIncidente) {
-    this.fecha = fecha;
+  public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo) {
+    super(fecha);
     this.tipo = tipo;
-    this.ubicacionDelIncidente = ubicacionDelIncidente;
-  }
-
-  @Override
-  public LocalDateTime getFecha() {
-    return this.fecha;
-  }
-
-  public Ubicacion getUbicacionDelIncidente() {
-    return ubicacionDelIncidente;
   }
 
   @Override

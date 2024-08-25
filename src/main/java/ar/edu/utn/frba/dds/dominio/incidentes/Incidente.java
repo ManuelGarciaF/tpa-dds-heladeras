@@ -1,13 +1,17 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
-import ar.edu.utn.frba.dds.dominio.Heladera;
-import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
+public abstract class Incidente {
+  private final LocalDateTime fecha;
 
-public interface Incidente {
-  LocalDateTime getFecha();
+  public Incidente(LocalDateTime fecha) {
+    this.fecha = fecha;
+  }
 
-  String getDescripcionDelError();
-  Ubicacion getUbicacionDelIncidente();
+  public LocalDateTime getFecha() {
+    return fecha;
+  }
+
+  abstract String getDescripcionDelError();
 }
