@@ -1,7 +1,8 @@
 package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
 
-
-import ar.edu.utn.frba.dds.dominio.*;
+import ar.edu.utn.frba.dds.dominio.Colaborador;
+import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
+import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.externo.InstantMessageApp;
 
 public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
@@ -13,14 +14,6 @@ public class NotificarFaltaDeViandas implements NotificacionHeladeraObserver {
   public NotificarFaltaDeViandas(ColaboradorHumano colaboradorInteresado, Integer cantidadSeteada) {
     this.colaboradorInteresado = colaboradorInteresado;
     this.cantidadSeteada = cantidadSeteada;
-  }
-
-  public Colaborador getColaboradorInteresado() {
-    return colaboradorInteresado;
-  }
-
-  public Integer getCantidadSeteada() {
-    return cantidadSeteada;
   }
 
   @Override

@@ -7,6 +7,7 @@ import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
+import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heladera {
+public class Heladera{
   private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
 
   private final String nombre;
@@ -68,9 +69,6 @@ public class Heladera {
       throw new HeladeraException("Las viandas no entran, capacidad: " + this.capacidadViandas);
     }
     this.viandas.addAll(viandas);
-    //Acá podriamos agregar la cantidad de viandas
-    sensorDeCantidad.agregarViandas(viandas.size());
-    notificacionHeladeraHandler.notificar(this);
   }
 
   public List<Vianda> sacarViandas(Integer cantidad) {
@@ -79,10 +77,6 @@ public class Heladera {
     }
     List<Vianda> removidas = new ArrayList<>(this.viandas.subList(0, cantidad));
     this.viandas.subList(0, cantidad).clear();
-
-    //Aca lo mismo
-    sensorDeCantidad.retirarViandas(cantidad);
-    notificacionHeladeraHandler.notificar(this);
     return removidas;
   }
 
@@ -172,6 +166,7 @@ public class Heladera {
   //Entrega 3 //TODO: revisar esto
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
+    //que delege una heladera
     repoTecnicos.delegarIncidente(incidente);
   }
 
@@ -208,4 +203,20 @@ public class Heladera {
     return notificacionHeladeraHandler;
   }
 
+  public Integer espacioRestante(){
+    return capacidadViandas - this.getCantidadDeViandas();
+  }
+
+  //aca estariamos repitiendo logica, podriamos hacer un componente que calcule distancias??
+  public double calcularDistancia(Ubicacion ubicacion2){
+
+    double diferenciaEntreLatitud = Math.pow((ubicacion2.getLatitud() - ubicacion.getLatitud()),2);
+    double diferenciaEntreLongitud = Math.pow((ubicacion2.getLongitud() - ubicacion.getLongitud()),2);
+    return Math.sqrt(diferenciaEntreLongitud + diferenciaEntreLatitud);
+  }
+
+  //@Override
+  //public int compareTo(Heladera otraHeladera) {
+    //  return Double.compare(otraHeladera.calcularDistancia(this.getUbicacion()), this.calcularDistancia(otraHeladera.getUbicacion()));
+  //}
 }

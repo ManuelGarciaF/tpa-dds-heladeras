@@ -22,8 +22,6 @@ public class ColaboradorHumano extends Colaborador {
   private TipoDocumento tipoDocumento;
   private Integer numeroDocumento;
   private TarjetaColaborador tarjetaColaborador;
-  //TODO: revisar
-  private List<NotificacionHeladeraObserver> alertasInteresadasPorElUsuario = new ArrayList<NotificacionHeladeraObserver>();
   private List<String> alertasEnviadas = new ArrayList<String>();
 
   public ColaboradorHumano(String nombre,
@@ -70,26 +68,6 @@ public class ColaboradorHumano extends Colaborador {
   @Override
   public boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento) {
     return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
-  }
-
-  //E3
-  public void reportarIncidente(FallaTecnica fallaTecnica){
-    //repositorio.avisar(fallaTecnica);
-    fallaTecnica.getHeladeraDefectuosa().nuevoIncidente(fallaTecnica);
-  }
-
-  public void suscribirseAHeladeraConCantidadDeViandas(Heladera heladera, Integer cantidadDeViandas){
-    NotificarFaltaDeViandas nuevaAlerta = new NotificarFaltaDeViandas(this, cantidadDeViandas);
-    heladera.getNotificacionHeladeraHandler().agregarObserver(nuevaAlerta);
-    alertasInteresadasPorElUsuario.add(nuevaAlerta);
-  }
-
-  public void desuscribirseAHeladeraConCantidadDeViandas(NotificacionHeladeraObserver alerta, Heladera heladera){ // filtro si contiene x
-    heladera.getNotificacionHeladeraHandler().quitarObserver(alerta);
-  }
-
-  public List<NotificacionHeladeraObserver> getAlertasInteresadasPorElUsuario() {
-    return alertasInteresadasPorElUsuario;
   }
 
   public List<String> getAlertasEnviadas() {
