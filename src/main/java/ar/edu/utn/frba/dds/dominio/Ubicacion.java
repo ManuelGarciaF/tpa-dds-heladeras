@@ -19,6 +19,7 @@ public class Ubicacion {
     return longitud;
   }
 
+  // Uso la formula simple, realmente habria que usar la formula de Haversine (pero es quilombo)
   public Double distanciaA(Ubicacion ubicacion) {
     return Math.sqrt(
         Math.pow(this.latitud - ubicacion.getLatitud(), 2)

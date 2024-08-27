@@ -40,6 +40,10 @@ public class Tecnico {
     this.visitasPendientes.add(heladera);
   }
 
+  public List<Heladera> getVisitasPendientes() {
+    return visitasPendientes;
+  }
+
   public List<Visita> getVisitasCompletadas() {
     return visitasCompletadas;
   }
