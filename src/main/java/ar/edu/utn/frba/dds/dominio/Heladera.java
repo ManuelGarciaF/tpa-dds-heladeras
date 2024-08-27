@@ -23,6 +23,8 @@ public class Heladera {
   private final String nombre;
   private final Integer capacidadViandas;
   private final LocalDate fechaCreacion;
+  private final Double temperaturaMaximaAceptable;
+  private final Double temperaturaMinimaAceptable;
   private final Ubicacion ubicacion;
   private final String numeroDeSerie;
 
@@ -39,12 +41,8 @@ public class Heladera {
 
   private final RepoTecnicos repoTecnicos;
 
-  //E3 REQ5
   private final ProveedorCantidadDeViandas proveedorCantidadDeViandas;
   private final NotificacionHeladeraHandler notificacionHeladeraHandler;
-
-  private final Double temperaturaMaximaAceptable;
-  private final Double temperaturaMinimaAceptable;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -86,8 +84,7 @@ public class Heladera {
       proveedorTemperatura.setCheckeoDeTemperaturaHandler(() -> {
         if (requiereAtencion()) {
           nuevoIncidente(
-              new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA)
-          );
+              new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
         }
       });
     }

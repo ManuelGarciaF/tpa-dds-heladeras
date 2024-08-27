@@ -57,7 +57,6 @@ class PersonaVulnerableTest {
     personaVulnerable.agregarUsoTarjeta(heladera);
     personaVulnerable.agregarUsoTarjeta(heladera);
     assertThrows(UsoTarjetaException.class, () -> personaVulnerable.agregarUsoTarjeta(heladera));
-
   }
 
 }

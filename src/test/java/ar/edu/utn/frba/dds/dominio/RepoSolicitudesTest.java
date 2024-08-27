@@ -20,7 +20,8 @@ class RepoSolicitudesTest {
         new MedioDeContacto(null, "test@gmail.com", null),
         Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
         TipoDocumento.DNI,
-        180924102
+        180924102,
+        null
     );
 
     repoSolicitudes = new RepoSolicitudes();

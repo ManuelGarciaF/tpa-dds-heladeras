@@ -2,7 +2,11 @@ package ar.edu.utn.frba.dds.cargamasiva;
 
 import ar.edu.utn.frba.dds.dominio.MotivoDeDistribucion;
 import ar.edu.utn.frba.dds.dominio.TipoDocumento;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.*;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeViandaHistorica;
+import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerableHistorico;
 import ar.edu.utn.frba.dds.exceptions.CsvInvalidoException;
 import java.io.IOException;
 import java.nio.file.Files;

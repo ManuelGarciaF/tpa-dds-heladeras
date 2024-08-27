@@ -76,6 +76,9 @@ public class SugerenciaTrasladoDeViandas {
   }
 
   public void aceptar(ColaboradorHumano colaboradorHumano) {
+    if (aceptada) {
+      throw new RuntimeException("La sugerencia ya fue aceptada");
+    }
     aceptada = true;
 
     // Agregar una colaboracion por cada traslado

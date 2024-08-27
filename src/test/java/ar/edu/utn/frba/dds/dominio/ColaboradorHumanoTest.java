@@ -1,50 +1,103 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable;
+import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
+import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificarFaltaDeViandas;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificarIncidente;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajesInstantaneos;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorPesoSensor;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperaturaSensor;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
+import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
+import ar.edu.utn.frba.dds.externo.*;
 import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ColaboradorHumanoTest {
-
-  private ColaboradorHumano colaboradorHumano;
+  private Heladera heladera1;
   private MapaHeladeras mapaHeladeras;
+  private ProveedorCantidadDeViandasSensor proveedorCantidadDeViandasSensor;
+  private InstantMessageSender instantMessageSender;
+
+  private ColaboradorHumano colaboradorHumano1;
+  private ColaboradorHumano colaboradorHumano2;
 
   @BeforeEach
   void setUp() {
-    colaboradorHumano = new ColaboradorHumano("Mati",
+    TSensor tSensor = mock(TSensor.class);
+    WSensor wSensor = mock(WSensor.class);
+    LSensor lSensor = mock(LSensor.class);
+    instantMessageSender = mock(InstantMessageSender.class);
+    ControladorDeAcceso controladorDeAcceso = mock(ControladorDeAcceso.class);
+
+    ProveedorTemperaturaSensor proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j");
+    proveedorCantidadDeViandasSensor = new ProveedorCantidadDeViandasSensor(lSensor);
+
+    var repoTecnicos = new RepoTecnicos();
+    repoTecnicos.agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
+
+    // Agregar un valor inicial para la cantidad de viandas
+    proveedorCantidadDeViandasSensor.interpretarLectura(1);
+
+    colaboradorHumano1 = new ColaboradorHumano("Mati",
         "Matias",
         LocalDate.of(1995, 10, 10),
         "Calle Falsa 123",
-        new MedioDeContacto(null, "test@gmail.com", null),
-        Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
+        new MedioDeContacto(null, "test@gmail.com", "123456789"),
+        null,
         TipoDocumento.DNI,
-        180924102
+        180924102,
+        new ProveedorMensajesInstantaneos(instantMessageSender,
+            InstantMessageApp.WHATSAPP,
+            "123456789")
+    );
+
+    colaboradorHumano2 = new ColaboradorHumano("Pedro",
+        "Perez",
+        LocalDate.of(1995, 10, 10),
+        "Calle Falsa 124",
+        new MedioDeContacto(null, "test@yahoo.com", "987654321"),
+        null,
+        TipoDocumento.DNI,
+        180924103,
+        new ProveedorMensajesInstantaneos(instantMessageSender,
+            InstantMessageApp.WHATSAPP,
+            "9876454321")
     );
 
     mapaHeladeras = new MapaHeladeras();
-    mapaHeladeras.agregarHeladera(
-        new Heladera("heladera1",
-            40,
-            new Ubicacion(0.1, 0.0),
-            "kd993j",
-            LocalDate.now(),
-            15.0,
-            0.0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null));
+    heladera1 = new Heladera("heladera1",
+        40,
+        new Ubicacion(0.1, 0.0),
+        "kd993j",
+        LocalDate.now(),
+        15.0,
+        0.0,
+        new ProveedorPesoSensor(wSensor),
+        proveedorTemperaturaSensor,
+        new AutorizadorAperturasActual(controladorDeAcceso),
+        repoTecnicos,
+        proveedorCantidadDeViandasSensor,
+        new NotificacionHeladeraHandler(mapaHeladeras));
+    mapaHeladeras.agregarHeladera(heladera1);
 
+    var lSensor2 = mock(LSensor.class);
+    var proveedorCantidadDeViandasSensor2 = new ProveedorCantidadDeViandasSensor(lSensor2);
     mapaHeladeras.agregarHeladera(
         new Heladera("heladera2",
             39,
@@ -57,27 +110,29 @@ class ColaboradorHumanoTest {
             null,
             null,
             null,
-            null,
-            null));
+            proveedorCantidadDeViandasSensor2,
+            new NotificacionHeladeraHandler(mapaHeladeras)));
+    // Valor inicial para la cantidad de viandas
+    proveedorCantidadDeViandasSensor2.interpretarLectura(0);
   }
 
   @Test
   void puedeAgregarUnaColaboracion() {
     var colaboracion = new DonacionDeDinero(420, false, null);
-    colaboradorHumano.colaborar(colaboracion);
-    assertTrue(colaboradorHumano.getHistorialDeColaboraciones().contains(colaboracion));
+    colaboradorHumano1.colaborar(colaboracion);
+    assertTrue(colaboradorHumano1.getHistorialDeColaboraciones().contains(colaboracion));
   }
 
   @Test
   void elPuntajeSeCalculaCorrectamente() {
-    colaboradorHumano.colaborar(new DistribucionDeViandas(
+    colaboradorHumano1.colaborar(new DistribucionDeViandas(
         MotivoDeDistribucion.FALTA_DE_VIANDAS,
         LocalDate.now(),
         10,
         null,
         null));
-    colaboradorHumano.colaborar(new DonacionDeDinero(420, false, null));
-    colaboradorHumano.colaborar(new DonacionDeVianda(
+    colaboradorHumano1.colaborar(new DonacionDeDinero(420, false, null));
+    colaboradorHumano1.colaborar(new DonacionDeVianda(
         new Vianda("Vianda", LocalDate.now().plusWeeks(2), 10, 10),
         null));
 
@@ -91,13 +146,90 @@ class ColaboradorHumanoTest {
     personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera1"));
     personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera2"));
 
-    colaboradorHumano.colaborar(new RegistroDePersonaVulnerable(personaVulnerable));
+    colaboradorHumano1.colaborar(new RegistroDePersonaVulnerable(personaVulnerable));
 
     Double valorEsperado = 10 * DistribucionDeViandas.COEFICIENTE_PUNTAJE
         + 420 * DonacionDeDinero.COEFICIENTE_PUNTAJE
         + 2 * DonacionDeVianda.COEFICIENTE_PUNTAJE
         + 10 * 2 * RegistroDePersonaVulnerable.COEFICIENTE_PUNTAJE;
-    assertEquals(valorEsperado, colaboradorHumano.puntaje());
+    assertEquals(valorEsperado, colaboradorHumano1.puntaje());
+  }
+
+  @Test
+  void puedeSubscribirseAUnaHeladeraYSerAlertadoPorFaltaDeViandas() {
+    heladera1.getNotificacionHeladeraHandler().agregarSubscriptorCantidadDeViandas(
+        new NotificarFaltaDeViandas(colaboradorHumano1, 10));
+
+    // Se registra un cambio en la cantidad de viandas
+    proveedorCantidadDeViandasSensor.interpretarLectura(0);
+
+    verify(instantMessageSender).sendMessage(
+        eq(InstantMessageApp.WHATSAPP),
+        eq("123456789"),
+        any(String.class));
+  }
+
+  @Test
+  void puedeSubscribirseAUnaHeladeraYSerAlertadoPorUnIncidente() {
+    heladera1.getNotificacionHeladeraHandler().agregarSubscriptorIncidente(
+        new NotificarIncidente(colaboradorHumano1));
+
+    // Se registra un incidente
+    heladera1.nuevoIncidente(
+        new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
+
+    verify(instantMessageSender).sendMessage(
+        eq(InstantMessageApp.WHATSAPP),
+        eq("123456789"),
+        any(String.class));
+  }
+
+  @Test
+  void alSerAlertadoPorUnIncidenteSeLeEnviaUnaSugerencia() {
+    // Subscribirse y ser alertado.
+    heladera1.getNotificacionHeladeraHandler()
+        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+    heladera1.nuevoIncidente(
+        new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
+
+    assertEquals(1, colaboradorHumano1.getSugerenciasPendientes().size());
+  }
+
+  @Test
+  void alAceptarLaSugerenciaSeLeAgregaUnaColaboracion() {
+    // Agregar una vianda a la heladera rota
+    heladera1.ingresarViandas(List.of(new Vianda("mm...food",
+        LocalDate.now().plusWeeks(2),
+        10,
+        10)));
+    // Subscribirse y ser alertado.
+    heladera1.getNotificacionHeladeraHandler()
+        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+    heladera1.nuevoIncidente(
+        new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
+
+    // Aceptar la sugerencia
+    colaboradorHumano1.getSugerenciasPendientes().get(0).aceptar(colaboradorHumano1);
+
+    assertEquals(1, colaboradorHumano1.getHistorialDeColaboraciones().size());
+  }
+
+  @Test
+  void dosColaboradoresNoPuedenAceptarLaMismaSugerencia() {
+    // Subscribirse y ser alertado.
+    heladera1.getNotificacionHeladeraHandler()
+        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+    heladera1.getNotificacionHeladeraHandler()
+        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano2));
+    heladera1.nuevoIncidente(
+        new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
+
+    // El colaborador1 acepta la sugerencia
+    colaboradorHumano1.getSugerenciasPendientes().get(0).aceptar(colaboradorHumano1);
+
+    // El colaborador2 intenta aceptar la misma sugerencia
+    assertThrows(RuntimeException.class,
+        () -> colaboradorHumano2.getSugerenciasPendientes().get(0).aceptar(colaboradorHumano2));
   }
 }
 

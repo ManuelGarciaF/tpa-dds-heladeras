@@ -43,7 +43,8 @@ public class RepoColaboradores {
           new MedioDeContacto(null, fila.mail(), null),
           Set.of(),
           fila.tipoDocumento(),
-          fila.numeroDocumento());
+          fila.numeroDocumento(),
+          null); // TODO crear un proveedorMensajeriaMaipersonal
       agregarColaborador(colaborador);
     }
     return colaborador;

@@ -24,7 +24,8 @@ class RepoColaboradoresTest {
         new MedioDeContacto(null, "mati@gmail.com", null),
         null,
         TipoDocumento.DNI,
-        180924102
+        180924102,
+        null
     );
     repoColaboradores.agregarColaborador(colaborador);
     assertTrue(repoColaboradores.getColaboradores().contains(colaborador));
