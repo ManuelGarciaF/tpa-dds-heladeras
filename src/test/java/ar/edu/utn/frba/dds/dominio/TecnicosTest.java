@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
-import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
@@ -21,7 +20,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AvisoDeTecnicosTest {
+class TecnicosTest {
   private Heladera heladera;
   private MapaHeladeras mapaHeladeras;
   private TSensor tSensor;
