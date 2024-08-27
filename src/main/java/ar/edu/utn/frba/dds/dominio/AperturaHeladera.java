@@ -39,4 +39,8 @@ public class AperturaHeladera {
   public boolean esValidaAhora() {
     return esValida(LocalDateTime.now());
   }
+
+  public LocalDateTime getFechaApertura() {
+    return fechaApertura;
+  }
 }

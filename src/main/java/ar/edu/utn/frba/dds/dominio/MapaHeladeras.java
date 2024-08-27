@@ -1,7 +1,5 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,6 @@ public class MapaHeladeras {
         .toList();
   }
 
-  // Entrega 3
   public void revisarSensoresDeTemperatura() {
     heladeras.forEach(Heladera::checkearDesconexionSensorTemperatura);
   }

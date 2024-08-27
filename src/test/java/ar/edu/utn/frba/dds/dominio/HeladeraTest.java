@@ -5,6 +5,9 @@ import static org.mockito.Mockito.*;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorPesoSensor;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperaturaSensor;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;

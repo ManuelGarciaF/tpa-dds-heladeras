@@ -20,16 +20,16 @@ public class Tecnico {
 
   public void registrarVisita(Visita visita, Boolean incidenteSolucionado) {
     // Checkear que haya sido asignado a esta heladera
-    if (!visitasPendientes.contains(visita.getHeladeraAsistida())) {
+    if (!visitasPendientes.contains(visita.heladeraAsistida())) {
       throw new VisitaTecnicoException("No puede registrar una visita a la cual no fue asignado");
     }
 
     if (incidenteSolucionado) {
-      visita.getHeladeraAsistida().limpiarIncidentes();
+      visita.heladeraAsistida().limpiarIncidentes();
     }
 
     this.visitasCompletadas.add(visita);
-    this.visitasPendientes.remove(visita.getHeladeraAsistida());
+    this.visitasPendientes.remove(visita.heladeraAsistida());
   }
 
   public Double distanciaA(Ubicacion ubicacion) {

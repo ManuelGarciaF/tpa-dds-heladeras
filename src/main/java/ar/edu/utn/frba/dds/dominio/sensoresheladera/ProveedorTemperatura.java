@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio;
+package ar.edu.utn.frba.dds.dominio.sensoresheladera;
 
 import java.util.List;
 

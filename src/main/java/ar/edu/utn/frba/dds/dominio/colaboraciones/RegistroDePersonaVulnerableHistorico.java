@@ -1,19 +1,11 @@
 package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
-import static java.util.Objects.requireNonNull;
-
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 
-public class RegistroDePersonaVulnerableHistorico implements Colaboracion {
-  private Integer cantidad;
-
+public record RegistroDePersonaVulnerableHistorico(Integer cantidad) implements Colaboracion {
   private static final Integer USOS_PROMEDIO = 2;
   private static final Integer MESES_ACTIVAS_PROMEDIO = 2;
   public static final Double COEFICIENTE_PUNTAJE = 2.0;
-
-  public RegistroDePersonaVulnerableHistorico(Integer cantidad) {
-    this.cantidad = requireNonNull(cantidad);
-  }
 
   @Override
   public Double puntaje() {

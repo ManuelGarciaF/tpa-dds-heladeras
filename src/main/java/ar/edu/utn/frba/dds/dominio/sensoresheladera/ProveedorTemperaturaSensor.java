@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio;
+package ar.edu.utn.frba.dds.dominio.sensoresheladera;
 
 import ar.edu.utn.frba.dds.externo.TSensor;
 import java.time.LocalDate;

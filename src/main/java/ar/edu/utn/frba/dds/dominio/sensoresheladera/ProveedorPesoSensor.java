@@ -1,7 +1,8 @@
-package ar.edu.utn.frba.dds.dominio;
+package ar.edu.utn.frba.dds.dominio.sensoresheladera;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.exceptions.LecturaInvalidaException;

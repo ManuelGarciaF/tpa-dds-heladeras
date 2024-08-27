@@ -67,7 +67,7 @@ public class ColaboradorHumano extends Colaborador {
     return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
   }
 
-  public void notificar(String s) {
+  public void notificar(String mensaje) {
     throw new RuntimeException("TODO");
   }
 

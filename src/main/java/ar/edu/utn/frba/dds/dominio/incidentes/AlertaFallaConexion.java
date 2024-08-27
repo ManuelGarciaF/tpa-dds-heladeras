@@ -4,7 +4,7 @@ import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
 public class AlertaFallaConexion extends Incidente {
-  private TipoDeFalla tipo;
+  private final TipoDeFalla tipo;
 
   public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo) {
     super(fecha);
