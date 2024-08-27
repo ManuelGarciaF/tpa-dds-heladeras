@@ -172,7 +172,7 @@ public class Heladera{
   public void checkearDesconexionSensorTemperatura() {
     if (proveedorTemperatura.hayFalloConexion()) {
       nuevoIncidente(
-          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA, this.ubicacion)
+          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA)
       );
     }
   }

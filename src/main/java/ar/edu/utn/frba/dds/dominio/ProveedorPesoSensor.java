@@ -31,7 +31,7 @@ public class ProveedorPesoSensor implements ProveedorPeso {
       };
     } catch (RuntimeException e) { // No sabemos el tipo
       heladera.nuevoIncidente(
-          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_PESO, heladera.getUbicacion())
+          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_PESO)
       );
     }
     return -1.0;
