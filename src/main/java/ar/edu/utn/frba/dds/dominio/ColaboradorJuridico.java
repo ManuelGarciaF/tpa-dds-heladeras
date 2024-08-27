@@ -5,10 +5,10 @@ import static java.util.Objects.requireNonNull;
 import java.util.Set;
 
 public class ColaboradorJuridico extends Colaborador {
-  private String razonSocial;
-  private TipoPersonaJuridica tipo;
-  private String rubro;
-  private Set<FormaDeColaboracionJuridica> formasDeColaboracion;
+  private final String razonSocial;
+  private final TipoPersonaJuridica tipo;
+  private final String rubro;
+  private final Set<FormaDeColaboracionJuridica> formasDeColaboracion;
 
   public ColaboradorJuridico(String razonSocial,
                              TipoPersonaJuridica tipo,

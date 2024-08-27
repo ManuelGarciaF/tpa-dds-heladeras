@@ -1,8 +1,5 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
-
-import ar.edu.utn.frba.dds.dominio.Heladera;
-import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
 
 public class AlertaTemperatura extends Incidente {

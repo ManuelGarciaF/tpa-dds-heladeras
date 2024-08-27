@@ -23,6 +23,8 @@ class DonacionDeViandaTest {
             new Ubicacion(0.0, 0.0),
             "123",
             LocalDate.now(),
+            15.0,
+            0.0,
             null,
             null,
             null,

@@ -4,9 +4,9 @@ import ar.edu.utn.frba.dds.dominio.Colaborador;
 import java.time.LocalDateTime;
 
 public class FallaTecnica extends Incidente {
-  private Colaborador colaborador;
-  private String descripcionDelError;
-  private String urlFoto;
+  private final Colaborador colaborador;
+  private final String descripcionDelError;
+  private final String urlFoto;
 
   public FallaTecnica(Colaborador colaborador,
                       LocalDateTime fecha,

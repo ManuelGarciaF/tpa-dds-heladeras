@@ -1,18 +1,10 @@
 package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
-import static java.util.Objects.requireNonNull;
-
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 
-public class DonacionDeViandaHistorica implements Colaboracion {
-  private Integer cantidad;
-
+public record DonacionDeViandaHistorica(Integer cantidad) implements Colaboracion {
   private static final Integer SEMANAS_FRESCAS_PROMEDIO = 2;
   public static final Double COEFICIENTE_PUNTAJE = 1.5;
-
-  public DonacionDeViandaHistorica(Integer cantidad) {
-    this.cantidad = requireNonNull(cantidad);
-  }
 
   @Override
   public Double puntaje() {

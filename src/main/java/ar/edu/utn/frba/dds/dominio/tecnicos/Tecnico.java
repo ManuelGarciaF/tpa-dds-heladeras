@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.dominio.tecnicos;
 
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
-import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.exceptions.VisitaTecnicoException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +20,16 @@ public class Tecnico {
 
   public void registrarVisita(Visita visita, Boolean incidenteSolucionado) {
     // Checkear que haya sido asignado a esta heladera
-    if(!visitasPendientes.contains(visita.getHeladeraAsistida())) {
+    if (!visitasPendientes.contains(visita.heladeraAsistida())) {
       throw new VisitaTecnicoException("No puede registrar una visita a la cual no fue asignado");
     }
 
     if (incidenteSolucionado) {
-      visita.getHeladeraAsistida().limpiarIncidentes();
+      visita.heladeraAsistida().limpiarIncidentes();
     }
 
     this.visitasCompletadas.add(visita);
-    this.visitasPendientes.remove(visita.getHeladeraAsistida());
+    this.visitasPendientes.remove(visita.heladeraAsistida());
   }
 
   public Double distanciaA(Ubicacion ubicacion) {
@@ -39,6 +38,10 @@ public class Tecnico {
 
   public void asignarHeladera(Heladera heladera) {
     this.visitasPendientes.add(heladera);
+  }
+
+  public List<Heladera> getVisitasPendientes() {
+    return visitasPendientes;
   }
 
   public List<Visita> getVisitasCompletadas() {

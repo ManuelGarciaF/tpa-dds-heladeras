@@ -6,12 +6,10 @@ import ar.edu.utn.frba.dds.dominio.validaciones.ValidacionLongitud;
 import ar.edu.utn.frba.dds.exceptions.ContraseniaInseguraException;
 import java.util.List;
 
-public class Usuario {
+public record Usuario(String contrasenia, String nombre) {
   private static final List<ValidacionContrasenia> validaciones = List.of(
       new ValidacionLongitud(8),
       new ValidacionContraseniasComunes("10k-most-common.txt"));
-  private final String nombre;
-  private final String contrasenia;
 
   public Usuario(String contrasenia, String nombre) {
     this.nombre = nombre;
@@ -23,14 +21,6 @@ public class Usuario {
 
   private static boolean esSegura(String contrasenia) {
     return validaciones.stream().allMatch(validacion -> validacion.validar(contrasenia));
-  }
-
-  public String getNombre() {
-    return nombre;
-  }
-
-  public String getContrasenia() {
-    return contrasenia;
   }
 
   public Boolean verificarContrasenia(String contrasenia) {

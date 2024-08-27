@@ -13,6 +13,6 @@ public class AutorizadorAperturasActual implements AutorizadorAperturas {
 
   @Override
   public void habilitarTarjeta(TarjetaColaborador tarjetaColaborador) {
-    api.notificarTarjetasColaboradoraHabilitada(tarjetaColaborador.getCodigoTarjeta());
+    api.notificarTarjetasColaboradoraHabilitada(tarjetaColaborador.codigoTarjeta());
   }
 }

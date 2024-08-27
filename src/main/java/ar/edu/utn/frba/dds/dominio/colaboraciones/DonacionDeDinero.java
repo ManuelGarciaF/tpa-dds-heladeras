@@ -6,17 +6,16 @@ import ar.edu.utn.frba.dds.dominio.Colaborador;
 import java.time.LocalDate;
 
 public class DonacionDeDinero implements Colaboracion {
-
-  private LocalDate fecha;
-  private Integer monto;
-  private Boolean donacionPeriodica;
-  private Integer frecuenciaEnDias;
+  private final LocalDate fecha;
+  private final Integer monto;
+  private final Boolean donacionPeriodica;
+  private final Integer frecuenciaEnDias;
 
   public static final Double COEFICIENTE_PUNTAJE = 0.5;
 
   public DonacionDeDinero(Integer monto,
-                         Boolean donacionPeriodica,
-                         Integer frecuenciaEnDias) {
+                          Boolean donacionPeriodica,
+                          Integer frecuenciaEnDias) {
     this.fecha = LocalDate.now();
 
     requireNonNull(monto);

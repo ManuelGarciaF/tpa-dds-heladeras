@@ -8,11 +8,11 @@ import java.time.temporal.ChronoUnit;
 
 public class PersonaVulnerable {
   private final String nombre;
-  private LocalDate fechaNacimiento;
-  private LocalDate fechaRegistro;
-  private String domicilio;
-  private Integer menoresAcargo;
-  private TarjetaPersonaVulnerable tarjeta;
+  private final LocalDate fechaNacimiento;
+  private final LocalDate fechaRegistro;
+  private final String domicilio;
+  private final Integer menoresAcargo;
+  private final TarjetaPersonaVulnerable tarjeta;
 
   public PersonaVulnerable(String nombre,
                            String domicilio,
@@ -49,6 +49,30 @@ public class PersonaVulnerable {
       throw new UsoTarjetaException("No tiene usos disponibles");
     }
     heladera.agregarUso(new UsoTarjetaPersonaVulnerable(tarjeta, LocalDate.now()));
+  }
+
+  public String getDomicilio() {
+    return domicilio;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public LocalDate getFechaNacimiento() {
+    return fechaNacimiento;
+  }
+
+  public LocalDate getFechaRegistro() {
+    return fechaRegistro;
+  }
+
+  public Integer getMenoresAcargo() {
+    return menoresAcargo;
+  }
+
+  public TarjetaPersonaVulnerable getTarjeta() {
+    return tarjeta;
   }
 
 }

@@ -1,10 +1,7 @@
 package ar.edu.utn.frba.dds.cargamasiva;
 
 public enum FormaColaboracionCsv {
-  DINERO,
-  DONACION_VIANDAS,
-  REDISTRIBUCION_VIANDAS,
-  ENTREGA_TARJETAS;
+  DINERO, DONACION_VIANDAS, REDISTRIBUCION_VIANDAS, ENTREGA_TARJETAS;
 
   public static FormaColaboracionCsv fromString(String formaColaboracion) {
     return switch (formaColaboracion) {

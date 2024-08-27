@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ValidacionContraseniasComunes implements ValidacionContrasenia {
-  private BufferedReader readerArchivo;
+  private final BufferedReader readerArchivo;
 
   public ValidacionContraseniasComunes(String nombreRecurso) {
     InputStream inputStream = getClass()

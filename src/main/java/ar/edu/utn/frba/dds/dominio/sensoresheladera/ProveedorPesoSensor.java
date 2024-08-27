@@ -1,7 +1,8 @@
-package ar.edu.utn.frba.dds.dominio;
+package ar.edu.utn.frba.dds.dominio.sensoresheladera;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.exceptions.LecturaInvalidaException;
@@ -31,7 +32,7 @@ public class ProveedorPesoSensor implements ProveedorPeso {
       };
     } catch (RuntimeException e) { // No sabemos el tipo
       heladera.nuevoIncidente(
-          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_PESO, heladera.getUbicacion())
+          new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_PESO)
       );
     }
     return -1.0;

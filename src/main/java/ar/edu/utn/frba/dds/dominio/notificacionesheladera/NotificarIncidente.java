@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
 
@@ -11,8 +11,8 @@ public class NotificarIncidente implements SubscriptorIncidente {
 
   @Override
   public void notificar(SugerenciaTrasladoDeViandas sugerenciaTrasladoDeViandas) {
-    colaboradorInteresado.notificar("Se ha detectado un incidente en la heladera " +
-        sugerenciaTrasladoDeViandas.getHeladeraRota().getNumeroDeSerie());
+    colaboradorInteresado.notificar("Se ha detectado un incidente en la heladera "
+        + sugerenciaTrasladoDeViandas.getHeladeraRota().getNumeroDeSerie());
     colaboradorInteresado.agregarSugerenciaTrasladoDeViandas(sugerenciaTrasladoDeViandas);
   }
 }

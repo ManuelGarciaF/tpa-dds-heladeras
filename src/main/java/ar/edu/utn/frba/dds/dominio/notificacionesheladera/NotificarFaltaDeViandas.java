@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
 import ar.edu.utn.frba.dds.dominio.Heladera;
@@ -15,9 +15,8 @@ public class NotificarFaltaDeViandas implements SubscriptorCantidadDeViandas {
   @Override
   public void notificar(Heladera heladera) {
     if (heladera.getCantidadDeViandas() <= cantidadSeteada) {
-      //Aca tendriamos que notificar por mail, pero con motivos de testing voy a hacer que se cargue en una lista
-      colaboradorInteresado.notificar("Solo quedan " + heladera.getCantidadDeViandas() + " viandas en la heladera " +
-          heladera.getNumeroDeSerie() + ".");
+      colaboradorInteresado.notificar("Solo quedan " + heladera.getCantidadDeViandas()
+          + " viandas en la heladera " + heladera.getNumeroDeSerie() + ".");
     }
   }
 }

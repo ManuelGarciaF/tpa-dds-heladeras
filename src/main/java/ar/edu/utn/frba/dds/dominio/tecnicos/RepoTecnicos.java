@@ -18,7 +18,11 @@ public class RepoTecnicos {
 
   public void delegarReparacion(Heladera heladera) {
     var tecnicosPorDistancia = new ArrayList<>(tecnicos);
-    tecnicosPorDistancia.sort(Comparator.comparing(tecnico -> tecnico.distanciaA(heladera.getUbicacion())));
+
+    // Menos ya que el tecnico mas cercano es el que tiene menor distancia.
+    tecnicosPorDistancia.sort(
+        Comparator.comparing(tecnico -> -tecnico.distanciaA(heladera.getUbicacion()))
+    );
     // Estan ordenados por mayor distancia, el ultimo es el mas cercano.
     var tecnicoMasCercano = tecnicosPorDistancia.get(tecnicosPorDistancia.size() - 1);
     tecnicoMasCercano.asignarHeladera(heladera);
