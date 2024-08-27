@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,41 +10,22 @@ import java.util.List;
 public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
   public static final int MINUTOS_DESCONECTADO_MAXIMOS = 15;
 
-  private final List<Double> ultimasTresTemperaturas;
+  private final List<Double> ultimasTresTemperaturas = new ArrayList<>();
   private LocalDate ultimaMedicion;
 
-  private final Double temperaturaMaximaAceptable;
-  private final Double temperaturaMinimaAceptable;
-
-  // Necesitamos la referencia doble para agregar el incidente
-  private Heladera heladera;
+  private Runnable checkeoDeTemperaturaHandler;
 
   public ProveedorTemperaturaSensor(
       TSensor api,
-      String numeroDeSerie,
-      Double temperaturaMaximaAceptable,
-      Double temperaturaMinimaAceptable) {
-    this.temperaturaMaximaAceptable = temperaturaMaximaAceptable;
-    this.temperaturaMinimaAceptable = temperaturaMinimaAceptable;
-    ultimasTresTemperaturas = new ArrayList<>();
-
+      String numeroDeSerie) {
     api.connect(numeroDeSerie);
     // Le pasamos el método agregarLectura como callback
     api.onTemperatureChange(this::agregarLectura);
   }
 
-  public void setHeladera(Heladera heladera) {
-    this.heladera = heladera;
-  }
-
   @Override
-  public boolean requiereAtencion() {
-    // Si tenemos al menos 3 temperaturas y todas son mayores a la maxima o menores a la minima
-    boolean masAltas = ultimasTresTemperaturas.stream().allMatch(
-        temperatura -> temperatura > temperaturaMaximaAceptable);
-    boolean masBajas = ultimasTresTemperaturas.stream().allMatch(
-        temperatura -> temperatura < temperaturaMinimaAceptable);
-    return ultimasTresTemperaturas.size() >= 3 && (masAltas || masBajas);
+  public void setCheckeoDeTemperaturaHandler(Runnable checkeoDeTemperaturaHandler) {
+    this.checkeoDeTemperaturaHandler = checkeoDeTemperaturaHandler;
   }
 
   @Override
@@ -64,9 +44,14 @@ public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
     ultimasTresTemperaturas.add(temperatura);
     ultimaMedicion = LocalDate.now();
 
-    // Si la temperatura es menor a la mínima o mayor a la máxima, se genera una alerta
-    if (requiereAtencion()) {
-      heladera.nuevoIncidente(new AlertaTemperatura(LocalDateTime.now()));
+    // Delegar el checkeo de temperatura a la heladera
+    if (checkeoDeTemperaturaHandler != null) {
+      checkeoDeTemperaturaHandler.run();
     }
+  }
+
+  @Override
+  public List<Double> ultimasTresTemperaturas() {
+    return ultimasTresTemperaturas;
   }
 }

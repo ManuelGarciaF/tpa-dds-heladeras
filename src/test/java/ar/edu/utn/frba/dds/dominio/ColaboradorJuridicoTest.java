@@ -3,11 +3,8 @@ package ar.edu.utn.frba.dds.dominio;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable;
 import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,14 +26,16 @@ class ColaboradorJuridicoTest {
         Set.of(FormaDeColaboracionJuridica.DONACION_DINERO));
 
     heladera = new Heladera("heladera1",
-            40,
-            new Ubicacion(0.1, 0.0),
-            "kd993j",
-            LocalDate.now().minusMonths(4),
-            null,
-            null,
-            null,
-            null,
+        40,
+        new Ubicacion(0.1, 0.0),
+        "kd993j",
+        LocalDate.now().minusMonths(4),
+        15.0,
+        0.0,
+        null,
+        null,
+        null,
+        null,
         null,
         null);
     mapaHeladeras = new MapaHeladeras();
@@ -68,7 +67,7 @@ class ColaboradorJuridicoTest {
 
     Double valorEsperado = 420 * DonacionDeDinero.COEFICIENTE_PUNTAJE
         + 1 * 4 * 2 * HacerseCargoHeladera.COEFICIENTE_PUNTAJE;
-    
+
     assertEquals(valorEsperado, colaboradorJuridico.puntaje());
   }
 }

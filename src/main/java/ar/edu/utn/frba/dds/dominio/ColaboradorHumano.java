@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
-import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.SugerenciaTrasladoDeViandas;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.SugerenciaTrasladoDeViandas;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,9 @@ public class ColaboradorHumano extends Colaborador {
     throw new RuntimeException("TODO");
   }
 
-  public void agregarSugerenciaTrasladoDeViandas(SugerenciaTrasladoDeViandas sugerenciaTrasladoDeViandas) {
+  public void agregarSugerenciaTrasladoDeViandas(
+      SugerenciaTrasladoDeViandas sugerenciaTrasladoDeViandas
+  ) {
     sugerenciasPendientes.add(sugerenciaTrasladoDeViandas);
   }
 }

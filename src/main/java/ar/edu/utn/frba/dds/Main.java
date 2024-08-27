@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public class Main {
   private static MapaHeladeras mapa;
+
   public static void main(String[] args) {
     // Cron:
     // */15 * * * * java -jar tpa.jar
@@ -19,6 +20,8 @@ public class Main {
         new Ubicacion(5.35, 2.76),
         "AA26U",
         LocalDate.now(),
+        15.0,
+        0.0,
         null,
         null,
         null,

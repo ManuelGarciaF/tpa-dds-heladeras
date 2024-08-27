@@ -1,20 +1,31 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.externo.LSensor;
 
 public class ProveedorCantidadDeViandasSensor implements ProveedorCantidadDeViandas {
   private Integer cantidadDeViandas;
 
+  private Runnable nuevaMedicionHandler;
+
   public ProveedorCantidadDeViandasSensor(LSensor sensor) {
     sensor.onLunchBoxChanged(this::interpretarLectura);
   }
 
+  @Override
   public Integer getCantidadDeViandas() {
     return cantidadDeViandas;
   }
 
-  private void interpretarLectura(int nuevaCantidad) {
+  public void interpretarLectura(int nuevaCantidad) {
     cantidadDeViandas = nuevaCantidad;
+
+    if (nuevaMedicionHandler != null) {
+      nuevaMedicionHandler.run();
+    }
+  }
+
+  @Override
+  public void setNuevaMedicionHandler(Runnable nuevaMedicionHandler) {
+    this.nuevaMedicionHandler = nuevaMedicionHandler;
   }
 }

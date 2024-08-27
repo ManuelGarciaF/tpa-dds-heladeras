@@ -1,11 +1,13 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
+
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificacionHeladeraHandler {
-  private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas = new ArrayList<>();
+  private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas =
+      new ArrayList<>();
   private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
   private final MapaHeladeras mapaHeladeras;
 
@@ -13,7 +15,9 @@ public class NotificacionHeladeraHandler {
     this.mapaHeladeras = mapaHeladeras;
   }
 
-  public void agregarSubscriptorCantidadDeViandas(SubscriptorCantidadDeViandas subscriptorCantidadDeViandas) {
+  public void agregarSubscriptorCantidadDeViandas(
+      SubscriptorCantidadDeViandas subscriptorCantidadDeViandas
+  ) {
     subscriptoresCantidadDeViandas.add(subscriptorCantidadDeViandas);
   }
 

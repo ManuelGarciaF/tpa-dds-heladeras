@@ -1,13 +1,7 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
@@ -18,22 +12,19 @@ import ar.edu.utn.frba.dds.exceptions.VisitaTecnicoException;
 import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import ar.edu.utn.frba.dds.externo.WSensor;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-
-//TODO: HAY QUE HACER UN SETUP DE LOS OBSERVERS
 class AsignacionDeIncidentesTest {
   private Heladera heladera;
   private TSensor tSensor;
   private WSensor wSensor;
-  private ProveedorTemperaturaSensor proveedorTemperaturaSensor;
   private ControladorDeAcceso controladorDeAcceso;
   private ColaboradorHumano colaboradorHumano;
-  private RepoTecnicos repoTecnicos = new RepoTecnicos();
+  private RepoTecnicos repoTecnicos;
   private Tecnico ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
   private Tecnico juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.1));
   private Tecnico ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
@@ -43,21 +34,24 @@ class AsignacionDeIncidentesTest {
   void setUp() {
     tSensor = mock(TSensor.class);
     wSensor = mock(WSensor.class);
-    proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j", 23.0, 3.0);
     controladorDeAcceso = mock(ControladorDeAcceso.class);
+
+    var proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j");
+    var repoTecnicos = new RepoTecnicos();
 
     heladera = new Heladera("heladera",
         40,
         new Ubicacion(0.1, 0.0),
         "kd993j",
         LocalDate.now(),
+        13.0,
+        3.0,
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
         repoTecnicos,
         null,
         null);
-    proveedorTemperaturaSensor.setHeladera(heladera);
 
     colaboradorHumano = new ColaboradorHumano("Mati",
         "Matias",

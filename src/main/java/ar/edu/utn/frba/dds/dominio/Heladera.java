@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
-import ar.edu.utn.frba.dds.dominio.notificacionesHeladera.NotificacionHeladeraHandler;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Heladera{
+public class Heladera {
   private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
 
   private final String nombre;
@@ -38,13 +38,18 @@ public class Heladera{
 
   //E3 REQ5
   private final ProveedorCantidadDeViandas proveedorCantidadDeViandas;
-  private final NotificacionHeladeraHandler  notificacionHeladeraHandler;
+  private final NotificacionHeladeraHandler notificacionHeladeraHandler;
+
+  private final Double temperaturaMaximaAceptable;
+  private final Double temperaturaMinimaAceptable;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
                   Ubicacion ubicacion,
                   String numeroDeSerie,
                   LocalDate fechaCreacion,
+                  Double temperaturaMaximaAceptable,
+                  Double temperaturaMinimaAceptable,
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
@@ -58,10 +63,37 @@ public class Heladera{
     this.proveedorPeso = proveedorPeso;
     this.proveedorTemperatura = proveedorTemperatura;
     this.fechaCreacion = fechaCreacion;
+    this.temperaturaMaximaAceptable = temperaturaMaximaAceptable;
+    this.temperaturaMinimaAceptable = temperaturaMinimaAceptable;
     this.autorizadorAperturas = autorizadorAperturas;
     this.repoTecnicos = repoTecnicos;
     this.proveedorCantidadDeViandas = proveedorCantidadDeViandas;
     this.notificacionHeladeraHandler = notificacionHeladeraHandler;
+
+    configurarSensores(proveedorTemperatura,
+        proveedorCantidadDeViandas,
+        notificacionHeladeraHandler);
+  }
+
+  // Configurar handlers automaticos para los sensores
+  private void configurarSensores(ProveedorTemperatura proveedorTemperatura,
+                                  ProveedorCantidadDeViandas proveedorCantidadDeViandas,
+                                  NotificacionHeladeraHandler notificacionHeladeraHandler) {
+    if (proveedorTemperatura != null) {
+      proveedorTemperatura.setCheckeoDeTemperaturaHandler(() -> {
+        if (requiereAtencion()) {
+          nuevoIncidente(
+              new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA)
+          );
+        }
+      });
+    }
+
+    if (proveedorCantidadDeViandas != null) {
+      proveedorCantidadDeViandas.setNuevaMedicionHandler(
+          () -> notificacionHeladeraHandler.notificarCambioCantidadDeViandas(this)
+      );
+    }
   }
 
   public void ingresarViandas(List<Vianda> viandas) {
@@ -110,7 +142,14 @@ public class Heladera{
   }
 
   public boolean requiereAtencion() {
-    return proveedorTemperatura.requiereAtencion();
+    var ultimasTresTemperaturas = proveedorTemperatura.ultimasTresTemperaturas();
+    // Si tenemos al menos 3 temperaturas y todas son mayores a la maxima o menores a la minima
+    boolean masAltas = ultimasTresTemperaturas.stream().allMatch(
+        temperatura -> temperatura > temperaturaMaximaAceptable);
+    boolean masBajas = ultimasTresTemperaturas.stream().allMatch(
+        temperatura -> temperatura < temperaturaMinimaAceptable);
+    return ultimasTresTemperaturas.size() >= 3 && (masAltas || masBajas);
+
   }
 
   public Integer cantidadUsos() {
@@ -202,11 +241,11 @@ public class Heladera{
     return notificacionHeladeraHandler;
   }
 
-  public Integer espacioRestante(){
+  public Integer espacioRestante() {
     return capacidadViandas - this.getCantidadDeViandas();
   }
 
-  public Double distanciaA(Heladera otra){
+  public Double distanciaA(Heladera otra) {
     return this.ubicacion.distanciaA(otra.getUbicacion());
   }
 }

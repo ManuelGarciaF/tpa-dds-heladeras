@@ -2,15 +2,12 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +36,8 @@ class ColaboradorHumanoTest {
             new Ubicacion(0.1, 0.0),
             "kd993j",
             LocalDate.now(),
+            15.0,
+            0.0,
             null,
             null,
             null,
@@ -52,6 +51,8 @@ class ColaboradorHumanoTest {
             new Ubicacion(0.2, 0.0),
             "kd393j",
             LocalDate.now(),
+            15.0,
+            0.0,
             null,
             null,
             null,

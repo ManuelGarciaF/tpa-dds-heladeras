@@ -1,4 +1,4 @@
-package ar.edu.utn.frba.dds.dominio.notificacionesHeladera;
+package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
 import ar.edu.utn.frba.dds.dominio.Heladera;
@@ -11,7 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SugerenciaTrasladoDeViandas {
-  private static final Comparator<Heladera> CRITERIO_COMPARACION = CriteriosComparacionHeladera.masVacia();
+  private static final Comparator<Heladera> CRITERIO_COMPARACION =
+      CriteriosComparacionHeladera.masVacia();
   private static final int DISTANCIA_MINIMA_KM = 10;
 
   private Boolean aceptada = false;
@@ -19,7 +20,10 @@ public class SugerenciaTrasladoDeViandas {
   private final List<Heladera> heladerasSugeridas;
   private final MapaHeladeras mapaHeladeras;
 
-  public SugerenciaTrasladoDeViandas(Heladera heladeraRota, MapaHeladeras mapaHeladeras) {
+  public SugerenciaTrasladoDeViandas(
+      Heladera heladeraRota,
+      MapaHeladeras mapaHeladeras
+  ) {
     this.heladeraRota = heladeraRota;
     this.mapaHeladeras = mapaHeladeras;
 
@@ -27,13 +31,19 @@ public class SugerenciaTrasladoDeViandas {
   }
 
   private List<Heladera> calcularSugerencia() {
-    var candidatas = this.obtenerHeladerasCandidatas();
+    // Hay que copiar la lista para hacerla mutable
+    var candidatas = new ArrayList<>(this.obtenerHeladerasCandidatas());
     candidatas.sort(CRITERIO_COMPARACION);
     return this.obtenerHeladerasNecesarias(candidatas);
   }
 
   public List<Heladera> obtenerHeladerasCandidatas() {
-    return mapaHeladeras.listarHeladeras().stream().filter(heladeraCandidata -> heladeraRota.distanciaA(heladeraCandidata) <= DISTANCIA_MINIMA_KM).toList();
+    return mapaHeladeras
+        .listarHeladeras()
+        .stream()
+        .filter(
+            heladeraCandidata -> heladeraRota.distanciaA(heladeraCandidata) <= DISTANCIA_MINIMA_KM)
+        .toList();
   }
 
   private List<Heladera> obtenerHeladerasNecesarias(List<Heladera> candidatas) {
@@ -75,11 +85,11 @@ public class SugerenciaTrasladoDeViandas {
       var cantidad = Math.min(cantidadViandas, heladeraSugerida.espacioRestante());
 
       var distribucion = new DistribucionDeViandas(
-        MotivoDeDistribucion.DESPERFECTO_HELADERA,
-        LocalDate.now(),
-        cantidad,
-        heladeraRota,
-        heladeraSugerida
+          MotivoDeDistribucion.DESPERFECTO_HELADERA,
+          LocalDate.now(),
+          cantidad,
+          heladeraRota,
+          heladeraSugerida
       );
       colaboradorHumano.colaborar(distribucion);
 
