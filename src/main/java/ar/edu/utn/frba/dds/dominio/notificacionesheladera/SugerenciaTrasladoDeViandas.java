@@ -11,8 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class SugerenciaTrasladoDeViandas {
-  private static final Comparator<Heladera> CRITERIO_COMPARACION =
-      CriteriosComparacionHeladera.masVacia();
+  private static final CriterioSeleccionHeladeras CRITERIO_COMPARACION = new HeladerasMasVacias();
   private static final int DISTANCIA_MINIMA_KM = 10;
 
   private Boolean aceptada = false;
@@ -33,11 +32,11 @@ public class SugerenciaTrasladoDeViandas {
   private List<Heladera> calcularSugerencia() {
     // Hay que copiar la lista para hacerla mutable
     var candidatas = new ArrayList<>(this.obtenerHeladerasCandidatas());
-    candidatas.sort(CRITERIO_COMPARACION);
+    CRITERIO_COMPARACION.sort(heladeraRota, candidatas);
     return this.obtenerHeladerasNecesarias(candidatas);
   }
 
-  public List<Heladera> obtenerHeladerasCandidatas() {
+  private List<Heladera> obtenerHeladerasCandidatas() {
     return mapaHeladeras
         .listarHeladeras()
         .stream()

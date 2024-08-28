@@ -149,7 +149,6 @@ public class Heladera {
     boolean masBajas = ultimasTresTemperaturas.stream().allMatch(
         temperatura -> temperatura < temperaturaMinimaAceptable);
     return ultimasTresTemperaturas.size() >= 3 && (masAltas || masBajas);
-
   }
 
   public Integer cantidadUsos() {
