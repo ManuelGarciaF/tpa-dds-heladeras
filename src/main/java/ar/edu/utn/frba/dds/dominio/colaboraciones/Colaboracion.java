@@ -1,9 +1,15 @@
 package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.Colaborador;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-public interface Colaboracion {
-  Double puntaje();
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Colaboracion extends PersistentEntity {
+  public abstract Double puntaje();
 
-  boolean puedeSerRealizadaPor(Colaborador colaborador);
+  public abstract boolean puedeSerRealizadaPor(Colaborador colaborador);
 }

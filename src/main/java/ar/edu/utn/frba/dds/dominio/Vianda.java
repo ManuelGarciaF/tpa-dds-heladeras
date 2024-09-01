@@ -2,15 +2,18 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import javax.persistence.Entity;
 
-public class Vianda {
-  private final String tipoComida;
-  private final LocalDate fechaDeVencimiento;
-  private final LocalDate fechaDeDonacion;
-  private final Integer calorias;
-  private final Integer peso;
+@Entity
+public class Vianda extends PersistentEntity {
+  private String tipoComida;
+  private LocalDate fechaDeVencimiento;
+  private LocalDate fechaDeDonacion;
+  private Integer calorias;
+  private Integer peso;
 
   private Boolean fueEntregado = false; // Suponemos que por defecto no fue entregada.
 
@@ -23,6 +26,9 @@ public class Vianda {
     this.fechaDeDonacion = LocalDate.now();
     this.peso = peso;
     this.calorias = calorias;
+  }
+
+  public Vianda() {
   }
 
   public String getTipoComida() {
@@ -52,7 +58,6 @@ public class Vianda {
   public void marcarEntregado() {
     this.fueEntregado = true;
   }
-
 
   public int semanasFresca() {
     return (int) ChronoUnit.WEEKS.between(fechaDeDonacion, fechaDeVencimiento);

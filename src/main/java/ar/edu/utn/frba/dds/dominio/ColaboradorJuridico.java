@@ -3,12 +3,23 @@ package ar.edu.utn.frba.dds.dominio;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Set;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
+@Entity
 public class ColaboradorJuridico extends Colaborador {
-  private final String razonSocial;
-  private final TipoPersonaJuridica tipo;
-  private final String rubro;
-  private final Set<FormaDeColaboracionJuridica> formasDeColaboracion;
+  private String razonSocial;
+
+  @Enumerated(EnumType.STRING)
+  private TipoPersonaJuridica tipo;
+
+  private String rubro;
+
+  @ElementCollection
+  @Enumerated(EnumType.STRING)
+  private Set<FormaDeColaboracionJuridica> formasDeColaboracion;
 
   public ColaboradorJuridico(String razonSocial,
                              TipoPersonaJuridica tipo,
@@ -21,6 +32,9 @@ public class ColaboradorJuridico extends Colaborador {
     this.tipo = requireNonNull(tipo);
     this.rubro = requireNonNull(rubro);
     this.formasDeColaboracion = requireNonNull(formasDeColaboracion);
+  }
+
+  public ColaboradorJuridico() {
   }
 
   public String getRazonSocial() {

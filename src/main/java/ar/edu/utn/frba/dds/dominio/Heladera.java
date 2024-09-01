@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
@@ -16,33 +17,52 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
-public class Heladera {
+@Entity
+public class Heladera extends PersistentEntity {
   private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
 
-  private final String nombre;
-  private final Integer capacidadViandas;
-  private final LocalDate fechaCreacion;
-  private final Double temperaturaMaximaAceptable;
-  private final Double temperaturaMinimaAceptable;
-  private final Ubicacion ubicacion;
-  private final String numeroDeSerie;
+  private String nombre;
+  private Integer capacidadViandas;
+  private LocalDate fechaCreacion;
+  private Double temperaturaMaximaAceptable;
+  private Double temperaturaMinimaAceptable;
+  private Ubicacion ubicacion;
+  private String numeroDeSerie;
 
+  @ElementCollection
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
+
+  @OneToMany
+  @JoinColumn(name = "heladera_id")
   private final List<Vianda> viandas = new ArrayList<>();
+
+  @ElementCollection
   private final List<AperturaHeladera> aperturasPendientes = new ArrayList<>();
+
+  @ElementCollection // TODO reemplazar por un bool
   private final List<AperturaHeladera> aperturasCompletadas = new ArrayList<>();
 
-  private final ProveedorPeso proveedorPeso;
-  private final ProveedorTemperatura proveedorTemperatura;
-  private final AutorizadorAperturas autorizadorAperturas;
+  @Transient // TODO
+  private ProveedorPeso proveedorPeso;
+  @Transient // TODO
+  private ProveedorTemperatura proveedorTemperatura;
+  @Transient // TODO
+  private AutorizadorAperturas autorizadorAperturas;
 
+  @Transient // TODO
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
-  private final RepoTecnicos repoTecnicos;
-
-  private final ProveedorCantidadDeViandas proveedorCantidadDeViandas;
-  private final NotificacionHeladeraHandler notificacionHeladeraHandler;
+  @Transient // TODO
+  private ProveedorCantidadDeViandas proveedorCantidadDeViandas;
+  @Transient // TODO
+  private NotificacionHeladeraHandler notificacionHeladeraHandler;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -67,13 +87,15 @@ public class Heladera {
     this.temperaturaMaximaAceptable = temperaturaMaximaAceptable;
     this.temperaturaMinimaAceptable = temperaturaMinimaAceptable;
     this.autorizadorAperturas = autorizadorAperturas;
-    this.repoTecnicos = repoTecnicos;
     this.proveedorCantidadDeViandas = proveedorCantidadDeViandas;
     this.notificacionHeladeraHandler = notificacionHeladeraHandler;
 
     configurarSensores(proveedorTemperatura,
         proveedorCantidadDeViandas,
         notificacionHeladeraHandler);
+  }
+
+  public Heladera() {
   }
 
   // Configurar handlers automaticos para los sensores
@@ -203,7 +225,8 @@ public class Heladera {
 
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-    repoTecnicos.delegarReparacion(this);
+//    repoTecnicos.delegarReparacion(this);
+    // TODO
     notificacionHeladeraHandler.notificarIncidente(this);
   }
 

@@ -2,17 +2,23 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.exceptions.UsoTarjetaException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 
-public class PersonaVulnerable {
-  private final String nombre;
-  private final LocalDate fechaNacimiento;
-  private final LocalDate fechaRegistro;
-  private final String domicilio;
-  private final Integer menoresAcargo;
-  private final TarjetaPersonaVulnerable tarjeta;
+@Entity
+public class PersonaVulnerable extends PersistentEntity {
+  private String nombre;
+  private LocalDate fechaNacimiento;
+  private LocalDate fechaRegistro;
+  private String domicilio;
+  private Integer menoresAcargo;
+
+  @Embedded
+  private TarjetaPersonaVulnerable tarjeta;
 
   public PersonaVulnerable(String nombre,
                            String domicilio,
@@ -26,6 +32,9 @@ public class PersonaVulnerable {
     this.fechaRegistro = requireNonNull(fechaRegistro);
     this.menoresAcargo = requireNonNull(menoresAcargo);
     this.tarjeta = requireNonNull(tarjetaPersonaVulnerable);
+  }
+
+  public PersonaVulnerable() {
   }
 
   public Integer usosMaximosDiarios() {

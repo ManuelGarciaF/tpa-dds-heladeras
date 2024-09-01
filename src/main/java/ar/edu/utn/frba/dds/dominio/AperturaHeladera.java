@@ -2,12 +2,18 @@ package ar.edu.utn.frba.dds.dominio;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
+@Embeddable
 public class AperturaHeladera {
   private static final Integer HORAS_MAXIMAS_APERTURA = 3;
 
-  private final ColaboradorHumano colaboradorHumano;
-  private final LocalDateTime fechaSolicitud;
+  @ManyToOne
+  private ColaboradorHumano colaboradorHumano;
+
+  private LocalDateTime fechaSolicitud;
   private LocalDateTime fechaApertura;
 
   public AperturaHeladera(ColaboradorHumano colaboradorHumano, LocalDateTime fechaSolicitud) {
@@ -18,6 +24,9 @@ public class AperturaHeladera {
     }
     this.colaboradorHumano = colaboradorHumano;
     this.fechaSolicitud = fechaSolicitud;
+  }
+
+  public AperturaHeladera() {
   }
 
   public void setFechaApertura(LocalDateTime fechaApertura) {

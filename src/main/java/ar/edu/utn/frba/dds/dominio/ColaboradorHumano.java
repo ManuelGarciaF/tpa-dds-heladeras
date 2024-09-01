@@ -8,19 +8,36 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Transient;
 
+@Entity
 public class ColaboradorHumano extends Colaborador {
-  private final String nombre;
-  private final String apellido;
-  private final LocalDate fechaDeNacimiento;
-  private final Set<FormaDeColaboracionHumana> formasDeColaboracion;
-  private final TipoDocumento tipoDocumento;
-  private final Integer numeroDocumento;
+  private String nombre;
+  private String apellido;
+  private LocalDate fechaDeNacimiento;
+
+  @Enumerated(javax.persistence.EnumType.STRING)
+  @ElementCollection
+  private Set<FormaDeColaboracionHumana> formasDeColaboracion;
+
+  @Enumerated(javax.persistence.EnumType.STRING)
+  private TipoDocumento tipoDocumento;
+
+  private Integer numeroDocumento;
+
+  @Embedded
   private TarjetaColaborador tarjetaColaborador;
 
+  @Transient // TODO
   private final List<SugerenciaTrasladoDeViandas> sugerenciasPendientes = new ArrayList<>();
 
-  private final ProveedorMensajeria proveedorMensajeria;
+  @Transient // TODO
+  private ProveedorMensajeria proveedorMensajeria;
 
   public ColaboradorHumano(String nombre,
                            String apellido,
@@ -39,6 +56,9 @@ public class ColaboradorHumano extends Colaborador {
     this.tipoDocumento = requireNonNull(tipoDocumento);
     this.numeroDocumento = requireNonNull(numeroDocumento);
     this.proveedorMensajeria = proveedorMensajeria;
+  }
+
+  public ColaboradorHumano() {
   }
 
   @Override

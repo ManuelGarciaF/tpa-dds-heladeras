@@ -80,7 +80,7 @@ class ColaboradorHumanoTest {
             "9876454321")
     );
 
-    mapaHeladeras = new MapaHeladeras();
+    mapaHeladeras = new MapaHeladeras(); // TODO mockear esto
     heladera1 = new Heladera("heladera1",
         40,
         new Ubicacion(0.1, 0.0),
