@@ -36,7 +36,6 @@ class ColaboradorJuridicoTest {
         null,
         null,
         null,
-        null,
         null);
     mapaHeladeras = new MapaHeladeras();
     mapaHeladeras.agregarHeladera(heladera);
@@ -54,7 +53,7 @@ class ColaboradorJuridicoTest {
     colaboradorJuridico.colaborar(new DonacionDeDinero(420, false, null));
     colaboradorJuridico.colaborar(new HacerseCargoHeladera(heladera));
 
-    var tarjeta = new TarjetaPersonaVulnerable("123", mapaHeladeras);
+    var tarjeta = new TarjetaPersonaVulnerable("123");
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),

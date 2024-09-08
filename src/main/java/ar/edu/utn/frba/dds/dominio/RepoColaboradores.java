@@ -47,7 +47,7 @@ public class RepoColaboradores implements WithSimplePersistenceUnit {
           Set.of(),
           fila.tipoDocumento(),
           fila.numeroDocumento(),
-          null); // TODO crear un proveedorMensajeriaMaipersonal
+          null); // TODO crear un proveedorMensajeriaMailpersonal
       agregarColaborador(colaborador);
       return colaborador;
     }

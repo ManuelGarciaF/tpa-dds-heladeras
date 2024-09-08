@@ -9,7 +9,32 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Entities -->
-
+        <class>ar.edu.utn.frba.dds.dominio.Colaborador</class>
+        <class>ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion</class>
+        <class>ar.edu.utn.frba.dds.dominio.incidentes.Incidente</class>
+        <class>ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura</class>
+        <class>ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica</class>
+        <class>ar.edu.utn.frba.dds.dominio.ColaboradorHumano</class>
+        <class>ar.edu.utn.frba.dds.dominio.Vianda</class>
+        <class>ar.edu.utn.frba.dds.dominio.Heladera</class>
+        <class>ar.edu.utn.frba.dds.dominio.ColaboradorJuridico</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorCantidadDeViandas</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorIncidente</class>
+        <class>ar.edu.utn.frba.dds.dominio.PersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SugerenciaTrasladoDeViandas</class>
+        <class>ar.edu.utn.frba.dds.dominio.Usuario</class>
+        <class>ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico</class>
+        <class>ar.edu.utn.frba.dds.dominio.SolicitudTarjetaColaborador</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeViandaHistorica</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorIncidente</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerableHistorico</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion</class>
+        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

@@ -3,6 +3,7 @@ package ar.edu.utn.frba.dds.dominio;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor;
@@ -12,15 +13,15 @@ import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import ar.edu.utn.frba.dds.externo.*;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class HeladeraTest {
+class HeladeraTest implements SimplePersistenceTest {
   private Heladera heladera;
-  private MapaHeladeras mapaHeladeras;
   private TSensor tSensor;
   private WSensor wSensor;
   private LSensor lSensor;
@@ -37,10 +38,8 @@ class HeladeraTest {
 
     proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j");
     var proveedorCantidadDeViandasSensor = new ProveedorCantidadDeViandasSensor(lSensor);
-    var repoTecnicos = new RepoTecnicos();
-    repoTecnicos.agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
+    RepoTecnicos.getInstance().agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
 
-    mapaHeladeras = new MapaHeladeras();
     heladera = new Heladera("heladera",
         40,
         new Ubicacion(0.1, 0.0),
@@ -51,10 +50,9 @@ class HeladeraTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
-        repoTecnicos,
         proveedorCantidadDeViandasSensor,
-        new NotificacionHeladeraHandler(mapaHeladeras));
-    mapaHeladeras.agregarHeladera(heladera);
+        new NotificacionHeladeraHandler());
+    MapaHeladeras.getInstance().agregarHeladera(heladera);
 
     // Agregar un valor inicial para la cantidad de viandas
     proveedorCantidadDeViandasSensor.interpretarLectura(1);
@@ -69,6 +67,7 @@ class HeladeraTest {
         180924102,
         null
     );
+    entityManager().persist(colaboradorHumano);
   }
 
   @Test
@@ -174,8 +173,4 @@ class HeladeraTest {
 
     assertEquals(1, heladera.getIncidentesActivos().size());
   }
-
-  //TODO: yo quiero testear si efectivamente se le asigna el incidente al tecnico mas cercano
-
-
 }

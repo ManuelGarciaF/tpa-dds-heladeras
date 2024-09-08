@@ -17,11 +17,13 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -33,35 +35,35 @@ public class Heladera extends PersistentEntity {
   private LocalDate fechaCreacion;
   private Double temperaturaMaximaAceptable;
   private Double temperaturaMinimaAceptable;
-  private Ubicacion ubicacion;
   private String numeroDeSerie;
+
+  @Embedded
+  private Ubicacion ubicacion;
 
   @ElementCollection
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "heladera_id")
   private final List<Vianda> viandas = new ArrayList<>();
 
   @ElementCollection
-  private final List<AperturaHeladera> aperturasPendientes = new ArrayList<>();
-
-  @ElementCollection // TODO reemplazar por un bool
-  private final List<AperturaHeladera> aperturasCompletadas = new ArrayList<>();
+  private final List<AperturaHeladera> aperturasHeladera = new ArrayList<>();
 
   @Transient // TODO
   private ProveedorPeso proveedorPeso;
   @Transient // TODO
   private ProveedorTemperatura proveedorTemperatura;
   @Transient // TODO
-  private AutorizadorAperturas autorizadorAperturas;
-
-  @Transient // TODO
-  private final List<Incidente> incidentesActivos = new ArrayList<>();
-
-  @Transient // TODO
   private ProveedorCantidadDeViandas proveedorCantidadDeViandas;
   @Transient // TODO
+  private AutorizadorAperturas autorizadorAperturas;
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
+  private final List<Incidente> incidentesActivos = new ArrayList<>();
+
+  @OneToOne(cascade = CascadeType.ALL)
   private NotificacionHeladeraHandler notificacionHeladeraHandler;
 
   public Heladera(String nombre,
@@ -74,7 +76,6 @@ public class Heladera extends PersistentEntity {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-                  RepoTecnicos repoTecnicos,
                   ProveedorCantidadDeViandas proveedorCantidadDeViandas,
                   NotificacionHeladeraHandler notificacionHeladeraHandler) {
     this.nombre = requireNonNull(nombre);
@@ -190,43 +191,43 @@ public class Heladera extends PersistentEntity {
   public void agregarSolicitudApertura(AperturaHeladera apertura) {
     // Notificar al controlador de acceso
     autorizadorAperturas.habilitarTarjeta(apertura.getTarjetaColaborador());
-    aperturasPendientes.add(apertura);
+    aperturasHeladera.add(apertura);
   }
 
   public void registrarApertura(ColaboradorHumano colaborador, LocalDateTime fechaApertura) {
     AperturaHeladera apertura = buscarAperturaValida(colaborador, fechaApertura);
-
-    aperturasPendientes.remove(apertura);
-    apertura.setFechaApertura(fechaApertura);
-    aperturasCompletadas.add(apertura);
+    apertura.realizar(fechaApertura);
   }
 
   private AperturaHeladera buscarAperturaValida(ColaboradorHumano colaborador,
                                                 LocalDateTime fechaApertura) {
-    return aperturasPendientes.stream()
+    return aperturasHeladera.stream()
         .filter(a -> a.getColaboradorHumano().equals(colaborador) && a.esValida(fechaApertura))
         .findFirst()
         .orElseThrow(() -> new HeladeraException("No hay aperturas validas para este colaborador"));
   }
 
   public List<AperturaHeladera> getAperturasCompletadas() {
-    return aperturasCompletadas;
+    return aperturasHeladera.stream()
+        .filter(AperturaHeladera::isRealizada)
+        .toList();
   }
 
   public List<AperturaHeladera> getAperturasPendientes() {
-    return aperturasPendientes;
+    return aperturasHeladera.stream()
+        .filter(a -> !a.isRealizada())
+        .toList();
   }
 
   public List<AperturaHeladera> getAperturasValidas() {
-    return aperturasPendientes.stream()
+    return aperturasHeladera.stream()
         .filter(AperturaHeladera::esValidaAhora)
         .toList();
   }
 
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-//    repoTecnicos.delegarReparacion(this);
-    // TODO
+    RepoTecnicos.getInstance().delegarReparacion(this);
     notificacionHeladeraHandler.notificarIncidente(this);
   }
 

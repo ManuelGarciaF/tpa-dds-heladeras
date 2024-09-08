@@ -13,24 +13,24 @@ import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
-import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificarFaltaDeViandas;
-import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificarIncidente;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajesInstantaneos;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorCantidadDeViandas;
+import ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorIncidente;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorPesoSensor;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperaturaSensor;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico;
 import ar.edu.utn.frba.dds.externo.*;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ColaboradorHumanoTest {
+class ColaboradorHumanoTest implements SimplePersistenceTest {
   private Heladera heladera1;
-  private MapaHeladeras mapaHeladeras;
   private ProveedorCantidadDeViandasSensor proveedorCantidadDeViandasSensor;
   private InstantMessageSender instantMessageSender;
 
@@ -48,8 +48,7 @@ class ColaboradorHumanoTest {
     ProveedorTemperaturaSensor proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j");
     proveedorCantidadDeViandasSensor = new ProveedorCantidadDeViandasSensor(lSensor);
 
-    var repoTecnicos = new RepoTecnicos();
-    repoTecnicos.agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
+    RepoTecnicos.getInstance().agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
 
     // Agregar un valor inicial para la cantidad de viandas
     proveedorCantidadDeViandasSensor.interpretarLectura(1);
@@ -66,6 +65,7 @@ class ColaboradorHumanoTest {
             InstantMessageApp.WHATSAPP,
             "123456789")
     );
+    entityManager().persist(colaboradorHumano1);
 
     colaboradorHumano2 = new ColaboradorHumano("Pedro",
         "Perez",
@@ -79,8 +79,8 @@ class ColaboradorHumanoTest {
             InstantMessageApp.WHATSAPP,
             "9876454321")
     );
+    entityManager().persist(colaboradorHumano2);
 
-    mapaHeladeras = new MapaHeladeras(); // TODO mockear esto
     heladera1 = new Heladera("heladera1",
         40,
         new Ubicacion(0.1, 0.0),
@@ -91,14 +91,13 @@ class ColaboradorHumanoTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
-        repoTecnicos,
         proveedorCantidadDeViandasSensor,
-        new NotificacionHeladeraHandler(mapaHeladeras));
-    mapaHeladeras.agregarHeladera(heladera1);
+        new NotificacionHeladeraHandler());
+    MapaHeladeras.getInstance().agregarHeladera(heladera1);
 
     var lSensor2 = mock(LSensor.class);
     var proveedorCantidadDeViandasSensor2 = new ProveedorCantidadDeViandasSensor(lSensor2);
-    mapaHeladeras.agregarHeladera(
+    MapaHeladeras.getInstance().agregarHeladera(
         new Heladera("heladera2",
             39,
             new Ubicacion(0.2, 0.0),
@@ -109,9 +108,8 @@ class ColaboradorHumanoTest {
             null,
             null,
             null,
-            null,
             proveedorCantidadDeViandasSensor2,
-            new NotificacionHeladeraHandler(mapaHeladeras)));
+            new NotificacionHeladeraHandler()));
     // Valor inicial para la cantidad de viandas
     proveedorCantidadDeViandasSensor2.interpretarLectura(0);
   }
@@ -136,15 +134,15 @@ class ColaboradorHumanoTest {
         new Vianda("Vianda", LocalDate.now().plusWeeks(2), 10, 10),
         null));
 
-    var tarjeta = new TarjetaPersonaVulnerable("123", mapaHeladeras);
+    var tarjeta = new TarjetaPersonaVulnerable("123");
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),
         LocalDate.now().minusMonths(10),
         100,
         tarjeta);
-    personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera1"));
-    personaVulnerable.agregarUsoTarjeta(mapaHeladeras.buscarHeladera("heladera2"));
+    personaVulnerable.agregarUsoTarjeta(MapaHeladeras.getInstance().buscarHeladera("heladera1"));
+    personaVulnerable.agregarUsoTarjeta(MapaHeladeras.getInstance().buscarHeladera("heladera2"));
 
     colaboradorHumano1.colaborar(new RegistroDePersonaVulnerable(personaVulnerable));
 
@@ -158,7 +156,7 @@ class ColaboradorHumanoTest {
   @Test
   void puedeSubscribirseAUnaHeladeraYSerAlertadoPorFaltaDeViandas() {
     heladera1.getNotificacionHeladeraHandler().agregarSubscriptorCantidadDeViandas(
-        new NotificarFaltaDeViandas(colaboradorHumano1, 10));
+        new SubscriptorCantidadDeViandas(colaboradorHumano1, 10));
 
     // Se registra un cambio en la cantidad de viandas
     proveedorCantidadDeViandasSensor.interpretarLectura(0);
@@ -171,12 +169,13 @@ class ColaboradorHumanoTest {
 
   @Test
   void puedeSubscribirseAUnaHeladeraYSerAlertadoPorUnIncidente() {
-    heladera1.getNotificacionHeladeraHandler().agregarSubscriptorIncidente(
-        new NotificarIncidente(colaboradorHumano1));
+    var subscriptor = new SubscriptorIncidente(colaboradorHumano1);
+    heladera1.getNotificacionHeladeraHandler().agregarSubscriptorIncidente(subscriptor);
 
     // Se registra un incidente
     heladera1.nuevoIncidente(
         new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
+
 
     verify(instantMessageSender).sendMessage(
         eq(InstantMessageApp.WHATSAPP),
@@ -188,7 +187,7 @@ class ColaboradorHumanoTest {
   void alSerAlertadoPorUnIncidenteSeLeEnviaUnaSugerencia() {
     // Subscribirse y ser alertado.
     heladera1.getNotificacionHeladeraHandler()
-        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+        .agregarSubscriptorIncidente(new SubscriptorIncidente(colaboradorHumano1));
     heladera1.nuevoIncidente(
         new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
 
@@ -204,7 +203,7 @@ class ColaboradorHumanoTest {
         10)));
     // Subscribirse y ser alertado.
     heladera1.getNotificacionHeladeraHandler()
-        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+        .agregarSubscriptorIncidente(new SubscriptorIncidente(colaboradorHumano1));
     heladera1.nuevoIncidente(
         new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
 
@@ -218,9 +217,9 @@ class ColaboradorHumanoTest {
   void dosColaboradoresNoPuedenAceptarLaMismaSugerencia() {
     // Subscribirse y ser alertado.
     heladera1.getNotificacionHeladeraHandler()
-        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano1));
+        .agregarSubscriptorIncidente(new SubscriptorIncidente(colaboradorHumano1));
     heladera1.getNotificacionHeladeraHandler()
-        .agregarSubscriptorIncidente(new NotificarIncidente(colaboradorHumano2));
+        .agregarSubscriptorIncidente(new SubscriptorIncidente(colaboradorHumano2));
     heladera1.nuevoIncidente(
         new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_TEMPERATURA));
 

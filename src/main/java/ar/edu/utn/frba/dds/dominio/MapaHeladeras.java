@@ -5,16 +5,14 @@ import java.util.List;
 
 
 public class MapaHeladeras implements WithSimplePersistenceUnit {
-
   private static final MapaHeladeras instance = new MapaHeladeras();
 
   public static MapaHeladeras getInstance() {
     return instance;
   }
 
-  @SuppressWarnings("unchecked")
   public List<Heladera> listarHeladeras() {
-    return entityManager().createQuery("from Heladera").getResultList();
+    return entityManager().createQuery("from Heladera", Heladera.class).getResultList();
   }
 
   public void agregarHeladera(Heladera heladera) {

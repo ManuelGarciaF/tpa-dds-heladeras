@@ -2,15 +2,15 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.PersonaVulnerable;
-import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
 
 @Entity
 public class RegistroDePersonaVulnerable extends Colaboracion {
   public static final Double COEFICIENTE_PUNTAJE = 2.0;
 
-  @Transient // TODO
+  @OneToOne(cascade = CascadeType.ALL)
   private PersonaVulnerable personaRegistrada;
 
   public RegistroDePersonaVulnerable(

@@ -4,17 +4,20 @@ import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.Vianda;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class DonacionDeVianda extends Colaboracion {
   public static final double COEFICIENTE_PUNTAJE = 1.5;
 
-  @Transient // TODO
+  @OneToOne(cascade = CascadeType.ALL)
   private Vianda vianda;
 
-  @Transient // TODO
+  @ManyToOne
   private Heladera heladera;
 
   public DonacionDeVianda(Vianda vianda, Heladera heladera) {

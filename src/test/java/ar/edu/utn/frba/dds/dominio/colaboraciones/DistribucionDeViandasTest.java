@@ -25,7 +25,6 @@ class DistribucionDeViandasTest {
         null,
         null,
         null,
-        null,
         null);
     Heladera heladeraDestino = new Heladera("Destino",
         40,
@@ -34,7 +33,6 @@ class DistribucionDeViandasTest {
         LocalDate.now(),
         15.0,
         0.0,
-        null,
         null,
         null,
         null,

@@ -3,17 +3,11 @@ package ar.edu.utn.frba.dds.dominio;
 import static org.junit.jupiter.api.Assertions.*;
 
 import ar.edu.utn.frba.dds.exceptions.CsvInvalidoException;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RepoColaboradoresTest {
-  RepoColaboradores repoColaboradores;
-
-  @BeforeEach
-  void setUp() {
-    repoColaboradores = new RepoColaboradores();
-  }
+class RepoColaboradoresTest implements SimplePersistenceTest {
 
   @Test
   void puedeAgregarUnColaborador() {
@@ -27,21 +21,21 @@ class RepoColaboradoresTest {
         180924102,
         null
     );
-    repoColaboradores.agregarColaborador(colaborador);
-    assertTrue(repoColaboradores.getColaboradores().contains(colaborador));
+    RepoColaboradores.getInstance().agregarColaborador(colaborador);
+    assertTrue(RepoColaboradores.getInstance().getColaboradores().contains(colaborador));
   }
 
   @Test
   void puedoCargarColaboradoresDesdeCsv() {
-    repoColaboradores.cargarDeCsv("src/test/resources/cargaMasivaCorrecta.csv");
-    assertEquals(20, repoColaboradores.getColaboradores().size());
+    RepoColaboradores.getInstance().cargarDeCsv("src/test/resources/cargaMasivaCorrecta.csv");
+    assertEquals(20, RepoColaboradores.getInstance().getColaboradores().size());
   }
 
   @Test
   void noPuedoCargarColaboradoresDesdeUnArchivoConErrores() {
     assertThrows(CsvInvalidoException.class,
-       () -> repoColaboradores.cargarDeCsv("src/test/resources/cargaMasivaError.csv"));
+       () -> RepoColaboradores.getInstance().cargarDeCsv("src/test/resources/cargaMasivaError.csv"));
     // Checkear que no hubo cambios en el sistema
-    assertEquals(0, repoColaboradores.getColaboradores().size());
+    assertEquals(0, RepoColaboradores.getInstance().getColaboradores().size());
   }
 }

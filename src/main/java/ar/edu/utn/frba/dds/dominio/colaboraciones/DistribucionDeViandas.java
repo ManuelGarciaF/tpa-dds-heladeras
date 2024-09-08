@@ -5,22 +5,25 @@ import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MotivoDeDistribucion;
 import java.time.LocalDate;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
 public class DistribucionDeViandas extends Colaboracion {
   public static final Double COEFICIENTE_PUNTAJE = 1.0;
 
-  @Enumerated(javax.persistence.EnumType.STRING)
+  @Enumerated(EnumType.STRING)
   private MotivoDeDistribucion motivoDeDistribucion;
 
   private LocalDate fechaDeLaDistribucion;
   private Integer cantidadDeViandas;
 
-  @Transient // TODO
+  @ManyToOne
   private Heladera heladeraOrigen;
-  @Transient // TODO
+  @ManyToOne
   private Heladera heladeraDestino;
 
   public DistribucionDeViandas(MotivoDeDistribucion motivoDeDistribucion,

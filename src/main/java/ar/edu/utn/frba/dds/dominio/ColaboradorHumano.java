@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
+import javax.persistence.ManyToMany;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Transient;
@@ -21,8 +21,8 @@ public class ColaboradorHumano extends Colaborador {
   private String apellido;
   private LocalDate fechaDeNacimiento;
 
-  @Enumerated(javax.persistence.EnumType.STRING)
   @ElementCollection
+  @Enumerated(javax.persistence.EnumType.STRING)
   private Set<FormaDeColaboracionHumana> formasDeColaboracion;
 
   @Enumerated(javax.persistence.EnumType.STRING)
@@ -33,7 +33,7 @@ public class ColaboradorHumano extends Colaborador {
   @Embedded
   private TarjetaColaborador tarjetaColaborador;
 
-  @Transient // TODO
+  @ManyToMany
   private final List<SugerenciaTrasladoDeViandas> sugerenciasPendientes = new ArrayList<>();
 
   @Transient // TODO

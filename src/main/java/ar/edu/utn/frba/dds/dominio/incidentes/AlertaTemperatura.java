@@ -1,10 +1,15 @@
 package ar.edu.utn.frba.dds.dominio.incidentes;
 
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
 
+@Entity
 public class AlertaTemperatura extends Incidente {
   public AlertaTemperatura(LocalDateTime fecha) {
     super(fecha);
+  }
+
+  public AlertaTemperatura() {
   }
 
   @Override

@@ -1,18 +1,15 @@
 package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
-import static java.util.Objects.requireNonNull;
-
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
 
 @Entity
 public class HacerseCargoHeladera extends Colaboracion {
   public static final Double COEFICIENTE_PUNTAJE = 5.0;
 
-  @Transient // TODO
+  @OneToOne
   private Heladera heladera;
 
   public HacerseCargoHeladera(Heladera heladera) {

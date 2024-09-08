@@ -29,7 +29,6 @@ class DonacionDeViandaTest {
             null,
             null,
             null,
-            null,
             null)
     );
   }

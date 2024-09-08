@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
@@ -8,24 +9,31 @@ import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
-public class SugerenciaTrasladoDeViandas {
+@Entity
+public class SugerenciaTrasladoDeViandas extends PersistentEntity {
   private static final CriterioSeleccionHeladeras CRITERIO_COMPARACION = new HeladerasMasVacias();
   private static final int DISTANCIA_MINIMA_KM = 10;
 
   private Boolean aceptada = false;
-  private final Heladera heladeraRota;
-  private final List<Heladera> heladerasSugeridas;
-  private final MapaHeladeras mapaHeladeras;
 
-  public SugerenciaTrasladoDeViandas(
-      Heladera heladeraRota,
-      MapaHeladeras mapaHeladeras
-  ) {
+  @ManyToOne
+  private Heladera heladeraRota;
+
+  @ManyToMany
+  private List<Heladera> heladerasSugeridas;
+
+  public SugerenciaTrasladoDeViandas(Heladera heladeraRota) {
     this.heladeraRota = heladeraRota;
-    this.mapaHeladeras = mapaHeladeras;
 
     this.heladerasSugeridas = calcularSugerencia();
+  }
+
+  public SugerenciaTrasladoDeViandas() {
   }
 
   private List<Heladera> calcularSugerencia() {
@@ -36,7 +44,7 @@ public class SugerenciaTrasladoDeViandas {
   }
 
   private List<Heladera> obtenerHeladerasCandidatas() {
-    return mapaHeladeras
+    return MapaHeladeras.getInstance()
         .listarHeladeras()
         .stream()
         .filter(
