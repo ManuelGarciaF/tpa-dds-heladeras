@@ -47,7 +47,8 @@ public class RepoColaboradores implements WithSimplePersistenceUnit {
           Set.of(),
           fila.tipoDocumento(),
           fila.numeroDocumento(),
-          null); // TODO crear un proveedorMensajeriaMailpersonal
+          null); // Quizas tendria sentido crear un proveedor de
+      // mensajeria para el colaborador nuevo.
       agregarColaborador(colaborador);
       return colaborador;
     }
@@ -55,7 +56,8 @@ public class RepoColaboradores implements WithSimplePersistenceUnit {
 
   private Colaborador buscarColaboradorHumano(TipoDocumento tipoDocumento, Integer documento) {
     return entityManager().createQuery(
-            "from ColaboradorHumano where tipoDocumento = :tipoDocumento and numeroDocumento = :documento",
+            "from ColaboradorHumano where "
+                + "tipoDocumento = :tipoDocumento and numeroDocumento = :documento",
             ColaboradorHumano.class)
         .setParameter("tipoDocumento", tipoDocumento)
         .setParameter("documento", documento)

@@ -16,7 +16,7 @@ import javax.persistence.Transient;
 
 @Entity
 public class SugerenciaTrasladoDeViandas extends PersistentEntity {
-  private static final CriterioSeleccionHeladeras CRITERIO_COMPARACION = new HeladerasMasVacias();
+  private static final CriterioSeleccionHeladeras CRITERIO_COMPARACION = new HeladerasMasCercanas();
   private static final int DISTANCIA_MINIMA_KM = 10;
 
   private Boolean aceptada = false;

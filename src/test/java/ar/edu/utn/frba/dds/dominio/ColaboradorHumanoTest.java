@@ -50,9 +50,6 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
 
     RepoTecnicos.getInstance().agregarTecnico(new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6)));
 
-    // Agregar un valor inicial para la cantidad de viandas
-    proveedorCantidadDeViandasSensor.interpretarLectura(1);
-
     colaboradorHumano1 = new ColaboradorHumano("Mati",
         "Matias",
         LocalDate.of(1995, 10, 10),
@@ -94,6 +91,9 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
         proveedorCantidadDeViandasSensor,
         new NotificacionHeladeraHandler());
     MapaHeladeras.getInstance().agregarHeladera(heladera1);
+
+    // Agregar un valor inicial para la cantidad de viandas
+    proveedorCantidadDeViandasSensor.interpretarLectura(1);
 
     var lSensor2 = mock(LSensor.class);
     var proveedorCantidadDeViandasSensor2 = new ProveedorCantidadDeViandasSensor(lSensor2);

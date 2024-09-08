@@ -13,7 +13,9 @@ public class SubscriptorCantidadDeViandas extends PersistentEntity {
   @ManyToOne
   private ColaboradorHumano colaboradorInteresado;
 
-  public SubscriptorCantidadDeViandas(ColaboradorHumano colaboradorInteresado, Integer cantidadMinima) {
+  public SubscriptorCantidadDeViandas(
+      ColaboradorHumano colaboradorInteresado,
+      Integer cantidadMinima) {
     this.colaboradorInteresado = colaboradorInteresado;
     this.cantidadMinima = cantidadMinima;
   }
