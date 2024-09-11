@@ -6,10 +6,9 @@ import ar.edu.utn.frba.dds.PersistentEntity;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 
-@Entity
-public class TarjetaPersonaVulnerable extends PersistentEntity {
+@Embeddable
+public class TarjetaPersonaVulnerable {
 
   private String codigoTarjeta;
 

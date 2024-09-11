@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ColaboradorJuridicoTest {
+class ColaboradorJuridicoTest implements SimplePersistenceTest {
 
   ColaboradorJuridico colaboradorJuridico;
   Heladera heladera;
-  MapaHeladeras mapaHeladeras;
 
   @BeforeEach
   void setUp() {
@@ -37,8 +37,7 @@ class ColaboradorJuridicoTest {
         null,
         null,
         null);
-    mapaHeladeras = new MapaHeladeras();
-    mapaHeladeras.agregarHeladera(heladera);
+    MapaHeladeras.getInstance().agregarHeladera(heladera);
   }
 
   @Test

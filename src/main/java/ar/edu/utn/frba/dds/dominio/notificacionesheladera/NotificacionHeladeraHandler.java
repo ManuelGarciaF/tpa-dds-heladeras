@@ -5,21 +5,20 @@ import ar.edu.utn.frba.dds.dominio.Heladera;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
-@Entity
-public class NotificacionHeladeraHandler extends PersistentEntity {
+@Embeddable
+public class NotificacionHeladeraHandler {
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "notificacionHeladeraHandler_id")
+  @JoinColumn(name = "heladera_id")
   private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas =
       new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "notificacionHeladeraHandler_id")
+  @JoinColumn(name = "heladera_id")
   private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
 
   public NotificacionHeladeraHandler() {

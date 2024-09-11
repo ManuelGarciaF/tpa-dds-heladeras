@@ -2,9 +2,7 @@ package ar.edu.utn.frba.dds.dominio.tecnicos;
 
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Embeddable

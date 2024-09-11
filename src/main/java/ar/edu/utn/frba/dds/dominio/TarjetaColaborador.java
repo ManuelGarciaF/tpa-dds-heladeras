@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable

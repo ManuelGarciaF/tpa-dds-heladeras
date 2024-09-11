@@ -6,9 +6,8 @@ import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.exceptions.UsoTarjetaException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 @Entity
 public class PersonaVulnerable extends PersistentEntity {
@@ -18,7 +17,7 @@ public class PersonaVulnerable extends PersistentEntity {
   private String domicilio;
   private Integer menoresAcargo;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @Embedded
   private TarjetaPersonaVulnerable tarjeta;
 
   public PersonaVulnerable(String nombre,

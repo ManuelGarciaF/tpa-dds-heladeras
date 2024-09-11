@@ -16,7 +16,9 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
   }
 
   public void agregarHeladera(Heladera heladera) {
+    entityManager().getTransaction().begin();
     entityManager().persist(heladera);
+    entityManager().getTransaction().commit();
   }
 
   public Heladera buscarHeladera(String nombreHeladera) {

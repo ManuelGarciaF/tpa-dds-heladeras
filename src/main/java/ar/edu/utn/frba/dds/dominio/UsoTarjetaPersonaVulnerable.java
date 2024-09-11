@@ -1,12 +1,14 @@
 package ar.edu.utn.frba.dds.dominio;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import java.time.LocalDate;
-import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-@Embeddable
-public final class UsoTarjetaPersonaVulnerable {
-  @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+@Entity
+public final class UsoTarjetaPersonaVulnerable extends PersistentEntity {
+  @Embedded
   private TarjetaPersonaVulnerable tarjetaPersonaVulnerable;
 
   private LocalDate fecha;

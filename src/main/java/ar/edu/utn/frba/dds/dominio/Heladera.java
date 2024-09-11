@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -40,7 +41,7 @@ public class Heladera extends PersistentEntity {
   @Embedded
   private Ubicacion ubicacion;
 
-  @ElementCollection
+  @OneToMany(cascade = CascadeType.ALL)
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL)
@@ -63,7 +64,7 @@ public class Heladera extends PersistentEntity {
   @JoinColumn(name = "heladera_id")
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @Embedded
   private NotificacionHeladeraHandler notificacionHeladeraHandler;
 
   public Heladera(String nombre,
