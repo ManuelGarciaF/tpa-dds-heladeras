@@ -2,11 +2,18 @@ package ar.edu.utn.frba.dds.dominio.incidentes;
 
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import org.hibernate.engine.internal.Cascade;
 
+@Entity
 public class FallaTecnica extends Incidente {
-  private final Colaborador colaborador;
-  private final String descripcionDelError;
-  private final String urlFoto;
+  private String descripcionDelError;
+  private String urlFoto;
+
+  @ManyToOne
+  private Colaborador colaborador;
 
   public FallaTecnica(Colaborador colaborador,
                       LocalDateTime fecha,
@@ -16,6 +23,9 @@ public class FallaTecnica extends Incidente {
     this.colaborador = colaborador;
     this.descripcionDelError = descripcionDelError;
     this.urlFoto = urlFoto;
+  }
+
+  public FallaTecnica() {
   }
 
   @Override

@@ -1,18 +1,27 @@
 package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
+@Embeddable
 public class NotificacionHeladeraHandler {
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
   private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas =
       new ArrayList<>();
-  private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
-  private final MapaHeladeras mapaHeladeras;
 
-  public NotificacionHeladeraHandler(MapaHeladeras mapaHeladeras) {
-    this.mapaHeladeras = mapaHeladeras;
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
+  private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
+
+  public NotificacionHeladeraHandler() {
   }
 
   public void agregarSubscriptorCantidadDeViandas(
@@ -33,7 +42,7 @@ public class NotificacionHeladeraHandler {
 
   public void notificarIncidente(Heladera heladera) {
     // Creamos una sola sugerencia para compartir entre todos los subscriptores
-    var sugerenciaTrasladoDeViandas = new SugerenciaTrasladoDeViandas(heladera, mapaHeladeras);
+    var sugerenciaTrasladoDeViandas = new SugerenciaTrasladoDeViandas(heladera);
     subscriptoresIncidentes.forEach(
         observer -> observer.notificar(sugerenciaTrasladoDeViandas)
     );

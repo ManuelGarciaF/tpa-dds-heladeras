@@ -2,41 +2,44 @@ package ar.edu.utn.frba.dds.dominio;
 
 import ar.edu.utn.frba.dds.cargamasiva.FilaCsv;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion;
-import java.util.ArrayList;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.NoResultException;
 
-public class RepoColaboradores {
-  private final List<Colaborador> colaboradores;
+public class RepoColaboradores implements WithSimplePersistenceUnit {
 
-  public RepoColaboradores() {
-    this.colaboradores = new ArrayList<>();
+  private static final RepoColaboradores instance = new RepoColaboradores();
+
+  public static RepoColaboradores getInstance() {
+    return instance;
   }
 
   public List<Colaborador> getColaboradores() {
-    return colaboradores;
+    return entityManager().createQuery("from Colaborador", Colaborador.class).getResultList();
   }
 
   public void agregarColaborador(Colaborador colaborador) {
-    this.colaboradores.add(colaborador);
+    entityManager().persist(colaborador);
   }
 
   public void cargarDeCsv(String path) {
     List<FilaCsv> filas = FilaCsv.fromCsv(path);
 
     filas.forEach(fila -> {
-      Colaborador colaborador = findOrCreateColaborador(fila);
+      Colaborador colaborador = findOrCreateColaboradorHumano(fila);
       Colaboracion colaboracion = fila.crearColaboracion();
       colaborador.colaborar(colaboracion);
     });
 
   }
 
-  private Colaborador findOrCreateColaborador(FilaCsv fila) {
-    Colaborador colaborador = buscarColaborador(fila.tipoDocumento(), fila.numeroDocumento());
-    // Si el colaborador no existe, crearlo y agregarlo a la lista
-    if (colaborador == null) {
-      colaborador = new ColaboradorHumano(fila.nombre(),
+  private Colaborador findOrCreateColaboradorHumano(FilaCsv fila) {
+    try {
+      return buscarColaboradorHumano(fila.tipoDocumento(), fila.numeroDocumento());
+    } catch (NoResultException e) {
+      // Si el colaborador no existe, crearlo y agregarlo
+      Colaborador colaborador = new ColaboradorHumano(fila.nombre(),
           fila.apellido(),
           null,
           null,
@@ -44,16 +47,20 @@ public class RepoColaboradores {
           Set.of(),
           fila.tipoDocumento(),
           fila.numeroDocumento(),
-          null); // TODO crear un proveedorMensajeriaMaipersonal
+          null); // Quizas tendria sentido crear un proveedor de
+      // mensajeria para el colaborador nuevo.
       agregarColaborador(colaborador);
+      return colaborador;
     }
-    return colaborador;
   }
 
-  private Colaborador buscarColaborador(TipoDocumento tipoDocumento, Integer documento) {
-    return colaboradores.stream()
-        .filter(c -> c.esDeDocumento(tipoDocumento, documento))
-        .findFirst()
-        .orElse(null);
+  private Colaborador buscarColaboradorHumano(TipoDocumento tipoDocumento, Integer documento) {
+    return entityManager().createQuery(
+            "from ColaboradorHumano where "
+                + "tipoDocumento = :tipoDocumento and numeroDocumento = :documento",
+            ColaboradorHumano.class)
+        .setParameter("tipoDocumento", tipoDocumento)
+        .setParameter("documento", documento)
+        .getSingleResult();
   }
 }

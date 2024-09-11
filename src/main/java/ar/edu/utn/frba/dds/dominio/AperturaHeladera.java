@@ -2,13 +2,20 @@ package ar.edu.utn.frba.dds.dominio;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 
+@Embeddable
 public class AperturaHeladera {
   private static final Integer HORAS_MAXIMAS_APERTURA = 3;
 
-  private final ColaboradorHumano colaboradorHumano;
-  private final LocalDateTime fechaSolicitud;
+  @ManyToOne
+  private ColaboradorHumano colaboradorHumano;
+
+  private LocalDateTime fechaSolicitud;
   private LocalDateTime fechaApertura;
+
+  private boolean realizada = false;
 
   public AperturaHeladera(ColaboradorHumano colaboradorHumano, LocalDateTime fechaSolicitud) {
     if (colaboradorHumano == null || colaboradorHumano.getTarjetaColaborador() == null) {
@@ -20,8 +27,7 @@ public class AperturaHeladera {
     this.fechaSolicitud = fechaSolicitud;
   }
 
-  public void setFechaApertura(LocalDateTime fechaApertura) {
-    this.fechaApertura = fechaApertura;
+  public AperturaHeladera() {
   }
 
   public ColaboradorHumano getColaboradorHumano() {
@@ -33,7 +39,17 @@ public class AperturaHeladera {
   }
 
   public boolean esValida(LocalDateTime fechaApertura) {
-    return ChronoUnit.HOURS.between(fechaSolicitud, fechaApertura) <= HORAS_MAXIMAS_APERTURA;
+    return ChronoUnit.HOURS.between(fechaSolicitud, fechaApertura) <= HORAS_MAXIMAS_APERTURA
+        && !realizada;
+  }
+
+  public void realizar(LocalDateTime fechaApertura) {
+    if (esValidaAhora()) {
+      this.fechaApertura = fechaApertura;
+      this.realizada = true;
+    } else {
+      throw new IllegalStateException("La apertura no es válida en este momento");
+    }
   }
 
   public boolean esValidaAhora() {
@@ -42,5 +58,9 @@ public class AperturaHeladera {
 
   public LocalDateTime getFechaApertura() {
     return fechaApertura;
+  }
+
+  public boolean isRealizada() {
+    return realizada;
   }
 }

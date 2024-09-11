@@ -1,21 +1,35 @@
 package ar.edu.utn.frba.dds.dominio.tecnicos;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import ar.edu.utn.frba.dds.exceptions.VisitaTecnicoException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
-public class Tecnico {
-  private final String nombre;
-  private final Ubicacion ubicacion;
+@Entity
+public class Tecnico extends PersistentEntity {
+  private String nombre;
+
+  @Embedded
+  private Ubicacion ubicacion;
+
+  @ManyToMany
   private final List<Heladera> visitasPendientes = new ArrayList<>();
 
+  @ElementCollection
   private final List<Visita> visitasCompletadas = new ArrayList<>();
 
   public Tecnico(String nombre, Ubicacion ubicacion) {
     this.nombre = nombre;
     this.ubicacion = ubicacion;
+  }
+
+  public Tecnico() {
   }
 
   public void registrarVisita(Visita visita, Boolean incidenteSolucionado) {

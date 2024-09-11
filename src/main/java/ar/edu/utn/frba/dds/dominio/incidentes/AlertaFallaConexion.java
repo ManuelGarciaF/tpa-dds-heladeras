@@ -2,13 +2,21 @@ package ar.edu.utn.frba.dds.dominio.incidentes;
 
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
+@Entity
 public class AlertaFallaConexion extends Incidente {
-  private final TipoDeFalla tipo;
+  @Enumerated(EnumType.STRING)
+  private TipoDeFalla tipo;
 
   public AlertaFallaConexion(LocalDateTime fecha, TipoDeFalla tipo) {
     super(fecha);
     this.tipo = tipo;
+  }
+
+  public AlertaFallaConexion() {
   }
 
   @Override

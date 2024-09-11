@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ColaboradorJuridicoTest {
+class ColaboradorJuridicoTest implements SimplePersistenceTest {
 
   ColaboradorJuridico colaboradorJuridico;
   Heladera heladera;
-  MapaHeladeras mapaHeladeras;
 
   @BeforeEach
   void setUp() {
@@ -36,10 +36,8 @@ class ColaboradorJuridicoTest {
         null,
         null,
         null,
-        null,
         null);
-    mapaHeladeras = new MapaHeladeras();
-    mapaHeladeras.agregarHeladera(heladera);
+    MapaHeladeras.getInstance().agregarHeladera(heladera);
   }
 
   @Test
@@ -54,7 +52,7 @@ class ColaboradorJuridicoTest {
     colaboradorJuridico.colaborar(new DonacionDeDinero(420, false, null));
     colaboradorJuridico.colaborar(new HacerseCargoHeladera(heladera));
 
-    var tarjeta = new TarjetaPersonaVulnerable("123", mapaHeladeras);
+    var tarjeta = new TarjetaPersonaVulnerable("123");
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),

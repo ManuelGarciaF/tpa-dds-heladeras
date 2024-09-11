@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import ar.edu.utn.frba.dds.exceptions.UsoTarjetaException;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PersonaVulnerableTest {
+class PersonaVulnerableTest implements SimplePersistenceTest {
   public PersonaVulnerable personaVulnerable;
   public MapaHeladeras mapaHeladeras;
 
@@ -27,14 +28,13 @@ class PersonaVulnerableTest {
             null,
             null,
             null,
-            null,
             null));
     personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),
         LocalDate.now(),
         1,
-        new TarjetaPersonaVulnerable("123", mapaHeladeras));
+        new TarjetaPersonaVulnerable("123"));
   }
 
   @Test

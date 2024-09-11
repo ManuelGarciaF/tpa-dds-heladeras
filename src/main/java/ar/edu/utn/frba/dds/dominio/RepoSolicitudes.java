@@ -1,37 +1,48 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import java.util.ArrayList;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.List;
 
-public class RepoSolicitudes {
-  private final List<SolicitudTarjetaColaborador> pendientes = new ArrayList<>();
-  private final List<SolicitudTarjetaColaborador> rechazadas = new ArrayList<>();
-  private final List<SolicitudTarjetaColaborador> aceptadas = new ArrayList<>();
+public class RepoSolicitudes implements WithSimplePersistenceUnit {
+
+  private static final RepoSolicitudes instance = new RepoSolicitudes();
+
+  public static RepoSolicitudes getInstance() {
+    return instance;
+  }
 
   public void agregarSolicitud(SolicitudTarjetaColaborador solicitud) {
-    pendientes.add(solicitud);
+    entityManager().persist(solicitud);
   }
 
   public void aceptar(SolicitudTarjetaColaborador solicitud, TarjetaColaborador tarjetaARegistrar) {
-    pendientes.remove(solicitud);
-    solicitud.asignarTarjeta(tarjetaARegistrar);
-    aceptadas.add(solicitud);
+    solicitud.aceptar(tarjetaARegistrar);
+    entityManager().merge(solicitud);
   }
 
   public void rechazar(SolicitudTarjetaColaborador solicitud) {
-    pendientes.remove(solicitud);
-    rechazadas.add(solicitud);
+    solicitud.rechazar();
+    entityManager().merge(solicitud);
   }
 
   public List<SolicitudTarjetaColaborador> getPendientes() {
-    return pendientes;
+    return entityManager().createQuery(
+            "from SolicitudTarjetaColaborador where estado = 'PENDIENTE'",
+            SolicitudTarjetaColaborador.class)
+        .getResultList();
   }
 
   public List<SolicitudTarjetaColaborador> getRechazadas() {
-    return rechazadas;
+    return entityManager().createQuery(
+            "from SolicitudTarjetaColaborador where estado = 'RECHAZADA'",
+            SolicitudTarjetaColaborador.class)
+        .getResultList();
   }
 
   public List<SolicitudTarjetaColaborador> getAceptadas() {
-    return aceptadas;
+    return entityManager().createQuery(
+            "from SolicitudTarjetaColaborador where estado = 'ACEPTADA'",
+            SolicitudTarjetaColaborador.class)
+        .getResultList();
   }
 }

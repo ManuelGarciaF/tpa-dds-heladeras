@@ -17,15 +17,15 @@ import ar.edu.utn.frba.dds.externo.ControladorDeAcceso;
 import ar.edu.utn.frba.dds.externo.LSensor;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import ar.edu.utn.frba.dds.externo.WSensor;
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class TecnicosTest {
+class TecnicosTest implements SimplePersistenceTest {
   private Heladera heladera;
-  private MapaHeladeras mapaHeladeras;
   private TSensor tSensor;
   private WSensor wSensor;
   private LSensor lSensor;
@@ -46,16 +46,14 @@ class TecnicosTest {
 
     proveedorTemperaturaSensor = new ProveedorTemperaturaSensor(tSensor, "kd993j");
     var proveedorCantidadDeViandasSensor = new ProveedorCantidadDeViandasSensor(lSensor);
-    var repoTecnicos = new RepoTecnicos();
 
     ricardo = new Tecnico("Ricardo Flores", new Ubicacion(0.3, 0.6));
-    repoTecnicos.agregarTecnico(ricardo);
+    RepoTecnicos.getInstance().agregarTecnico(ricardo);
     juan = new Tecnico("Juan Perez", new Ubicacion(0.3, 0.0));
-    repoTecnicos.agregarTecnico(juan);
+    RepoTecnicos.getInstance().agregarTecnico(juan);
     ramon = new Tecnico("Ramon Castillo", new Ubicacion(0.2, 0.6));
-    repoTecnicos.agregarTecnico(ramon);
+    RepoTecnicos.getInstance().agregarTecnico(ramon);
 
-    mapaHeladeras = new MapaHeladeras();
     heladera = new Heladera("heladera",
         40,
         new Ubicacion(0.0, 0.0),
@@ -66,10 +64,9 @@ class TecnicosTest {
         new ProveedorPesoSensor(wSensor),
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
-        repoTecnicos,
         proveedorCantidadDeViandasSensor,
-        new NotificacionHeladeraHandler(mapaHeladeras));
-    mapaHeladeras.agregarHeladera(heladera);
+        new NotificacionHeladeraHandler());
+    MapaHeladeras.getInstance().agregarHeladera(heladera);
 
     // Agregar un valor inicial para la cantidad de viandas
     proveedorCantidadDeViandasSensor.interpretarLectura(1);
@@ -84,6 +81,7 @@ class TecnicosTest {
         180924102,
         null
     );
+    RepoColaboradores.getInstance().agregarColaborador(colaboradorHumano);
   }
 
   @Test

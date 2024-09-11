@@ -2,14 +2,14 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RepoSolicitudesTest {
+class RepoSolicitudesTest implements SimplePersistenceTest {
   private ColaboradorHumano colaboradorHumano;
-  private  RepoSolicitudes repoSolicitudes;
 
   @BeforeEach
   void setUp() {
@@ -23,32 +23,31 @@ class RepoSolicitudesTest {
         180924102,
         null
     );
-
-    repoSolicitudes = new RepoSolicitudes();
+    RepoColaboradores.getInstance().agregarColaborador(colaboradorHumano);
   }
 
   @Test
   void puedoAgregarYAceptarUnaSolicitud() {
     var solicitud = new SolicitudTarjetaColaborador(colaboradorHumano, LocalDate.now());
-    repoSolicitudes.agregarSolicitud(solicitud);
+    RepoSolicitudes.getInstance().agregarSolicitud(solicitud);
 
     assertNull(colaboradorHumano.getTarjetaColaborador());
 
     var tarjeta = new TarjetaColaborador("1234");
-    repoSolicitudes.aceptar(solicitud, tarjeta);
+    RepoSolicitudes.getInstance().aceptar(solicitud, tarjeta);
 
-    assertTrue(repoSolicitudes.getAceptadas().contains(solicitud));
+    assertTrue(RepoSolicitudes.getInstance().getAceptadas().contains(solicitud));
     assertEquals(tarjeta, colaboradorHumano.getTarjetaColaborador());
   }
 
   @Test
   void puedoAgregarYRechazarUnaSolicitud() {
     var solicitud = new SolicitudTarjetaColaborador(colaboradorHumano, LocalDate.now());
-    repoSolicitudes.agregarSolicitud(solicitud);
+    RepoSolicitudes.getInstance().agregarSolicitud(solicitud);
 
-    repoSolicitudes.rechazar(solicitud);
+    RepoSolicitudes.getInstance().rechazar(solicitud);
 
-    assertTrue(repoSolicitudes.getRechazadas().contains(solicitud));
+    assertTrue(RepoSolicitudes.getInstance().getRechazadas().contains(solicitud));
     assertNull(colaboradorHumano.getTarjetaColaborador());
   }
 }

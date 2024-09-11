@@ -1,4 +1,19 @@
 package ar.edu.utn.frba.dds.dominio;
 
-public record TarjetaColaborador(String codigoTarjeta) {
+import javax.persistence.Embeddable;
+
+@Embeddable
+public final class TarjetaColaborador {
+  private String codigoTarjeta;
+
+  public TarjetaColaborador(String codigoTarjeta) {
+    this.codigoTarjeta = codigoTarjeta;
+  }
+
+  public TarjetaColaborador() {
+  }
+
+  public String codigoTarjeta() {
+    return codigoTarjeta;
+  }
 }

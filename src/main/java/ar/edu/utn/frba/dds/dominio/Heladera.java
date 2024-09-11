@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.dominio.incidentes.Incidente;
 import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
@@ -16,33 +17,55 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
-public class Heladera {
+@Entity
+public class Heladera extends PersistentEntity {
   private static final Double PESO_ESTANDAR_VIANDA_GRAMOS = 400.0;
 
-  private final String nombre;
-  private final Integer capacidadViandas;
-  private final LocalDate fechaCreacion;
-  private final Double temperaturaMaximaAceptable;
-  private final Double temperaturaMinimaAceptable;
-  private final Ubicacion ubicacion;
-  private final String numeroDeSerie;
+  private String nombre;
+  private Integer capacidadViandas;
+  private LocalDate fechaCreacion;
+  private Double temperaturaMaximaAceptable;
+  private Double temperaturaMinimaAceptable;
+  private String numeroDeSerie;
 
+  @Embedded
+  private Ubicacion ubicacion;
+
+  @OneToMany(cascade = CascadeType.ALL)
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
   private final List<Vianda> viandas = new ArrayList<>();
-  private final List<AperturaHeladera> aperturasPendientes = new ArrayList<>();
-  private final List<AperturaHeladera> aperturasCompletadas = new ArrayList<>();
 
-  private final ProveedorPeso proveedorPeso;
-  private final ProveedorTemperatura proveedorTemperatura;
-  private final AutorizadorAperturas autorizadorAperturas;
+  @ElementCollection
+  private final List<AperturaHeladera> aperturasHeladera = new ArrayList<>();
 
+  @Transient // TODO
+  private ProveedorPeso proveedorPeso;
+  @Transient // TODO
+  private ProveedorTemperatura proveedorTemperatura;
+  @Transient // TODO
+  private ProveedorCantidadDeViandas proveedorCantidadDeViandas;
+  @Transient // TODO
+  private AutorizadorAperturas autorizadorAperturas;
+
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
-  private final RepoTecnicos repoTecnicos;
-
-  private final ProveedorCantidadDeViandas proveedorCantidadDeViandas;
-  private final NotificacionHeladeraHandler notificacionHeladeraHandler;
+  @Embedded
+  private NotificacionHeladeraHandler notificacionHeladeraHandler;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -54,7 +77,6 @@ public class Heladera {
                   ProveedorPeso proveedorPeso,
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
-                  RepoTecnicos repoTecnicos,
                   ProveedorCantidadDeViandas proveedorCantidadDeViandas,
                   NotificacionHeladeraHandler notificacionHeladeraHandler) {
     this.nombre = requireNonNull(nombre);
@@ -67,13 +89,15 @@ public class Heladera {
     this.temperaturaMaximaAceptable = temperaturaMaximaAceptable;
     this.temperaturaMinimaAceptable = temperaturaMinimaAceptable;
     this.autorizadorAperturas = autorizadorAperturas;
-    this.repoTecnicos = repoTecnicos;
     this.proveedorCantidadDeViandas = proveedorCantidadDeViandas;
     this.notificacionHeladeraHandler = notificacionHeladeraHandler;
 
     configurarSensores(proveedorTemperatura,
         proveedorCantidadDeViandas,
         notificacionHeladeraHandler);
+  }
+
+  public Heladera() {
   }
 
   // Configurar handlers automaticos para los sensores
@@ -168,42 +192,43 @@ public class Heladera {
   public void agregarSolicitudApertura(AperturaHeladera apertura) {
     // Notificar al controlador de acceso
     autorizadorAperturas.habilitarTarjeta(apertura.getTarjetaColaborador());
-    aperturasPendientes.add(apertura);
+    aperturasHeladera.add(apertura);
   }
 
   public void registrarApertura(ColaboradorHumano colaborador, LocalDateTime fechaApertura) {
     AperturaHeladera apertura = buscarAperturaValida(colaborador, fechaApertura);
-
-    aperturasPendientes.remove(apertura);
-    apertura.setFechaApertura(fechaApertura);
-    aperturasCompletadas.add(apertura);
+    apertura.realizar(fechaApertura);
   }
 
   private AperturaHeladera buscarAperturaValida(ColaboradorHumano colaborador,
                                                 LocalDateTime fechaApertura) {
-    return aperturasPendientes.stream()
+    return aperturasHeladera.stream()
         .filter(a -> a.getColaboradorHumano().equals(colaborador) && a.esValida(fechaApertura))
         .findFirst()
         .orElseThrow(() -> new HeladeraException("No hay aperturas validas para este colaborador"));
   }
 
   public List<AperturaHeladera> getAperturasCompletadas() {
-    return aperturasCompletadas;
+    return aperturasHeladera.stream()
+        .filter(AperturaHeladera::isRealizada)
+        .toList();
   }
 
   public List<AperturaHeladera> getAperturasPendientes() {
-    return aperturasPendientes;
+    return aperturasHeladera.stream()
+        .filter(a -> !a.isRealizada())
+        .toList();
   }
 
   public List<AperturaHeladera> getAperturasValidas() {
-    return aperturasPendientes.stream()
+    return aperturasHeladera.stream()
         .filter(AperturaHeladera::esValidaAhora)
         .toList();
   }
 
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-    repoTecnicos.delegarReparacion(this);
+    RepoTecnicos.getInstance().delegarReparacion(this);
     notificacionHeladeraHandler.notificarIncidente(this);
   }
 

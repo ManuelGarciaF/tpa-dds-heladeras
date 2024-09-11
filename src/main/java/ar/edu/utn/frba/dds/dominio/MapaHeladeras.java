@@ -1,41 +1,42 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import java.util.ArrayList;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.util.List;
 
-public class MapaHeladeras {
-  private final List<Heladera> heladeras;
 
-  public MapaHeladeras() {
-    this.heladeras = new ArrayList<>();
+public class MapaHeladeras implements WithSimplePersistenceUnit {
+  private static final MapaHeladeras instance = new MapaHeladeras();
+
+  public static MapaHeladeras getInstance() {
+    return instance;
   }
 
   public List<Heladera> listarHeladeras() {
-    return heladeras;
+    return entityManager().createQuery("from Heladera", Heladera.class).getResultList();
   }
 
   public void agregarHeladera(Heladera heladera) {
-    this.heladeras.add(heladera);
-  }
-
-  public void quitarHeladera(Heladera heladera) {
-    this.heladeras.remove(heladera);
+    entityManager().getTransaction().begin();
+    entityManager().persist(heladera);
+    entityManager().getTransaction().commit();
   }
 
   public Heladera buscarHeladera(String nombreHeladera) {
-    return heladeras.stream()
-        .filter(heladera -> heladera.tieneNombre(nombreHeladera))
-        .findFirst()
-        .orElse(null);
+    return entityManager().createQuery(
+            "from Heladera where nombre = :nombreHeladera",
+            Heladera.class)
+        .setParameter("nombreHeladera", nombreHeladera)
+        .getSingleResult();
   }
 
+  // TODO hacer esto con una query
   public List<UsoTarjetaPersonaVulnerable> encontrarUsosDeTarjeta(String codigotarjeta) {
-    return heladeras.stream()
+    return this.listarHeladeras().stream()
         .flatMap(heladera -> heladera.usosDeTarjetaPersonaVulnerable(codigotarjeta).stream())
         .toList();
   }
 
   public void revisarSensoresDeTemperatura() {
-    heladeras.forEach(Heladera::checkearDesconexionSensorTemperatura);
+    this.listarHeladeras().forEach(Heladera::checkearDesconexionSensorTemperatura);
   }
 }

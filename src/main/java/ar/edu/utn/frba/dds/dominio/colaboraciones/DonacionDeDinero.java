@@ -4,12 +4,14 @@ import static java.util.Objects.requireNonNull;
 
 import ar.edu.utn.frba.dds.dominio.Colaborador;
 import java.time.LocalDate;
+import javax.persistence.Entity;
 
-public class DonacionDeDinero implements Colaboracion {
-  private final LocalDate fecha;
-  private final Integer monto;
-  private final Boolean donacionPeriodica;
-  private final Integer frecuenciaEnDias;
+@Entity
+public class DonacionDeDinero extends Colaboracion {
+  private LocalDate fecha;
+  private Integer monto;
+  private Boolean donacionPeriodica;
+  private Integer frecuenciaEnDias;
 
   public static final Double COEFICIENTE_PUNTAJE = 0.5;
 
@@ -30,6 +32,9 @@ public class DonacionDeDinero implements Colaboracion {
           "La donacion es periodica pero no se indico la frecuencia");
     }
     this.frecuenciaEnDias = frecuenciaEnDias;
+  }
+
+  public DonacionDeDinero() {
   }
 
   public LocalDate getFecha() {
