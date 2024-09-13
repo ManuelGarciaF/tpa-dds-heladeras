@@ -3,7 +3,6 @@ package ar.edu.utn.frba.dds;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
-import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
 import java.time.LocalDate;
 
 public class Main {
@@ -11,10 +10,12 @@ public class Main {
     // Cron:
     // */15 * * * * java -jar tpa.jar
 
-    var unaHeladera = new Heladera("heladera2",
-        39,
-        new Ubicacion(0.2, 0.0),
-        "kd393j",
+    // Seria reemplazado por acceso a la DB
+    Heladera unaHeladera = new Heladera(
+        "UTN Campus",
+        6,
+        new Ubicacion(5.35, 2.76),
+        "AA26U",
         LocalDate.now(),
         15.0,
         0.0,
@@ -22,11 +23,15 @@ public class Main {
         null,
         null,
         null,
-        new NotificacionHeladeraHandler());
-//    MapaHeladeras.getInstance().agregarHeladera(unaHeladera);
-    System.out.println(MapaHeladeras.getInstance().listarHeladeras().size());
+        null
+    );
+    // MapaHeladeras.getInstance().agregarHeladera(unaHeladera);
+
+    revisarSensores();
   }
 
   private static void revisarSensores() {
+    // Checkear fallos de conexion
+    MapaHeladeras.getInstance().revisarSensoresDeTemperatura();
   }
 }
