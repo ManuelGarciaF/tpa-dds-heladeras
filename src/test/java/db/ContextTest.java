@@ -13,7 +13,7 @@ public class ContextTest implements SimplePersistenceTest {
   }
 
   @Test
-  void contextUpWithTransaction() throws Exception {
+  void contextUpWithTransaction() {
     withTransaction(() -> {
     });
   }

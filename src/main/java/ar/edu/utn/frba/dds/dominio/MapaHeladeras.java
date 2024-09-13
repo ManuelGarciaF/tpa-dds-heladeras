@@ -16,9 +16,7 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
   }
 
   public void agregarHeladera(Heladera heladera) {
-    entityManager().getTransaction().begin();
     entityManager().persist(heladera);
-    entityManager().getTransaction().commit();
   }
 
   public Heladera buscarHeladera(String nombreHeladera) {
@@ -29,11 +27,13 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
         .getSingleResult();
   }
 
-  // TODO hacer esto con una query
   public List<UsoTarjetaPersonaVulnerable> encontrarUsosDeTarjeta(String codigotarjeta) {
-    return this.listarHeladeras().stream()
-        .flatMap(heladera -> heladera.usosDeTarjetaPersonaVulnerable(codigotarjeta).stream())
-        .toList();
+    return entityManager().createQuery(
+            "SELECT u FROM UsoTarjetaPersonaVulnerable u "
+                + "WHERE u.tarjetaPersonaVulnerable.codigoTarjeta = :codigo",
+            UsoTarjetaPersonaVulnerable.class)
+        .setParameter("codigo", codigotarjeta)
+        .getResultList();
   }
 
   public void revisarSensoresDeTemperatura() {
