@@ -42,6 +42,7 @@ public class Heladera extends PersistentEntity {
   private Ubicacion ubicacion;
 
   @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "heladera_id")
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL)

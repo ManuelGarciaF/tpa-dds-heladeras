@@ -17,12 +17,10 @@ public class RepoSolicitudes implements WithSimplePersistenceUnit {
 
   public void aceptar(SolicitudTarjetaColaborador solicitud, TarjetaColaborador tarjetaARegistrar) {
     solicitud.aceptar(tarjetaARegistrar);
-    entityManager().merge(solicitud);
   }
 
   public void rechazar(SolicitudTarjetaColaborador solicitud) {
     solicitud.rechazar();
-    entityManager().merge(solicitud);
   }
 
   public List<SolicitudTarjetaColaborador> getPendientes() {

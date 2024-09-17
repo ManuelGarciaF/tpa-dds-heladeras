@@ -15,7 +15,7 @@ public class Main implements WithSimplePersistenceUnit {
     // */15 * * * * java -jar tpa.jar
 
     // Checkear fallos de conexion
-    MapaHeladeras.getInstance().revisarSensoresDeTemperatura();
+    //MapaHeladeras.getInstance().revisarSensoresDeTemperatura();
   }
 
   public void agregarHeladera() {
