@@ -46,7 +46,7 @@ public class Heladera extends PersistentEntity {
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "heladera_id")
+  @JoinColumn(name = "heladeraId")
   private final List<Vianda> viandas = new ArrayList<>();
 
   @ElementCollection
@@ -62,7 +62,7 @@ public class Heladera extends PersistentEntity {
   private AutorizadorAperturas autorizadorAperturas;
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "heladera_id")
+  @JoinColumn(name = "heladeraId")
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
   @Embedded

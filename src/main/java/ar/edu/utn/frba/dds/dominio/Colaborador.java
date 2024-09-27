@@ -25,7 +25,7 @@ public abstract class Colaborador extends PersistentEntity {
   private final MedioDeContacto medioDeContacto;
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "colaborador_id")
+  @JoinColumn(name = "colaboradorId")
   private final List<Colaboracion> historialDeColaboraciones = new ArrayList<>();
 
   public Colaborador(String direccion, MedioDeContacto medioDeContacto) {

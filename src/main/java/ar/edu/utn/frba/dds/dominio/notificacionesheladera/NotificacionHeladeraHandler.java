@@ -13,12 +13,12 @@ import javax.persistence.OneToMany;
 public class NotificacionHeladeraHandler {
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "heladera_id")
+  @JoinColumn(name = "heladeraId")
   private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas =
       new ArrayList<>();
 
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "heladera_id")
+  @JoinColumn(name = "heladeraId")
   private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
 
   public NotificacionHeladeraHandler() {
