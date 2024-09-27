@@ -3,7 +3,6 @@ package ar.edu.utn.frba.dds.dominio.notificacionesheladera;
 import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.dominio.ColaboradorHumano;
 import ar.edu.utn.frba.dds.dominio.Heladera;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 

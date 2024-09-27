@@ -2,13 +2,12 @@ package ar.edu.utn.frba.dds.dominio;
 
 import ar.edu.utn.frba.dds.PersistentEntity;
 import java.time.LocalDate;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
-@Entity
-public final class UsoTarjetaPersonaVulnerable extends PersistentEntity {
-  @Embedded
+@Embeddable
+public final class UsoTarjetaPersonaVulnerable {
+  @ManyToOne
   private TarjetaPersonaVulnerable tarjetaPersonaVulnerable;
 
   private LocalDate fecha;

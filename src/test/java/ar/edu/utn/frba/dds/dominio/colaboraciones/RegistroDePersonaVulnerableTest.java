@@ -6,6 +6,7 @@ import ar.edu.utn.frba.dds.dominio.PersonaVulnerable;
 import ar.edu.utn.frba.dds.dominio.TarjetaPersonaVulnerable;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import ar.edu.utn.frba.dds.dominio.UsoTarjetaPersonaVulnerable;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +19,7 @@ class RegistroDePersonaVulnerableTest implements SimplePersistenceTest {
 
   @BeforeEach
   void setUp() {
-    tarjetaPersonaVulnerable = new TarjetaPersonaVulnerable("123");
+    tarjetaPersonaVulnerable = new TarjetaPersonaVulnerable("123", MapaHeladeras.getInstance());
 
     PersonaVulnerable persona = new PersonaVulnerable("Juan",
         null,
@@ -46,7 +47,8 @@ class RegistroDePersonaVulnerableTest implements SimplePersistenceTest {
         null,
         null,
         null,
-        null);
+        null,
+        RepoTecnicos.getInstance());
     MapaHeladeras.getInstance().agregarHeladera(heladera);
     heladera.registrarUso(new UsoTarjetaPersonaVulnerable(tarjetaPersonaVulnerable, LocalDate.now()));
     heladera.registrarUso(new UsoTarjetaPersonaVulnerable(tarjetaPersonaVulnerable, LocalDate.now()));

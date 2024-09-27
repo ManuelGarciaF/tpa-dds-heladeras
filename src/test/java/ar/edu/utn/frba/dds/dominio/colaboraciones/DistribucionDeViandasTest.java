@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MotivoDeDistribucion;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,8 @@ class DistribucionDeViandasTest {
         null,
         null,
         null,
-        null);
+        null,
+        RepoTecnicos.getInstance());
     Heladera heladeraDestino = new Heladera("Destino",
         40,
         new Ubicacion(0.1, 0.0),
@@ -37,7 +39,8 @@ class DistribucionDeViandasTest {
         null,
         null,
         null,
-        null);
+        null,
+        RepoTecnicos.getInstance());
     distribucionDeViandas = new DistribucionDeViandas(
         MotivoDeDistribucion.DESPERFECTO_HELADERA,
         LocalDate.now(),

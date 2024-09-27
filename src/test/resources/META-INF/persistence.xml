@@ -35,7 +35,15 @@
         <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerableHistorico</class>
         <class>ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion</class>
         <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable</class>
-        <class>ar.edu.utn.frba.dds.dominio.UsoTarjetaPersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.dominio.TarjetaPersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.dominio.TarjetaColaborador</class>
+        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandas</class>
+        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor</class>
+        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperatura</class>
+        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperaturaSensor</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajeria</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajeriaMail</class>
+        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajesInstantaneos</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
@@ -46,7 +54,7 @@
             <property name="hibernate.connection.password" value=""/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
 
-            <property name="hibernate.show_sql" value="true"/>
+<!--            <property name="hibernate.show_sql" value="true"/>-->
             <property name="hibernate.format_sql" value="true"/>
             <property name="use_sql_comments" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

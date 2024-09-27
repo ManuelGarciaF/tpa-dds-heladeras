@@ -9,6 +9,7 @@ import ar.edu.utn.frba.dds.dominio.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandas;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorPeso;
+import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorPesoSensor;
 import ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperatura;
 import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import ar.edu.utn.frba.dds.exceptions.HeladeraException;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
 @Entity
@@ -41,32 +42,35 @@ public class Heladera extends PersistentEntity {
   @Embedded
   private Ubicacion ubicacion;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "heladera_id")
+  @ElementCollection
+  @JoinColumn(name = "heladeraId")
   private final List<UsoTarjetaPersonaVulnerable> usosPersonasVulnerables = new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "heladeraId")
   private final List<Vianda> viandas = new ArrayList<>();
 
   @ElementCollection
   private final List<AperturaHeladera> aperturasHeladera = new ArrayList<>();
 
-  @Transient // TODO
-  private ProveedorPeso proveedorPeso;
-  @Transient // TODO
+  @OneToOne(cascade = CascadeType.PERSIST)
   private ProveedorTemperatura proveedorTemperatura;
-  @Transient // TODO
+  @OneToOne(cascade = CascadeType.PERSIST)
   private ProveedorCantidadDeViandas proveedorCantidadDeViandas;
-  @Transient // TODO
+  @Transient
+  private ProveedorPeso proveedorPeso;
+  @Transient
   private AutorizadorAperturas autorizadorAperturas;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "heladeraId")
   private final List<Incidente> incidentesActivos = new ArrayList<>();
 
   @Embedded
   private NotificacionHeladeraHandler notificacionHeladeraHandler;
+
+  @Transient
+  private RepoTecnicos repoTecnicos;
 
   public Heladera(String nombre,
                   Integer capacidadViandas,
@@ -79,7 +83,8 @@ public class Heladera extends PersistentEntity {
                   ProveedorTemperatura proveedorTemperatura,
                   AutorizadorAperturas autorizadorAperturas,
                   ProveedorCantidadDeViandas proveedorCantidadDeViandas,
-                  NotificacionHeladeraHandler notificacionHeladeraHandler) {
+                  NotificacionHeladeraHandler notificacionHeladeraHandler,
+                  RepoTecnicos repoTecnicos) {
     this.nombre = requireNonNull(nombre);
     this.capacidadViandas = requireNonNull(capacidadViandas);
     this.ubicacion = requireNonNull(ubicacion);
@@ -92,6 +97,7 @@ public class Heladera extends PersistentEntity {
     this.autorizadorAperturas = autorizadorAperturas;
     this.proveedorCantidadDeViandas = proveedorCantidadDeViandas;
     this.notificacionHeladeraHandler = notificacionHeladeraHandler;
+    this.repoTecnicos = repoTecnicos;
 
     configurarSensores(proveedorTemperatura,
         proveedorCantidadDeViandas,
@@ -99,6 +105,20 @@ public class Heladera extends PersistentEntity {
   }
 
   public Heladera() {
+  }
+
+  @PostLoad
+  public void postLoad() {
+    this.repoTecnicos = RepoTecnicos.getInstance();
+    this.proveedorPeso = new ProveedorPesoSensor(ServiceLocator.getWSensor());
+    this.autorizadorAperturas = new AutorizadorAperturasActual(
+        ServiceLocator.getControladorDeAcceso(numeroDeSerie)
+    );
+
+    configurarSensores(proveedorTemperatura,
+        proveedorCantidadDeViandas,
+        notificacionHeladeraHandler
+    );
   }
 
   // Configurar handlers automaticos para los sensores
@@ -229,7 +249,7 @@ public class Heladera extends PersistentEntity {
 
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
-    RepoTecnicos.getInstance().delegarReparacion(this);
+    repoTecnicos.delegarReparacion(this);
     notificacionHeladeraHandler.notificarIncidente(this);
   }
 

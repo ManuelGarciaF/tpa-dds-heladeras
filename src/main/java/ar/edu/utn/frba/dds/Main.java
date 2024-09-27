@@ -3,19 +3,20 @@ package ar.edu.utn.frba.dds;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.MapaHeladeras;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import java.time.LocalDate;
 
 public class Main implements WithSimplePersistenceUnit {
   public static void main(String[] args) {
-    // Main main = new Main();
-    // main.agregarHeladera();
+    Main main = new Main();
+    main.agregarHeladera();
 
     // Cron:
     // */15 * * * * java -jar tpa.jar
 
     // Checkear fallos de conexion
-    //MapaHeladeras.getInstance().revisarSensoresDeTemperatura();
+    MapaHeladeras.getInstance().revisarSensoresDeTemperatura();
   }
 
   public void agregarHeladera() {
@@ -32,7 +33,8 @@ public class Main implements WithSimplePersistenceUnit {
           null,
           null,
           null,
-          null
+          null,
+          RepoTecnicos.getInstance()
       );
       MapaHeladeras.getInstance().agregarHeladera(unaHeladera);
     });

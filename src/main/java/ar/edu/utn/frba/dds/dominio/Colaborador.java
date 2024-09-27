@@ -14,7 +14,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -24,7 +23,7 @@ public abstract class Colaborador extends PersistentEntity {
   @Embedded
   private final MedioDeContacto medioDeContacto;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "colaboradorId")
   private final List<Colaboracion> historialDeColaboraciones = new ArrayList<>();
 

@@ -1,9 +1,13 @@
 package ar.edu.utn.frba.dds.dominio;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@Embeddable
-public final class TarjetaColaborador {
+@Entity
+public class TarjetaColaborador {
+  @Id
   private String codigoTarjeta;
 
   public TarjetaColaborador(String codigoTarjeta) {

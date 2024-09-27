@@ -1,25 +1,49 @@
 package ar.edu.utn.frba.dds.dominio.sensoresheladera;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
+import ar.edu.utn.frba.dds.dominio.ServiceLocator;
 import ar.edu.utn.frba.dds.externo.TSensor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
-public class ProveedorTemperaturaSensor implements ProveedorTemperatura {
+@Entity
+@DiscriminatorValue("SENSOR")
+public class ProveedorTemperaturaSensor extends ProveedorTemperatura {
   public static final int MINUTOS_DESCONECTADO_MAXIMOS = 15;
 
+  private String numeroDeSerie;
+
+  @ElementCollection
   private final List<Double> ultimasTresTemperaturas = new ArrayList<>();
   private LocalDate ultimaMedicion;
 
+  @Transient
   private Runnable checkeoDeTemperaturaHandler;
 
   public ProveedorTemperaturaSensor(
       TSensor api,
       String numeroDeSerie) {
+    this.numeroDeSerie = numeroDeSerie;
     api.connect(numeroDeSerie);
-    // Le pasamos el método agregarLectura como callback
+    // Le pasamos el metodo agregarLectura como callback
+    api.onTemperatureChange(this::agregarLectura);
+  }
+
+  public ProveedorTemperaturaSensor() {
+  }
+
+  @PostLoad
+  public void postLoad() {
+    var api = ServiceLocator.getTSensor();
+    api.connect(numeroDeSerie);
     api.onTemperatureChange(this::agregarLectura);
   }
 

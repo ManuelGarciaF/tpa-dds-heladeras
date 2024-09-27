@@ -8,11 +8,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Transient;
 
 @Entity
@@ -30,13 +32,13 @@ public class ColaboradorHumano extends Colaborador {
 
   private Integer numeroDocumento;
 
-  @Embedded
+  @OneToOne(cascade = CascadeType.PERSIST)
   private TarjetaColaborador tarjetaColaborador;
 
   @ManyToMany
   private final List<SugerenciaTrasladoDeViandas> sugerenciasPendientes = new ArrayList<>();
 
-  @Transient // TODO
+  @OneToOne(cascade = CascadeType.PERSIST)
   private ProveedorMensajeria proveedorMensajeria;
 
   public ColaboradorHumano(String nombre,

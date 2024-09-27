@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.dominio.colaboraciones;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,8 @@ class DonacionDeViandaTest {
             null,
             null,
             null,
-            null)
+            null,
+            RepoTecnicos.getInstance())
     );
   }
 

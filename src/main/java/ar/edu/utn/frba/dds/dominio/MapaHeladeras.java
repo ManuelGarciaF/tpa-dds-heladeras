@@ -29,7 +29,7 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
 
   public List<UsoTarjetaPersonaVulnerable> encontrarUsosDeTarjeta(String codigotarjeta) {
     return entityManager().createQuery(
-            "SELECT u FROM UsoTarjetaPersonaVulnerable u "
+            "SELECT u FROM Heladera h JOIN h.usosPersonasVulnerables u "
                 + "WHERE u.tarjetaPersonaVulnerable.codigoTarjeta = :codigo",
             UsoTarjetaPersonaVulnerable.class)
         .setParameter("codigo", codigotarjeta)

@@ -89,7 +89,8 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
         proveedorCantidadDeViandasSensor,
-        new NotificacionHeladeraHandler());
+        new NotificacionHeladeraHandler(),
+        RepoTecnicos.getInstance());
     MapaHeladeras.getInstance().agregarHeladera(heladera1);
 
     // Agregar un valor inicial para la cantidad de viandas
@@ -109,7 +110,8 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
             null,
             null,
             proveedorCantidadDeViandasSensor2,
-            new NotificacionHeladeraHandler()));
+            new NotificacionHeladeraHandler(),
+            RepoTecnicos.getInstance()));
     // Valor inicial para la cantidad de viandas
     proveedorCantidadDeViandasSensor2.interpretarLectura(0);
   }
@@ -134,13 +136,15 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
         new Vianda("Vianda", LocalDate.now().plusWeeks(2), 10, 10),
         null));
 
-    var tarjeta = new TarjetaPersonaVulnerable("123");
+    var tarjeta = new TarjetaPersonaVulnerable("123", MapaHeladeras.getInstance());
+    entityManager().persist(tarjeta);
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),
         LocalDate.now().minusMonths(10),
         100,
         tarjeta);
+    entityManager().persist(personaVulnerable);
     personaVulnerable.agregarUsoTarjeta(MapaHeladeras.getInstance().buscarHeladera("heladera1"));
     personaVulnerable.agregarUsoTarjeta(MapaHeladeras.getInstance().buscarHeladera("heladera2"));
 

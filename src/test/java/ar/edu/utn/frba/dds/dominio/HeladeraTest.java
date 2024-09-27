@@ -51,7 +51,8 @@ class HeladeraTest implements SimplePersistenceTest {
         proveedorTemperaturaSensor,
         new AutorizadorAperturasActual(controladorDeAcceso),
         proveedorCantidadDeViandasSensor,
-        new NotificacionHeladeraHandler());
+        new NotificacionHeladeraHandler(),
+        RepoTecnicos.getInstance());
     MapaHeladeras.getInstance().agregarHeladera(heladera);
 
     // Agregar un valor inicial para la cantidad de viandas

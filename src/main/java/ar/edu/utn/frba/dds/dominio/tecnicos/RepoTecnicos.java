@@ -22,7 +22,6 @@ public class RepoTecnicos implements WithSimplePersistenceUnit {
   }
 
   public void delegarReparacion(Heladera heladera) {
-    // TODO checkear q no haga falta copiar
     var tecnicosPorDistancia = new ArrayList<>(obtenerTecnicos());
 
     if (tecnicosPorDistancia.isEmpty()) {

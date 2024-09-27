@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
 import java.time.LocalDate;
 import java.util.Set;
@@ -36,7 +37,8 @@ class ColaboradorJuridicoTest implements SimplePersistenceTest {
         null,
         null,
         null,
-        null);
+        null,
+        RepoTecnicos.getInstance());
     MapaHeladeras.getInstance().agregarHeladera(heladera);
   }
 
@@ -52,13 +54,15 @@ class ColaboradorJuridicoTest implements SimplePersistenceTest {
     colaboradorJuridico.colaborar(new DonacionDeDinero(420, false, null));
     colaboradorJuridico.colaborar(new HacerseCargoHeladera(heladera));
 
-    var tarjeta = new TarjetaPersonaVulnerable("123");
+    var tarjeta = new TarjetaPersonaVulnerable("123", MapaHeladeras.getInstance());
+    entityManager().persist(tarjeta);
     var personaVulnerable = new PersonaVulnerable("Mati",
         "Calle Falsa 123",
         LocalDate.of(1892, 10, 10),
         LocalDate.now().minusMonths(10),
         100,
         tarjeta);
+    entityManager().persist(personaVulnerable);
 
     personaVulnerable.agregarUsoTarjeta(heladera);
     personaVulnerable.agregarUsoTarjeta(heladera);

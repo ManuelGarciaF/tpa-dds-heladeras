@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 public class RegistroDePersonaVulnerable extends Colaboracion {
   public static final Double COEFICIENTE_PUNTAJE = 2.0;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.PERSIST)
   private PersonaVulnerable personaRegistrada;
 
   public RegistroDePersonaVulnerable(

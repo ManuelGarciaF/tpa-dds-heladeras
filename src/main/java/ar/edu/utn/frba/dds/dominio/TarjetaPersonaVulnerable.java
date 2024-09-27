@@ -1,22 +1,31 @@
 package ar.edu.utn.frba.dds.dominio;
 
-import static java.util.Objects.requireNonNull;
-
-import ar.edu.utn.frba.dds.PersistentEntity;
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
-@Embeddable
+@Entity
 public class TarjetaPersonaVulnerable {
-
+  @Id
   private String codigoTarjeta;
 
-  public TarjetaPersonaVulnerable(String codigoTarjeta) {
-    this.codigoTarjeta = requireNonNull(codigoTarjeta);
+  @Transient
+  private MapaHeladeras mapaHeladeras;
+
+  public TarjetaPersonaVulnerable(String codigoTarjeta, MapaHeladeras mapaHeladeras) {
+    this.codigoTarjeta = codigoTarjeta;
+    this.mapaHeladeras = mapaHeladeras;
   }
 
   public TarjetaPersonaVulnerable() {
+  }
+
+  @PostLoad
+  public void postLoad() {
+    this.mapaHeladeras = MapaHeladeras.getInstance();
   }
 
   public boolean esDeCodigo(String codigoTarjeta) {
@@ -32,6 +41,6 @@ public class TarjetaPersonaVulnerable {
   }
 
   private List<UsoTarjetaPersonaVulnerable> usosTarjeta() {
-    return MapaHeladeras.getInstance().encontrarUsosDeTarjeta(codigoTarjeta);
+    return mapaHeladeras.encontrarUsosDeTarjeta(codigoTarjeta);
   }
 }

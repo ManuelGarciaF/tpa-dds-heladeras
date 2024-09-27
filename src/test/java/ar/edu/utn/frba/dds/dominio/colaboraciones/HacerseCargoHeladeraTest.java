@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import ar.edu.utn.frba.dds.dominio.Heladera;
 import ar.edu.utn.frba.dds.dominio.Ubicacion;
 import ar.edu.utn.frba.dds.dominio.UsoTarjetaPersonaVulnerable;
+import ar.edu.utn.frba.dds.dominio.tecnicos.RepoTecnicos;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,8 @@ class HacerseCargoHeladeraTest {
         null,
         null,
         null,
-        null
+        null,
+        RepoTecnicos.getInstance()
     );
     hacerseCargoHeladera = new HacerseCargoHeladera(heladera);
   }

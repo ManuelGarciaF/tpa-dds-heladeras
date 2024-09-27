@@ -12,12 +12,12 @@ import javax.persistence.OneToMany;
 @Embeddable
 public class NotificacionHeladeraHandler {
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "heladeraId")
   private final List<SubscriptorCantidadDeViandas> subscriptoresCantidadDeViandas =
       new ArrayList<>();
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "heladeraId")
   private final List<SubscriptorIncidente> subscriptoresIncidentes = new ArrayList<>();
 
