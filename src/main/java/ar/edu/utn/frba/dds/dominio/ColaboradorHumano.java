@@ -46,11 +46,12 @@ public class ColaboradorHumano extends Colaborador {
                            LocalDate fechaDeNacimiento,
                            String direccion,
                            MedioDeContacto medioDeContacto,
+                           Usuario usuario,
                            Set<FormaDeColaboracionHumana> formasDeColaboracion,
                            TipoDocumento tipoDocumento,
                            Integer numeroDocumento,
                            ProveedorMensajeria proveedorMensajeria) {
-    super(direccion, medioDeContacto);
+    super(direccion, medioDeContacto, usuario);
     this.nombre = requireNonNull(nombre);
     this.apellido = requireNonNull(apellido);
     this.fechaDeNacimiento = fechaDeNacimiento;

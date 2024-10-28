@@ -23,6 +23,7 @@ class ColaboradorJuridicoTest implements SimplePersistenceTest {
         TipoPersonaJuridica.EMPRESA,
         "Automotores",
         new MedioDeContacto(null, "test@gmail.com", null),
+        new Usuario("contraseniaAutomotores", "automotores"),
         "Triunvirato 55894",
         Set.of(FormaDeColaboracionJuridica.DONACION_DINERO));
 

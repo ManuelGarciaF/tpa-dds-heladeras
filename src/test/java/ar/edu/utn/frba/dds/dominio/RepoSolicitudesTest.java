@@ -18,6 +18,7 @@ class RepoSolicitudesTest implements SimplePersistenceTest {
         LocalDate.of(1995, 10, 10),
         "Calle Falsa 123",
         new MedioDeContacto(null, "test@gmail.com", null),
+        new Usuario("contraseniaMati", "mati"),
         Set.of(FormaDeColaboracionHumana.DONACION_VIANDA),
         TipoDocumento.DNI,
         180924102,

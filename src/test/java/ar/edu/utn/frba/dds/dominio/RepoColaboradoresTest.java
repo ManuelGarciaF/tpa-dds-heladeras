@@ -16,6 +16,7 @@ class RepoColaboradoresTest implements SimplePersistenceTest {
         LocalDate.of(1995, 10, 10),
         "Calle Falsa 123",
         new MedioDeContacto(null, "mati@gmail.com", null),
+        new Usuario("contraseniaMati", "mati"),
         null,
         TipoDocumento.DNI,
         180924102,

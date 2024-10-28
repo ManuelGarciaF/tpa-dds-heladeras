@@ -14,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -27,14 +28,19 @@ public abstract class Colaborador extends PersistentEntity {
   @JoinColumn(name = "colaboradorId")
   private final List<Colaboracion> historialDeColaboraciones = new ArrayList<>();
 
-  public Colaborador(String direccion, MedioDeContacto medioDeContacto) {
+  @OneToOne
+  private Usuario usuario;
+
+  public Colaborador(String direccion, MedioDeContacto medioDeContacto, Usuario usuario) {
     this.direccion = direccion;
     this.medioDeContacto = requireNonNull(medioDeContacto);
+    this.usuario = requireNonNull(usuario);
   }
 
   public Colaborador() {
     this.direccion = null;
     this.medioDeContacto = null;
+    this.usuario = null;
   }
 
   public List<Colaboracion> getHistorialDeColaboraciones() {

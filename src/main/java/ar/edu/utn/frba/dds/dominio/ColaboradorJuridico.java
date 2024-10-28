@@ -25,9 +25,10 @@ public class ColaboradorJuridico extends Colaborador {
                              TipoPersonaJuridica tipo,
                              String rubro,
                              MedioDeContacto medioDeContacto,
+                             Usuario usuario,
                              String direccion,
                              Set<FormaDeColaboracionJuridica> formasDeColaboracion) {
-    super(direccion, medioDeContacto);
+    super(direccion, medioDeContacto, usuario);
     this.razonSocial = requireNonNull(razonSocial);
     this.tipo = requireNonNull(tipo);
     this.rubro = requireNonNull(rubro);
