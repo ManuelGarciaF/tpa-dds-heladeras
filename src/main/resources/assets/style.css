@@ -1,0 +1,19 @@
+@import "bootstrap.min.css";
+
+/* Fuente */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+:root, .btn-primary {
+    --bs-primary: #0D5A78;
+    --bs-primary-rgb: 13, 90, 120;
+    --bs-btn-bg: #0D5A78;
+    --bs-btn-border-color: #0D5A78;
+    --bs-btn-hover-bg: #0a4861;  /* Slightly darker shade */
+    --bs-btn-hover-border-color: #0a4861;
+    --bs-btn-active-bg: #084057;  /* Even darker for active state */
+    --bs-btn-active-border-color: #084057;
+}
+
+:root {
+    --bs-font-sans-serif: "Poppins", sans-serif;
+}

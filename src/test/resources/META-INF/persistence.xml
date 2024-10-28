@@ -9,41 +9,41 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- Entities -->
-        <class>ar.edu.utn.frba.dds.dominio.Colaborador</class>
-        <class>ar.edu.utn.frba.dds.dominio.incidentes.AlertaFallaConexion</class>
-        <class>ar.edu.utn.frba.dds.dominio.incidentes.Incidente</class>
-        <class>ar.edu.utn.frba.dds.dominio.incidentes.AlertaTemperatura</class>
-        <class>ar.edu.utn.frba.dds.dominio.incidentes.FallaTecnica</class>
-        <class>ar.edu.utn.frba.dds.dominio.ColaboradorHumano</class>
-        <class>ar.edu.utn.frba.dds.dominio.Vianda</class>
-        <class>ar.edu.utn.frba.dds.dominio.Heladera</class>
-        <class>ar.edu.utn.frba.dds.dominio.ColaboradorJuridico</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorCantidadDeViandas</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorIncidente</class>
-        <class>ar.edu.utn.frba.dds.dominio.PersonaVulnerable</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SugerenciaTrasladoDeViandas</class>
-        <class>ar.edu.utn.frba.dds.dominio.Usuario</class>
-        <class>ar.edu.utn.frba.dds.dominio.tecnicos.Tecnico</class>
-        <class>ar.edu.utn.frba.dds.dominio.SolicitudTarjetaColaborador</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.NotificacionHeladeraHandler</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeViandaHistorica</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeVianda</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.HacerseCargoHeladera</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.SubscriptorIncidente</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerableHistorico</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion</class>
-        <class>ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerable</class>
-        <class>ar.edu.utn.frba.dds.dominio.TarjetaPersonaVulnerable</class>
-        <class>ar.edu.utn.frba.dds.dominio.TarjetaColaborador</class>
-        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandas</class>
-        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorCantidadDeViandasSensor</class>
-        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperatura</class>
-        <class>ar.edu.utn.frba.dds.dominio.sensoresheladera.ProveedorTemperaturaSensor</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajeria</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajeriaMail</class>
-        <class>ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajesInstantaneos</class>
+        <class>ar.edu.utn.frba.dds.model.Colaborador</class>
+        <class>ar.edu.utn.frba.dds.model.incidentes.AlertaFallaConexion</class>
+        <class>ar.edu.utn.frba.dds.model.incidentes.Incidente</class>
+        <class>ar.edu.utn.frba.dds.model.incidentes.AlertaTemperatura</class>
+        <class>ar.edu.utn.frba.dds.model.incidentes.FallaTecnica</class>
+        <class>ar.edu.utn.frba.dds.model.ColaboradorHumano</class>
+        <class>ar.edu.utn.frba.dds.model.Vianda</class>
+        <class>ar.edu.utn.frba.dds.model.Heladera</class>
+        <class>ar.edu.utn.frba.dds.model.ColaboradorJuridico</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorCantidadDeViandas</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorIncidente</class>
+        <class>ar.edu.utn.frba.dds.model.PersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.SugerenciaTrasladoDeViandas</class>
+        <class>ar.edu.utn.frba.dds.model.Usuario</class>
+        <class>ar.edu.utn.frba.dds.model.tecnicos.Tecnico</class>
+        <class>ar.edu.utn.frba.dds.model.SolicitudTarjetaColaborador</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.NotificacionHeladeraHandler</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.DistribucionDeViandas</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeViandaHistorica</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeVianda</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.HacerseCargoHeladera</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorIncidente</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeDinero</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.RegistroDePersonaVulnerableHistorico</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.Colaboracion</class>
+        <class>ar.edu.utn.frba.dds.model.colaboraciones.RegistroDePersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.model.TarjetaPersonaVulnerable</class>
+        <class>ar.edu.utn.frba.dds.model.TarjetaColaborador</class>
+        <class>ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorCantidadDeViandas</class>
+        <class>ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorCantidadDeViandasSensor</class>
+        <class>ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorTemperatura</class>
+        <class>ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorTemperaturaSensor</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.ProveedorMensajeria</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.ProveedorMensajeriaMail</class>
+        <class>ar.edu.utn.frba.dds.model.notificacionesheladera.ProveedorMensajesInstantaneos</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

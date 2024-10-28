@@ -56,6 +56,30 @@
             <version>2.7.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin-rendering</artifactId>
+            <version>6.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -160,7 +184,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ar.edu.utn.frba.dds.Main</mainClass>
+                            <mainClass>ar.edu.utn.frba.dds.CheckearSensores</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -182,7 +206,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ar.edu.utn.frba.dds.Main</mainClass>
+                            <mainClass>ar.edu.utn.frba.dds.CheckearSensores</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
