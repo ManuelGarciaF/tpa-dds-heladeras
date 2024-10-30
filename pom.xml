@@ -16,6 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <exec.mainClass>ar.edu.utn.frba.dds.server.App</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -58,7 +59,7 @@
 
         <dependency>
             <groupId>io.javalin</groupId>
-            <artifactId>javalin</artifactId>
+            <artifactId>javalin-bundle</artifactId>
             <version>6.3.0</version>
         </dependency>
 

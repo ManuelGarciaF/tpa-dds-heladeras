@@ -63,6 +63,10 @@ public abstract class Colaborador extends PersistentEntity {
     return medioDeContacto;
   }
 
+  public Usuario getUsuario() {
+    return usuario;
+  }
+
   public Double puntaje() {
     return historialDeColaboraciones.stream()
         .mapToDouble(Colaboracion::puntaje).sum();

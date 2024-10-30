@@ -68,4 +68,16 @@ public class RepoColaboradores implements WithSimplePersistenceUnit {
         .setParameter("documento", documento)
         .getSingleResult();
   }
+
+  public Colaborador buscarPorUsuario(String username) {
+    try {
+      return entityManager().createQuery(
+              "SELECT c FROM Colaborador c JOIN c.usuario u ON u.nombre = :username",
+              Colaborador.class)
+          .setParameter("username", username)
+          .getSingleResult();
+    } catch (NoResultException e) {
+      return null;
+    }
+  }
 }

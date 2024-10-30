@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.model.Usuario;
+import ar.edu.utn.frba.dds.model.Colaborador;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.RedirectResponse;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Auth {
   public static void handleAccess(@NotNull Context ctx) {
-    // If the route is in assets, skip auth
+    // Ignorar auth para assets
     if (ctx.path().startsWith("/assets")) {
       return;
     }
@@ -17,7 +17,7 @@ public class Auth {
     if (allowedRoles.contains(Role.ANYONE)) {
       return;
     }
-    Usuario user = ctx.sessionAttribute("user");
+    Colaborador user = ctx.sessionAttribute("user");
     if (allowedRoles.contains(Role.COLABORADOR) && user != null) {
       return;
     }
@@ -26,6 +26,6 @@ public class Auth {
       return;
     }
     ctx.redirect("/login");
-    throw new RedirectResponse(HttpStatus.FOUND, "You must log in");
+    throw new RedirectResponse(HttpStatus.FOUND, "Debes iniciar sesión");
   }
 }

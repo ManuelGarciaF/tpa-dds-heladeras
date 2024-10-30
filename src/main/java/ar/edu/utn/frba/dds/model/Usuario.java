@@ -38,4 +38,8 @@ public class Usuario extends PersistentEntity {
   public Boolean verificarContrasenia(String contrasenia) {
     return this.contrasenia.equals(contrasenia);
   }
+
+  public String getNombre() {
+    return nombre;
+  }
 }

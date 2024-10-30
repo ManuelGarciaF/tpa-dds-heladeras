@@ -1,19 +1,21 @@
 # Rutas para la Interfaz Web
 
-## 
-- /login
+## SessionController
+- [x] `/login`
+- [ ] `/logout`
  
 ## ColaboradorController
-- /colaborar
-- /colaborar/nuevaheladera
-- /colaborar/donarviandas
-- /colaborar/registrarpersona
-- /colaborar/donardinero
-- /colaborar/distribuirviandas
+- [ ] `/colaborar`
+- [ ] `/colaborar/nuevaheladera`
+- [ ] `/colaborar/donarviandas`
+- [ ] `/colaborar/registrarpersona`
+- [ ] `/colaborar/donardinero`
+- [ ] `/colaborar/distribuirviandas`
 
-- /heladeras
-- /heladeras/:id
-- /heladeras/:id/reportarfalla
+## HeladeraController
+- [ ] `/heladeras`
+- [ ] `/heladeras/:id`
+- [ ] `/heladeras/:id/reportarfalla`
 
-- /admin/login
-- /admin/cargarcsv
+- [ ] `/admin/login`
+- [ ] `/admin/cargarcsv`
