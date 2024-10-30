@@ -35,4 +35,9 @@ public class SessionController {
     ctx.sessionAttribute("user", colaborador);
     ctx.redirect("/");
   }
+
+  public void logout(@NotNull Context ctx) {
+    ctx.sessionAttribute("user", null);
+    ctx.redirect("/");
+  }
 }

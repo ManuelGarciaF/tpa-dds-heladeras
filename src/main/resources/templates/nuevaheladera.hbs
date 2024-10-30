@@ -1,0 +1,84 @@
+{{#>templates/partials/formulariocolaboracion
+        title="Hacerse Cargo de una Heladera"
+        image-url="/assets/img/nuevaheladera-banner.png"
+}}
+    <form action="/colaborar/nuevaheladera" method="post" class="row row-cols-1 row-cols-lg-2 p-4">
+        <div class="col d-flex flex-column align-items-start">
+            <label for="location-picker" class="form-label fw-medium">Ubicación</label>
+            <div id="location-picker" class="border border-2 rounded rounded-3 location-picker"></div>
+            <input type="hidden" name="latitud" id="latitud-input" required>
+            <input type="hidden" name="longitud" id="longitud-input" required>
+            <div class="form-text">Hacé click en el mapa para elegir una ubicacion.</div>
+        </div>
+        <div class="col d-flex flex-column gap-2 mr-2">
+            <div class="mb-2">
+                <label for="nombre" class="form-label fw-medium">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="numeroserie" class="form-label fw-medium">Numero de Serie</label>
+                <input type="text" name="numeroserie" id="numeroserie" class="form-control" required>
+            </div>
+
+            <div class="mb-2">
+                <label for="capacidadviandas" class="form-label fw-medium">Capacidad de Viandas</label>
+                <input type="number" name="capacidadviandas" id="capacidadviandas" class="form-control"
+                       style="max-width: 6rem;"
+                       value="1" min="1" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary align-self-start align-self-lg-end">Confirmar</button>
+        </div>
+
+    </form>
+
+
+    <!-- Cosas del mapa -->
+
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script>
+        // Inicializar el mapa, posicion inicial y zoom
+        const map = L.map("location-picker").setView([-34.61, -58.40], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19, attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        let marker = null;
+
+        function updateCoordinates(lat, lng) {
+            document.getElementById('latitud-input').value = lat;
+            document.getElementById('longitud-input').value = lng;
+        }
+
+        map.on('click', function (e) {
+            const clickedLat = e.latlng.lat;
+            const clickedLng = e.latlng.lng;
+
+            // Borrar si ya existe
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            // Crear un nuevo marcador en la posicion clickeada
+            marker = L.marker([clickedLat, clickedLng], {
+                draggable: true
+            }).addTo(map);
+
+            // Actualizar cuando se arrastra el marcador
+            marker.on('dragend', function (e) {
+                const position = e.target.getLatLng();
+                updateCoordinates(position.lat, position.lng);
+            });
+
+            updateCoordinates(clickedLat, clickedLng);
+        });
+    </script>
+
+{{/templates/partials/formulariocolaboracion}}

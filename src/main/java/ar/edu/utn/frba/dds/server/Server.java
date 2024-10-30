@@ -40,6 +40,7 @@ public class Server {
 
   private static void configurarExcepciones(Javalin app) {
     app.exception(ValidationException.class, (e, ctx) -> {
+      log.error("Error de validacion {}", e.getErrors());
       ctx.result("400: Formulario invalido").status(400);
     });
   }

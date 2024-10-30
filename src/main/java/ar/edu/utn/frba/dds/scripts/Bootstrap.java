@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Bootstrap implements WithSimplePersistenceUnit {
   public void init() {
     withTransaction(() -> {
-      agregarColaborador("manu_dev", "contraseniaManu", "manu", "garcia");
+      agregarColaborador("manu", "contraseniaManu", "manu", "garcia");
       agregarColaborador("laura84", "lauraPass123", "laura", "rodriguez");
       agregarColaborador("carlos_dev", "carlosSecure!", "carlos", "martinez");
       agregarColaborador("ana2024", "ana#Pass456", "ana", "lopez");

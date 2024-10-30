@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-body">
-    <div class="container-fluid" hx-boost="true">
+    <div class="container-fluid" hx-boost="true" hx-push-url="true">
         <a href="/" class="navbar-brand">
             <img src="/assets/img/icon.png" alt="Icono" class="img nav-icon">
         </a>
@@ -16,7 +16,7 @@
                     <a class="nav-link" href="/colaborar">Colaborar</a>
                 </li>
             </ul>
-            <a href="/logout" class="ms-auto btn btn-primary me-2" role="button">Cerrar Sesión</a>
+            <button hx-post="/logout" class="ms-auto btn btn-primary me-2" hx-target="body">Cerrar Sesión</button>
         </div>
     </div>
 </nav>

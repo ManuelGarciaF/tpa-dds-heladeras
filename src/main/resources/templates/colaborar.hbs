@@ -1,75 +1,34 @@
-{{#partial "contenido"}}
-    {{>templates/nav}}
+{{#*inline "colaboracion"}}
+    <div class="col gy-3">
+        <div class="card h-100">
+            <img src="/assets/img/{{image}}" alt="{{title}}" class="card-img-top border-bottom">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <a href="{{url}}"
+                   class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
+                    <h5 class="card-title text-center">{{title}}</h5>
+                </a>
+            </div>
+        </div>
+    </div>
+{{/inline}}
+
+{{#>templates/partials/layout}}
+    {{>templates/partials/nav}}
     <div class="container-lg vstack mt-3">
         <h3 class="h3 text-center my-3">
             ¡Qué bueno verte por aquí, {{username}}!
             <span class="text-primary fw-bold">¿Cómo te gustaría contribuir hoy?</span>
         </h3>
-        <div class="container-lg border bg-body rounded-3 p-3 pt-0" style="max-width: 1100px">
+        <div class="container-lg border bg-body rounded-3 p-3 pt-0 content-container">
             <div class="row row-cols-1 row-cols-sm-3 gx-4">
-                <div class="col gy-3">
-                    <div class="card h-100">
-                        <img src="/assets/img/dinero.png" alt="Donar Dinero" class="card-img-top border-bottom">
-                        <div class="card-body d-flex flex-column justify-content-center">
-                            <a href="/colaborar/donardinero"
-                               class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <h5 class="card-title text-center">Donar Dinero</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col gy-3">
-                    <div class="card h-100">
-                        <img src="/assets/img/nuevaheladera.png" alt="Hacerse cargo de una Heladera"
-                             class="card-img-top border-bottom">
-                        <div class="card-body d-flex flex-column justify-content-center">
-                            <a href="/colaborar/nuevaheladera"
-                               class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <h5 class="card-title text-center">Hacerse Cargo de una Heladera</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col gy-3">
-                    <div class="card h-100">
-                        <img src="/assets/img/donarvianda.png" alt="Donar Vianda" class="card-img-top border-bottom">
-                        <div class="card-body d-flex flex-column justify-content-center">
-                            <a href="/colaborar/donarviandas"
-                               class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <h5 class="card-title text-center">Donar una Vianda</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {{>colaboracion image="dinero.png" title="Donar Dinero" url="/colaborar/donardinero"}}
+                {{>colaboracion image="nuevaheladera.png" title="Hacerse Cargo de una Heladera" url="/colaborar/nuevaheladera"}}
+                {{>colaboracion image="donarvianda.png" title="Donar una Vianda" url="/colaborar/donarviandas"}}
             </div>
             <div class="row row-cols-1 row-cols-sm-3 gx-4">
-                <div class="col gy-3">
-                    <div class="card h-100">
-                        <img src="/assets/img/distribuir.png" alt="Distribuir viandas"
-                             class="card-img-top border-bottom">
-                        <div class="card-body d-flex flex-column justify-content-center">
-                            <a href="/colaborar/distribuirviandas"
-                               class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <h5 class="card-title text-center">Distribuir Viandas entre Heladeras</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col gy-3">
-                    <div class="card h-100">
-                        <img src="/assets/img/registrarpersona.png" alt="Registrar persona vulnerable"
-                             class="card-img-top border-bottom">
-                        <div class="card-body d-flex flex-column justify-content-center">
-                            <a href="/colaborar/registrarpersona"
-                               class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                                <h5 class="card-title text-center">Registrar Persona Vulnerable</h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                {{>colaboracion image="distribuir.png" title="Distribuir Viandas entre Heladeras" url="/colaborar/distribuirviandas"}}
+                {{>colaboracion image="registrarpersona.png" title="Registrar Persona Vulnerable" url="/colaborar/registrarpersona"}}
             </div>
         </div>
     </div>
-{{/partial}}
-
-{{>templates/layout}}
+{{/templates/partials/layout}}

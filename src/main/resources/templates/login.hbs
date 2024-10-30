@@ -1,8 +1,8 @@
-{{#partial "contenido"}}
+{{#>templates/partials/layout}}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md d-flex flex-column align-items-center justify-content-center">
-                <div class="card p-5 border-0">
+                <div class="card p-5 m-2 border-0">
                     <div class="card-body">
                         <h1 class="text-center mb-2">INICIA SESIÓN</h1>
                         <p class="text-center mb-5">Alimentando Esperanzas, Compartiendo Sonrisas</p>
@@ -25,10 +25,8 @@
             </div>
             <div class="col-md-4 px-0" style="background: #e9fbff">
                 <img src="/assets/img/login.png" alt="Imagen de heladera"
-                     class="img-fluid vh-100 object-fit-cover">
+                     class="img-fluid object-fit-cover login-image">
             </div>
         </div>
     </div>
-{{/partial}}
-
-{{>templates/layout}}
+{{/templates/partials/layout}}

@@ -2,10 +2,10 @@
 
 ## SessionController
 - [x] `/login`
-- [ ] `/logout`
+- [x] `/logout`
  
 ## ColaboradorController
-- [ ] `/colaborar`
+- [x] `/colaborar`
 - [ ] `/colaborar/nuevaheladera`
 - [ ] `/colaborar/donarviandas`
 - [ ] `/colaborar/registrarpersona`
