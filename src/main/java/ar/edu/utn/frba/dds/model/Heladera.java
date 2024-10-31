@@ -8,11 +8,11 @@ import ar.edu.utn.frba.dds.model.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.model.incidentes.Incidente;
 import ar.edu.utn.frba.dds.model.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.model.notificacionesheladera.NotificacionHeladeraHandler;
+import ar.edu.utn.frba.dds.model.repositorios.RepoTecnicos;
 import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorCantidadDeViandas;
 import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorPeso;
 import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorPesoSensor;
 import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorTemperatura;
-import ar.edu.utn.frba.dds.model.repositorios.RepoTecnicos;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -141,6 +141,52 @@ public class Heladera extends PersistentEntity {
     }
   }
 
+  public String getNumeroDeSerie() {
+    return numeroDeSerie;
+  }
+
+  public String getNombre() {
+    return nombre;
+  }
+
+  public List<Incidente> getIncidentesActivos() {
+    return incidentesActivos;
+  }
+
+  public Integer getCantidadDeViandas() {
+    return proveedorCantidadDeViandas.getCantidadDeViandas();
+  }
+
+  public NotificacionHeladeraHandler getNotificacionHeladeraHandler() {
+    return notificacionHeladeraHandler;
+  }
+
+  public List<UsoTarjetaPersonaVulnerable> getUsosPersonasVulnerables() {
+    return this.usosPersonasVulnerables;
+  }
+
+  public Ubicacion getUbicacion() {
+    return this.ubicacion;
+  }
+
+  public List<AperturaHeladera> getAperturasCompletadas() {
+    return aperturasHeladera.stream()
+        .filter(AperturaHeladera::isRealizada)
+        .toList();
+  }
+
+  public List<AperturaHeladera> getAperturasPendientes() {
+    return aperturasHeladera.stream()
+        .filter(a -> !a.isRealizada())
+        .toList();
+  }
+
+  public List<AperturaHeladera> getAperturasValidas() {
+    return aperturasHeladera.stream()
+        .filter(AperturaHeladera::esValidaAhora)
+        .toList();
+  }
+
   public void ingresarViandas(List<Vianda> viandas) {
     if (this.viandas.size() + viandas.size() > this.capacidadViandas) {
       throw new HeladeraException("Las viandas no entran, capacidad: " + this.capacidadViandas);
@@ -167,14 +213,6 @@ public class Heladera extends PersistentEntity {
 
   public boolean tieneNombre(String nombreHeladera) {
     return this.nombre.equals(nombreHeladera);
-  }
-
-  public List<UsoTarjetaPersonaVulnerable> getUsosPersonasVulnerables() {
-    return this.usosPersonasVulnerables;
-  }
-
-  public Ubicacion getUbicacion() {
-    return this.ubicacion;
   }
 
   public Integer mesesActivos() {
@@ -229,24 +267,6 @@ public class Heladera extends PersistentEntity {
         .orElseThrow(() -> new HeladeraException("No hay aperturas validas para este colaborador"));
   }
 
-  public List<AperturaHeladera> getAperturasCompletadas() {
-    return aperturasHeladera.stream()
-        .filter(AperturaHeladera::isRealizada)
-        .toList();
-  }
-
-  public List<AperturaHeladera> getAperturasPendientes() {
-    return aperturasHeladera.stream()
-        .filter(a -> !a.isRealizada())
-        .toList();
-  }
-
-  public List<AperturaHeladera> getAperturasValidas() {
-    return aperturasHeladera.stream()
-        .filter(AperturaHeladera::esValidaAhora)
-        .toList();
-  }
-
   public void nuevoIncidente(Incidente incidente) {
     incidentesActivos.add(incidente);
     repoTecnicos.delegarReparacion(this);
@@ -268,24 +288,6 @@ public class Heladera extends PersistentEntity {
   public void limpiarIncidentes() {
     incidentesActivos.clear();
   }
-
-  public String getNumeroDeSerie() {
-    return numeroDeSerie;
-  }
-
-  public List<Incidente> getIncidentesActivos() {
-    return incidentesActivos;
-  }
-
-  public Integer getCantidadDeViandas() {
-    return proveedorCantidadDeViandas.getCantidadDeViandas();
-  }
-
-  //E3 REQ 5
-  public NotificacionHeladeraHandler getNotificacionHeladeraHandler() {
-    return notificacionHeladeraHandler;
-  }
-
   public Integer espacioRestante() {
     return capacidadViandas - this.getCantidadDeViandas();
   }
