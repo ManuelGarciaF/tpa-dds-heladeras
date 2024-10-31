@@ -1,7 +1,7 @@
 package ar.edu.utn.frba.dds.controllers;
 
-import ar.edu.utn.frba.dds.model.Colaborador;
-import ar.edu.utn.frba.dds.model.repositorios.RepoColaboradores;
+import ar.edu.utn.frba.dds.model.Usuario;
+import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import io.javalin.http.Context;
 import java.util.List;
 import java.util.Map;
@@ -24,20 +24,20 @@ public class SessionController {
         .check(it -> it.length() >= 4, "Contraseña debe tener al menos 4 caracteres")
         .get();
 
-    Colaborador colaborador = RepoColaboradores.getInstance().buscarPorUsuario(username);
+    Usuario usuario = RepoUsuarios.getInstance().findByUsername(username);
     // Si no se encontro el usuario o la contrasenia es incorrecta
-    if (colaborador == null || !colaborador.getUsuario().verificarContrasenia(password)) {
+    if (usuario == null || !usuario.verificarContrasenia(password)) {
       ctx.render("login.hbs", Map.of("errors", List.of("Usuario o contraseña incorrectos")));
       return;
     }
 
     log.info("Usuario {} logueado", username);
-    ctx.sessionAttribute("user", colaborador);
+    ctx.sessionAttribute("user_id", usuario.getId());
     ctx.redirect("/");
   }
 
   public void logout(@NotNull Context ctx) {
-    ctx.sessionAttribute("user", null);
+    ctx.sessionAttribute("user_id", null);
     ctx.redirect("/");
   }
 }

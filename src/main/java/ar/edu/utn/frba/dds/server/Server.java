@@ -2,13 +2,14 @@ package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.server.templates.JavalinHandlebars;
 import ar.edu.utn.frba.dds.server.templates.JavalinRenderer;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Server {
+public class Server implements WithSimplePersistenceUnit {
   private static final Logger log = LoggerFactory.getLogger(Server.class);
 
   public void start() {

@@ -19,6 +19,12 @@
             ¡Qué bueno verte por aquí, {{username}}!
             <span class="text-primary fw-bold">¿Cómo te gustaría contribuir hoy?</span>
         </h3>
+        {{#if message}}
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {{/if}}
         <div class="container-lg border bg-body rounded-3 p-3 pt-0 content-container">
             <div class="row row-cols-1 row-cols-sm-3 gx-4">
                 {{>colaboracion image="dinero.png" title="Donar Dinero" url="/colaborar/donardinero"}}

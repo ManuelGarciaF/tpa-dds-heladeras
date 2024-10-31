@@ -40,7 +40,7 @@ public class Bootstrap implements WithSimplePersistenceUnit {
   }
 
   private static void agregarHeladera(String nombre, String numeroDeSerie, Ubicacion ubicacion) {
-    MapaHeladeras.getInstance().agregarHeladera( new Heladera(nombre,
+    MapaHeladeras.getInstance().agregarHeladera(new Heladera(nombre,
         40,
         ubicacion,
         numeroDeSerie,
@@ -56,7 +56,10 @@ public class Bootstrap implements WithSimplePersistenceUnit {
     );
   }
 
-  private void agregarColaborador(String usuario, String contrasenia, String nombre, String apellido) {
+  private void agregarColaborador(String usuario,
+                                  String contrasenia,
+                                  String nombre,
+                                  String apellido) {
     RepoColaboradores.getInstance().agregarColaborador(new ColaboradorHumano(nombre,
         apellido,
         LocalDate.of(1995, 10, 10),

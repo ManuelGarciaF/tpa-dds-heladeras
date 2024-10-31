@@ -17,14 +17,16 @@ public class Auth {
     if (allowedRoles.contains(Role.ANYONE)) {
       return;
     }
-    Colaborador user = ctx.sessionAttribute("user");
-    if (allowedRoles.contains(Role.COLABORADOR) && user != null) {
+    Long user_id = ctx.sessionAttribute("user_id");
+    if (allowedRoles.contains(Role.COLABORADOR) && user_id != null) {
       return;
     }
     boolean isAdmin = Boolean.TRUE.equals(ctx.sessionAttribute("admin"));
     if (allowedRoles.contains(Role.ADMIN) && isAdmin) {
       return;
     }
+
+    // No tiene el rol necesario, redirigir a login.
     ctx.redirect("/login");
     throw new RedirectResponse(HttpStatus.FOUND, "Debes iniciar sesión");
   }

@@ -11,12 +11,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class JavalinHandlebars implements FileRenderer {
   Handlebars handlebars = new Handlebars();
+
   @NotNull
   @Override
-  public String render(@NotNull String path, @NotNull Map<String, ?> model, @NotNull Context context) {
+  public String render(@NotNull String path,
+                       @NotNull Map<String, ?> model,
+                       @NotNull Context context) {
     Template template = null;
     try {
-      template = handlebars.compile("templates/" + path.replace(".hbs",""));
+      template = handlebars.compile(
+          "templates/" + path.replace(".hbs", "")
+      );
       return template.apply(model);
     } catch (IOException e) {
       e.printStackTrace();

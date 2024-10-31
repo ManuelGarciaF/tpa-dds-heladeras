@@ -33,6 +33,10 @@
     max-width: 1100px;
 }
 
+.narrow {
+    max-width: 768px;
+}
+
 .nav-icon {
     height: 3.5rem;
     width: 3.5rem;

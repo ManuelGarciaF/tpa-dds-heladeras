@@ -15,7 +15,9 @@ public class JavalinRenderer implements FileRenderer {
   }
 
   @Override
-  public @NotNull String render(@NotNull String filePath, @NotNull Map<String, ? extends Object> model, @NotNull Context context) {
+  public @NotNull String render(@NotNull String filePath,
+                                @NotNull Map<String, ?> model,
+                                @NotNull Context context) {
     String extension = filePath.substring(filePath.lastIndexOf(".") + 1);
     return renderers.get(extension).render(filePath, model, context);
   }

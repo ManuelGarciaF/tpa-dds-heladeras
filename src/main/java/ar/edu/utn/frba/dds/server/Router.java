@@ -2,14 +2,15 @@ package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.controllers.ColaboradorController;
 import ar.edu.utn.frba.dds.controllers.SessionController;
-import io.github.flbulgarelli.jpa.extras.test.SimplePersistenceTest;
+import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 
-public class Router implements SimplePersistenceTest {
+public class Router implements WithSimplePersistenceUnit {
   public void configure(Javalin app) {
     var sessionController = new SessionController();
     var colaboradorController = new ColaboradorController();
 
+    // Limpiar el entity manager antes de cada request
     app.before(ctx -> entityManager().clear());
 
     // Inicio
@@ -23,19 +24,40 @@ public class Router implements SimplePersistenceTest {
     // Colaboraciones
     app.get("/colaborar", colaboradorController::listaColaboraciones, Role.COLABORADOR);
 
-    app.get("/colaborar/nuevaheladera", colaboradorController::nuevaHeladeraGet, Role.COLABORADOR);
-    app.post("/colaborar/nuevaheladera", colaboradorController::nuevaHeladeraPost, Role.COLABORADOR);
+    app.get("/colaborar/nuevaheladera",
+        colaboradorController::nuevaHeladeraGet,
+        Role.COLABORADOR);
+    app.post("/colaborar/nuevaheladera",
+        colaboradorController::nuevaHeladeraPost,
+        Role.COLABORADOR);
 
-    app.get("/colaborar/donarviandas", colaboradorController::donarViandasGet, Role.COLABORADOR);
-    app.post("/colaborar/donarviandas", colaboradorController::donarViandasPost, Role.COLABORADOR);
+    // TODO cambiar rol
+    app.get("/colaborar/donarviandas",
+        colaboradorController::donarViandasGet,
+        Role.ANYONE);
+    app.post("/colaborar/donarviandas",
+        colaboradorController::donarViandasPost,
+        Role.COLABORADOR);
 
-    app.get("/colaborar/registrarpersona", colaboradorController::registrarPersonaGet, Role.COLABORADOR);
-    app.post("/colaborar/registrarpersona", colaboradorController::registrarPersonaPost, Role.COLABORADOR);
+    app.get("/colaborar/registrarpersona",
+        colaboradorController::registrarPersonaGet,
+        Role.COLABORADOR);
+    app.post("/colaborar/registrarpersona",
+        colaboradorController::registrarPersonaPost,
+        Role.COLABORADOR);
 
-    app.get("/colaborar/donardinero", colaboradorController::donarDineroGet, Role.COLABORADOR);
-    app.post("/colaborar/donardinero", colaboradorController::donarDineroPost, Role.COLABORADOR);
+    app.get("/colaborar/donardinero",
+        colaboradorController::donarDineroGet,
+        Role.COLABORADOR);
+    app.post("/colaborar/donardinero",
+        colaboradorController::donarDineroPost,
+        Role.COLABORADOR);
 
-    app.get("/colaborar/distribuirviandas", colaboradorController::distribuirViandasGet, Role.COLABORADOR);
-    app.post("/colaborar/distribuirviandas", colaboradorController::distribuirViandasPost, Role.COLABORADOR);
+    app.get("/colaborar/distribuirviandas",
+        colaboradorController::distribuirViandasGet,
+        Role.COLABORADOR);
+    app.post("/colaborar/distribuirviandas",
+        colaboradorController::distribuirViandasPost,
+        Role.COLABORADOR);
   }
 }
