@@ -6,6 +6,7 @@ import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.validation.ValidationException;
+import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +18,7 @@ public class Server implements WithSimplePersistenceUnit {
       config.showJavalinBanner = false;
       initializeStaticFiles(config);
       initializeTemplating(config);
+      initializeValidation(config);
 
       // Logging de requests
       config.requestLogger.http((ctx, ms) -> {
@@ -58,4 +60,9 @@ public class Server implements WithSimplePersistenceUnit {
       staticFileConfig.directory = "/assets";
     });
   }
+
+  private static void initializeValidation(JavalinConfig config) {
+    config.validation.register(LocalDate.class, LocalDate::parse);
+  }
+
 }

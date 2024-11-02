@@ -5,12 +5,17 @@
 - [x] `/logout`
  
 ## ColaboradorController
-- [x] `/colaborar`
-- [ ] `/colaborar/nuevaheladera`
-- [ ] `/colaborar/donarviandas`
-- [ ] `/colaborar/registrarpersona`
-- [ ] `/colaborar/donardinero`
-- [ ] `/colaborar/distribuirviandas`
+- [x] GET `/colaboraciones`
+- [x] GET `/colaboraciones/hacersecargodeheladera/new`
+- [x] POST `/colaboraciones/hacersecargodeheladera`
+- [x] POST `/colaboraciones/donaciondeviandas/new`
+- [x] POST `/colaboraciones/donaciondeviandas`
+- [ ] GET `/colaboraciones/registrarpersona/new`
+- [ ] POST `/colaboraciones/registrarpersona`
+- [ ] GET `/colaboraciones/donaciondedinero/new`
+- [ ] POST `/colaboraciones/donaciondedinero`
+- [ ] GET `/colaboraciones/distribuciondeviandas/new`
+- [ ] POST `/colaboraciones/distribuciondeviandas`
 
 ## HeladeraController
 - [ ] `/heladeras`

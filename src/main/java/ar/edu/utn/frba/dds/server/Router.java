@@ -14,7 +14,7 @@ public class Router implements WithSimplePersistenceUnit {
     app.before(ctx -> entityManager().clear());
 
     // Inicio
-    app.get("/", ctx -> ctx.redirect("/colaborar"), Role.COLABORADOR);
+    app.get("/", ctx -> ctx.redirect("/colaboraciones"), Role.COLABORADOR);
 
     // Sesiones
     app.get("/login", sessionController::show, Role.ANYONE);
@@ -22,42 +22,42 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/logout", sessionController::logout, Role.COLABORADOR);
 
     // Colaboraciones
-    app.get("/colaborar", colaboradorController::listaColaboraciones, Role.COLABORADOR);
+    app.get("/colaboraciones", colaboradorController::formasDeColaborar, Role.COLABORADOR);
 
-    app.get("/colaborar/nuevaheladera",
-        colaboradorController::nuevaHeladeraGet,
+    // Ponemos /new a la pagina que contiene el formulario
+    app.get("/colaboraciones/hacersecargodeheladera/new",
+        colaboradorController::hacerseCargoDeHeladeraForm,
         Role.COLABORADOR);
-    app.post("/colaborar/nuevaheladera",
-        colaboradorController::nuevaHeladeraPost,
-        Role.COLABORADOR);
-
-    // TODO cambiar rol
-    app.get("/colaborar/donarviandas",
-        colaboradorController::donarViandasGet,
-        Role.ANYONE);
-    app.post("/colaborar/donarviandas",
-        colaboradorController::donarViandasPost,
+    app.post("/colaboraciones/hacersecargodeheladera",
+        colaboradorController::hacerseCargoDeHeladeraPost,
         Role.COLABORADOR);
 
-    app.get("/colaborar/registrarpersona",
-        colaboradorController::registrarPersonaGet,
+    app.get("/colaboraciones/donaciondeviandas/new",
+        colaboradorController::donacionDeViandasForm,
         Role.COLABORADOR);
-    app.post("/colaborar/registrarpersona",
+    app.post("/colaboraciones/donaciondeviandas",
+        colaboradorController::donacionDeViandasPost,
+        Role.COLABORADOR);
+
+    app.get("/colaboraciones/registrarpersona/new",
+        colaboradorController::registrarPersonaForm,
+        Role.COLABORADOR);
+    app.post("/colaboraciones/registrarpersona",
         colaboradorController::registrarPersonaPost,
         Role.COLABORADOR);
 
-    app.get("/colaborar/donardinero",
-        colaboradorController::donarDineroGet,
+    app.get("/colaboraciones/donaciondedinero/new",
+        colaboradorController::donacionDeDineroForm,
         Role.COLABORADOR);
-    app.post("/colaborar/donardinero",
-        colaboradorController::donarDineroPost,
+    app.post("/colaboraciones/donaciondedinero",
+        colaboradorController::donacionDeDineroPost,
         Role.COLABORADOR);
 
-    app.get("/colaborar/distribuirviandas",
-        colaboradorController::distribuirViandasGet,
+    app.get("/colaboraciones/distribuciondeviandas/new",
+        colaboradorController::distribucionDeViandasForm,
         Role.COLABORADOR);
-    app.post("/colaborar/distribuirviandas",
-        colaboradorController::distribuirViandasPost,
+    app.post("/colaboraciones/distribuciondeviandas",
+        colaboradorController::distribucionDeViandasPost,
         Role.COLABORADOR);
   }
 }

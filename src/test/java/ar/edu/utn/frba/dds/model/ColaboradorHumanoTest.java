@@ -204,10 +204,10 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
   @Test
   void alAceptarLaSugerenciaSeLeAgregaUnaColaboracion() {
     // Agregar una vianda a la heladera rota
-    heladera1.ingresarViandas(List.of(new Vianda("mm...food",
+    heladera1.agregarVianda(new Vianda("mm...food",
         LocalDate.now().plusWeeks(2),
         10,
-        10)));
+        10));
     // Subscribirse y ser alertado.
     heladera1.getNotificacionHeladeraHandler()
         .agregarSubscriptorIncidente(new SubscriptorIncidente(colaboradorHumano1));

@@ -38,6 +38,10 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
         .getResultList();
   }
 
+  public Heladera buscarPorId(Long id) {
+    return entityManager().find(Heladera.class, id);
+  }
+
   public void revisarSensoresDeTemperatura() {
     this.listarHeladeras().forEach(Heladera::checkearDesconexionSensorTemperatura);
   }

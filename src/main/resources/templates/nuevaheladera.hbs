@@ -2,10 +2,10 @@
         title="Hacerse Cargo de una Heladera"
         image-url="/assets/img/nuevaheladera-banner.png"
 }}
-    <form action="/colaborar/nuevaheladera" method="post" class="row row-cols-1 row-cols-lg-2 p-4">
+    <form action="/colaboracion/hacersecargodeheladera" method="post" class="row row-cols-1 row-cols-lg-2 p-4">
         <div class="col d-flex flex-column align-items-start">
             <label for="location-picker" class="form-label fw-medium">Ubicación</label>
-            <div id="location-picker" class="border border-2 rounded rounded-3 location-picker"></div>
+            <div id="location-picker" class="border border-2 rounded rounded-3 location-picker w-100"></div>
             <input type="hidden" name="latitud" id="latitud-input" required>
             <input type="hidden" name="longitud" id="longitud-input" required>
             <div class="form-text">Hacé click en el mapa para elegir una ubicacion.</div>
@@ -30,7 +30,6 @@
 
             <button type="submit" class="btn btn-primary align-self-start align-self-lg-end">Confirmar</button>
         </div>
-
     </form>
 
 

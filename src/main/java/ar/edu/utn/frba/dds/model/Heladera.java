@@ -187,11 +187,8 @@ public class Heladera extends PersistentEntity {
         .toList();
   }
 
-  public void ingresarViandas(List<Vianda> viandas) {
-    if (this.viandas.size() + viandas.size() > this.capacidadViandas) {
-      throw new HeladeraException("Las viandas no entran, capacidad: " + this.capacidadViandas);
-    }
-    this.viandas.addAll(viandas);
+  public void agregarVianda(Vianda vianda) {
+    this.viandas.add(vianda);
   }
 
   public List<Vianda> sacarViandas(Integer cantidad) {

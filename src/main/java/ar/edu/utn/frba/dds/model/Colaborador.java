@@ -10,12 +10,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -25,7 +25,7 @@ public abstract class Colaborador extends PersistentEntity {
   @Embedded
   private final MedioDeContacto medioDeContacto;
 
-  @OneToMany(cascade = CascadeType.PERSIST)
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "colaboradorId")
   private final List<Colaboracion> historialDeColaboraciones = new ArrayList<>();
 

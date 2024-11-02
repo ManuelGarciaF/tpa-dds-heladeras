@@ -9,9 +9,9 @@
     --bs-primary-rgb: 13, 90, 120;
     --bs-btn-bg: #0D5A78;
     --bs-btn-border-color: #0D5A78;
-    --bs-btn-hover-bg: #0a4861; /* Slightly darker shade */
+    --bs-btn-hover-bg: #0a4861;
     --bs-btn-hover-border-color: #0a4861;
-    --bs-btn-active-bg: #084057; /* Even darker for active state */
+    --bs-btn-active-bg: #084057;
     --bs-btn-active-border-color: #084057;
 }
 
@@ -49,7 +49,6 @@
 }
 
 .location-picker {
-    width: 30rem;
-    height: 20rem;
+    aspect-ratio: 1.2;
     margin: auto 0;
 }
