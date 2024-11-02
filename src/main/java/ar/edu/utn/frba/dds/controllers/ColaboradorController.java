@@ -2,10 +2,14 @@ package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.model.Colaborador;
 import ar.edu.utn.frba.dds.model.Heladera;
+import ar.edu.utn.frba.dds.model.PersonaVulnerable;
+import ar.edu.utn.frba.dds.model.TarjetaPersonaVulnerable;
 import ar.edu.utn.frba.dds.model.Ubicacion;
 import ar.edu.utn.frba.dds.model.Vianda;
+import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.model.colaboraciones.HacerseCargoHeladera;
+import ar.edu.utn.frba.dds.model.colaboraciones.RegistroDePersonaVulnerable;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColaboradores;
 import ar.edu.utn.frba.dds.model.repositorios.RepoTecnicos;
@@ -133,16 +137,73 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
   }
 
   public void registrarPersonaForm(@NotNull Context ctx) {
-    ctx.render("registrarpersona.hbs");
+    ctx.render("registrarpersonaform.hbs");
   }
 
   public void registrarPersonaPost(@NotNull Context ctx) {
+    String nombre = ctx.formParamAsClass("nombre", String.class)
+        .check(it -> !it.isEmpty(), "Nombre no puede estar vacío")
+        .get();
+    LocalDate fechaDeNacimiento = ctx.formParamAsClass("fechadenacimiento", LocalDate.class)
+        .check(it -> it.isBefore(LocalDate.now()), "Fecha de nacimiento inválida")
+        .get();
+    Integer menoresACargo = ctx.formParamAsClass("menoresacargo", Integer.class)
+        .check(it -> it >= 0, "Menores a cargo debe ser mayor o igual a 0")
+        .get();
+    String domicilio = ctx.formParamAsClass("domicilio", String.class)
+        .check(it -> !it.isEmpty(), "Domicilio no puede estar vacío")
+        .getOrDefault(null);
+    String codigoDeTarjeta = ctx.formParamAsClass("codigotarjeta", String.class)
+        .check(it -> !it.isEmpty(), "Código de tarjeta no puede estar vacío")
+        .get();
+
+    Long usuarioID = ctx.sessionAttribute("user_id");
+    Colaborador colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(usuarioID);
+
+    withTransaction(() -> {
+      var personaVulnerable = new PersonaVulnerable(
+          nombre,
+          domicilio,
+          fechaDeNacimiento,
+          LocalDate.now(),
+          menoresACargo,
+          new TarjetaPersonaVulnerable(codigoDeTarjeta, MapaHeladeras.getInstance())
+      );
+      colaborador.colaborar(new RegistroDePersonaVulnerable(personaVulnerable));
+    });
+
+    ctx.sessionAttribute("message", "Persona registrada con éxito");
+    ctx.redirect("/");
   }
 
   public void donacionDeDineroForm(@NotNull Context ctx) {
+    ctx.render("donaciondedineroform.hbs");
   }
 
   public void donacionDeDineroPost(@NotNull Context ctx) {
+    Integer monto = ctx.formParamAsClass("monto", Integer.class)
+        .check(it -> it > 0, "Monto debe ser mayor a 0")
+        .get();
+    String donacionPeriodicaStr = ctx.formParam("donacionperiodica");
+    boolean donacionPeriodica = donacionPeriodicaStr != null && donacionPeriodicaStr.equals("on");
+    Integer frecuenciaEnDias = donacionPeriodica ? ctx.formParamAsClass("frecuencia", Integer.class)
+        .check(it -> it > 0, "Frecuencia en días debe ser mayor a 0")
+        .get() : null;
+
+    Long usuarioID = ctx.sessionAttribute("user_id");
+    Colaborador colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(usuarioID);
+
+    withTransaction(() -> {
+      colaborador.colaborar(new DonacionDeDinero(
+          LocalDate.now(),
+          monto,
+          donacionPeriodica,
+          frecuenciaEnDias
+      ));
+    });
+
+    ctx.sessionAttribute("message", "Colaboración registrada con éxito");
+    ctx.redirect("/");
   }
 
   public void distribucionDeViandasForm(@NotNull Context ctx) {

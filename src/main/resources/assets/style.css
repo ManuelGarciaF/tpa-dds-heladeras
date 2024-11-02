@@ -5,9 +5,9 @@
 
 :root,
 .btn-primary {
-    --bs-primary: #0D5A78;
-    --bs-primary-rgb: 13, 90, 120;
-    --bs-btn-bg: #0D5A78;
+    --bs-primary: #275275;
+    --bs-primary-rgb: 39, 82, 117;
+    --bs-btn-bg: #275275;
     --bs-btn-border-color: #0D5A78;
     --bs-btn-hover-bg: #0a4861;
     --bs-btn-hover-border-color: #0a4861;

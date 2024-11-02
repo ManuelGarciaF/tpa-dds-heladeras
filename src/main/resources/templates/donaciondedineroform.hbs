@@ -2,30 +2,40 @@
         title="Donar Dinero"
         image-url="/assets/img/dinero-banner.png"
 }}
-    <form action="/colaboraciones/donaciondedinero" class="vstack p-4">
+    <form action="/colaboraciones/donaciondedinero" method="post" class="vstack p-4">
         <div class="mb-2">
             <label for="monto" class="form-label fw-medium">Monto</label>
-            <span class="input-group-text">$</span>
-            <input type="number" name="monto" id="monto" class="form-control"
-                                   placeholder="0"
-                                   min="1">
+            <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" name="monto" id="monto" class="form-control"
+                       placeholder="0"
+                       min="1">
+            </div>
         </div>
 
         <div class="mb-2 d-flex flex-column flex-md-row justify-content-start gap-3">
             <div class="w-50">
-                <label for="donacion-periodica" class="form-label fw-medium">Donación Periódica</label>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="donacionperiodica" name="donacionperiodica">
-                            </div>
+                <label for="donacionperiodica" class="form-label fw-medium">Donación Periódica</label>
+                <input class="form-check-input d-block" type="checkbox" id="donacionperiodica" name="donacionperiodica">
             </div>
             <div class="w-50">
-                <label for="Frecuencia" class="form-label fw-medium">Frecuencia</label>
-                <input type="number" name="frecuencia" id="frecuencia" class="form-control"
-                       placeholder="0"
-                       min="1">
-                <span class="input-group-text">Días</span>
+                <label for="frecuencia" class="form-label fw-medium">Frecuencia</label>
+                <div class="input-group">
+                    <input type="number" name="frecuencia" id="frecuencia" class="form-control"
+                           disabled
+                           placeholder="0"
+                           min="1">
+                    <span class="input-group-text">Días</span>
+                </div>
             </div>
         </div>
         <button type="submit" class="btn btn-primary align-self-md-end">Confirmar</button>
     </form>
+    <script>
+        document.getElementById('donacionperiodica').addEventListener('change', function () {
+            const frecuencia = document.getElementById('frecuencia');
+            frecuencia.disabled = !this.checked;
+            frecuencia.required = this.checked;
+        });
+    </script>
 {{/templates/partials/formulariocolaboracion}}

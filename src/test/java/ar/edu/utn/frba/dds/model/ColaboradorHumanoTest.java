@@ -121,7 +121,7 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
 
   @Test
   void puedeAgregarUnaColaboracion() {
-    var colaboracion = new DonacionDeDinero(420, false, null);
+    var colaboracion = new DonacionDeDinero(LocalDate.now(), 420, false, null);
     colaboradorHumano1.colaborar(colaboracion);
     assertTrue(colaboradorHumano1.getHistorialDeColaboraciones().contains(colaboracion));
   }
@@ -134,7 +134,7 @@ class ColaboradorHumanoTest implements SimplePersistenceTest {
         10,
         null,
         null));
-    colaboradorHumano1.colaborar(new DonacionDeDinero(420, false, null));
+    colaboradorHumano1.colaborar(new DonacionDeDinero(LocalDate.now(), 420, false, null));
     colaboradorHumano1.colaborar(new DonacionDeVianda(
         new Vianda("Vianda", LocalDate.now().plusWeeks(2), 10, 10),
         null));

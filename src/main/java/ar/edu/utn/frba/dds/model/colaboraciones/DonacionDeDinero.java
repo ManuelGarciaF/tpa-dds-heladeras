@@ -15,16 +15,17 @@ public class DonacionDeDinero extends Colaboracion {
 
   public static final Double COEFICIENTE_PUNTAJE = 0.5;
 
-  public DonacionDeDinero(Integer monto,
-                          Boolean donacionPeriodica,
-                          Integer frecuenciaEnDias) {
-    this.fecha = LocalDate.now();
-
+  public DonacionDeDinero(
+      LocalDate fecha,
+      Integer monto,
+      Boolean donacionPeriodica,
+      Integer frecuenciaEnDias) {
     requireNonNull(monto);
     if (monto < 0) {
       throw new IllegalArgumentException("El monto de la donación no puede ser negativo");
     }
 
+    this.fecha = fecha;
     this.monto = monto;
     this.donacionPeriodica = requireNonNull(donacionPeriodica);
     if (donacionPeriodica && frecuenciaEnDias == null) {

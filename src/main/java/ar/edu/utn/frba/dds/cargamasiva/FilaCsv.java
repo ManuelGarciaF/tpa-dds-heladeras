@@ -33,7 +33,7 @@ public record FilaCsv(
 
   public Colaboracion crearColaboracion() {
     return switch (formaColaboracion) {
-      case DINERO -> new DonacionDeDinero(cantidad, false, null);
+      case DINERO -> new DonacionDeDinero(fechaColaboracion, cantidad, false, null);
       case DONACION_VIANDAS -> new DonacionDeViandaHistorica(cantidad);
       case REDISTRIBUCION_VIANDAS -> new DistribucionDeViandas(
           MotivoDeDistribucion.NO_ESPECIFICADO,

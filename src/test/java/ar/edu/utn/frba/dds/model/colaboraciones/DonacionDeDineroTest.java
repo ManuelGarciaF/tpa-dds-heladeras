@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.model.colaboraciones;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ class DonacionDeDineroTest {
 
   @BeforeEach
   void setUp() {
-    donacionDeDinero = new DonacionDeDinero( 500, false, null );
+    donacionDeDinero = new DonacionDeDinero(LocalDate.now(), 500, false, null );
   }
 
   @Test

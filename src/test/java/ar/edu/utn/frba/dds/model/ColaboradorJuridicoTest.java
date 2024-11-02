@@ -46,14 +46,14 @@ class ColaboradorJuridicoTest implements SimplePersistenceTest {
 
   @Test
   void puedeAgregarUnaColaboracion() {
-    var colaboracion = new DonacionDeDinero(420, false, null);
+    var colaboracion = new DonacionDeDinero(LocalDate.now(), 420, false, null);
     colaboradorJuridico.colaborar(colaboracion);
     assertTrue(colaboradorJuridico.getHistorialDeColaboraciones().contains(colaboracion));
   }
 
   @Test
   void elPuntajeSeCalculaCorrectamente() {
-    colaboradorJuridico.colaborar(new DonacionDeDinero(420, false, null));
+    colaboradorJuridico.colaborar(new DonacionDeDinero(LocalDate.now(), 420, false, null));
     colaboradorJuridico.colaborar(new HacerseCargoHeladera(heladera));
 
     var tarjeta = new TarjetaPersonaVulnerable("123", MapaHeladeras.getInstance());
