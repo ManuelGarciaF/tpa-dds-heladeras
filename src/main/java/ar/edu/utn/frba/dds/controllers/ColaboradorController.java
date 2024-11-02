@@ -2,10 +2,12 @@ package ar.edu.utn.frba.dds.controllers;
 
 import ar.edu.utn.frba.dds.model.Colaborador;
 import ar.edu.utn.frba.dds.model.Heladera;
+import ar.edu.utn.frba.dds.model.MotivoDeDistribucion;
 import ar.edu.utn.frba.dds.model.PersonaVulnerable;
 import ar.edu.utn.frba.dds.model.TarjetaPersonaVulnerable;
 import ar.edu.utn.frba.dds.model.Ubicacion;
 import ar.edu.utn.frba.dds.model.Vianda;
+import ar.edu.utn.frba.dds.model.colaboraciones.DistribucionDeViandas;
 import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.model.colaboraciones.HacerseCargoHeladera;
@@ -16,11 +18,12 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoTecnicos;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
+import io.javalin.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.bind.ValidationException;
+
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,12 +95,8 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
   }
 
   public void donacionDeViandasForm(@NotNull Context ctx) {
-    List<Heladera> heladeras = MapaHeladeras.getInstance().listarHeladeras();
     var model = new HashMap<String, Object>();
-
-    model.put("heladeras", heladeras.stream().map(h ->
-        Map.of("nombre", h.getNombre(), "id", h.getId())
-    ).toList());
+    obtenerListaDeHeladeras(model);
     model.put("currDate", LocalDate.now());
     ctx.render("donaciondeviandasform.hbs", model);
   }
@@ -120,7 +119,8 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
         .get();
     Heladera heladera = MapaHeladeras.getInstance().buscarPorId(heladeraId);
     if (heladera == null) { // Validar que la heladera exista
-      throw new ValidationException("Heladera inválida");
+      ctx.status(400);
+      return;
     }
 
     Long usuarioID = ctx.sessionAttribute("user_id");
@@ -207,8 +207,65 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
   }
 
   public void distribucionDeViandasForm(@NotNull Context ctx) {
+    var model = new HashMap<String, Object>();
+    obtenerListaDeHeladeras(model);
+    ctx.render("distribuciondeviandasform.hbs", model);
   }
 
-  public void distribucionDeViandasPost(@NotNull Context ctx) {
+  public void distribucionDeViandasPost(@NotNull Context ctx) throws ValidationException {
+    Long heladeraOrigenId = ctx.formParamAsClass("heladeraorigen", Long.class)
+        .get();
+    Heladera heladeraOrigen = MapaHeladeras.getInstance().buscarPorId(heladeraOrigenId);
+    if (heladeraOrigen == null) { // Validar que la heladera exista
+      ctx.status(400);
+      return;
+    }
+
+    Long heladeraDestinoId = ctx.formParamAsClass("heladeradestino", Long.class)
+        .get();
+    Heladera heladeraDestino = MapaHeladeras.getInstance().buscarPorId(heladeraDestinoId);
+    if (heladeraDestino == null) { // Validar que la heladera exista
+      ctx.status(400);
+      return;
+    }
+
+    if (heladeraOrigenId.equals(heladeraDestinoId)) {
+      var model = new HashMap<String, Object>();
+      obtenerListaDeHeladeras(model);
+      model.put("errors", List.of("Las heladeras deben ser distintas"));
+      ctx.render("distribuciondeviandasform.hbs", model);
+      return;
+    }
+
+    MotivoDeDistribucion motivoDeDistribucion = ctx.formParamAsClass("motivo", MotivoDeDistribucion.class)
+        .get();
+
+    Integer cantidadDeViandas = ctx.formParamAsClass("cantidadtransladada", Integer.class)
+        .check(it -> it > 0, "Cantidad de viandas debe ser mayor a 0")
+        .get();
+
+    Long usuarioID = ctx.sessionAttribute("user_id");
+    Colaborador colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(usuarioID);
+
+    withTransaction(() -> {
+      colaborador.colaborar(new DistribucionDeViandas(
+          motivoDeDistribucion,
+          LocalDate.now(),
+          cantidadDeViandas,
+          heladeraOrigen,
+          heladeraDestino
+      ));
+    });
+
+    ctx.sessionAttribute("message", "Colaboración registrada con éxito");
+    ctx.redirect("/");
   }
+
+  private static void obtenerListaDeHeladeras(HashMap<String, Object> model) {
+    List<Heladera> heladeras = MapaHeladeras.getInstance().listarHeladeras();
+    model.put("heladeras", heladeras.stream().map(h ->
+        Map.of("nombre", h.getNombre(), "id", h.getId())
+    ).toList());
+  }
+
 }

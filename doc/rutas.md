@@ -14,8 +14,8 @@
 - [x] POST `/colaboraciones/registrarpersona`
 - [x] GET `/colaboraciones/donaciondedinero/new`
 - [x] POST `/colaboraciones/donaciondedinero`
-- [ ] GET `/colaboraciones/distribuciondeviandas/new`
-- [ ] POST `/colaboraciones/distribuciondeviandas`
+- [x] GET `/colaboraciones/distribuciondeviandas/new`
+- [x] POST `/colaboraciones/distribuciondeviandas`
 
 ## HeladeraController
 - [ ] `/heladeras`
