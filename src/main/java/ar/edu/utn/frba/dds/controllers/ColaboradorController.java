@@ -33,11 +33,11 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
     var model = new HashMap<String, Object>();
     model.put("username", nombre);
     model.put("message", message);
-    ctx.render("colaborar.hbs", model);
+    ctx.render("colaboraciones.hbs", model);
   }
 
   public void hacerseCargoDeHeladeraForm(@NotNull Context ctx) {
-    ctx.render("nuevaheladera.hbs");
+    ctx.render("hacersecargodeheladeraform.hbs");
   }
 
   public void hacerseCargoDeHeladeraPost(@NotNull Context ctx) {
@@ -46,7 +46,7 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
     // Campos ocultos no son validados del lado del cliente, hay que hacerlo acá
     if (lat == null || lng == null) {
       var model = Map.of("errors", List.of("Ubicación inválida"));
-      ctx.render("nuevaheladera.hbs", model);
+      ctx.render("hacersecargodeheladeraform.hbs", model);
       return;
     }
 
@@ -95,7 +95,7 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
         Map.of("nombre", h.getNombre(), "id", h.getId())
     ).toList());
     model.put("currDate", LocalDate.now());
-    ctx.render("donarviandas.hbs", model);
+    ctx.render("donaciondeviandasform.hbs", model);
   }
 
   public void donacionDeViandasPost(@NotNull Context ctx) throws ValidationException {
