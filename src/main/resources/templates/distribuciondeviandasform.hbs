@@ -1,0 +1,45 @@
+{{#>templates/partials/formulariocolaboracion
+        title="Distribuir Viandas"
+        image-url="/assets/img/donarvianda-banner.png"
+}}
+
+    <form action="/colaboracion/distribuciondeviandas" method="post" class="vstack p-4">
+        <div class="mb-2">
+                    <label for="heladeraorigen" class="form-label fw-medium">Heladera Origen</label>
+                    <select name="heladeraorigen" id="heladeraorigen" class="form-select" required>
+                        <option value="" selected>Seleccionar...</option>
+                        {{#each heladeras}}
+                            <option value="{{this.id}}">{{this.nombre}}</option>
+                        {{/each}}
+                    </select>
+        </div>
+
+       <div class="mb-2">
+                           <label for="heladerdestino" class="form-label fw-medium">Heladera Destino</label>
+                           <select name="heladerdestino" id="heladerdestino" class="form-select" required>
+                               <option value="" selected>Seleccionar...</option>
+                               {{#each heladeras}}
+                                   <option value="{{this.id}}">{{this.nombre}}</option>
+                               {{/each}}
+                           </select>
+       </div>
+       <div class="mb-2">
+                           <label for="motivo" class="form-label fw-medium">Motivo</label>
+                           <select name="motivo" id="motivo" class="form-select" required>
+                           <option value="desperfectoheladera" selected>Desperfecto heladera</option>
+                           <option value="faltadeviandas" selected>Falta de viandas</option>
+                           <option value="noespecificado" selected>No especificado</option>
+                           </select>
+       </div>
+       <div class="mb-2">
+                    <label for="cantidadtransladada" class="form-label fw-medium">Cantidad Transladada</label>
+                    <div class="input-group">
+                    <input type="number" name="cantidadtransladada" id="cantidadtransladada" class="form-control"
+                           min="0" value="1" required>
+                    <span class="input-group-text">Viandas</span>
+                    </div>
+       </div>
+
+        <button type="submit" class="btn btn-primary align-self-md-end mt-2">Confirmar</button>
+    </form>
+{{/templates/partials/formulariocolaboracion}}
