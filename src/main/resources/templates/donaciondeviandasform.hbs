@@ -1,47 +1,47 @@
 {{#>templates/partials/formulariocolaboracion
-        title="Donar Viandas"
-        image-url="/assets/img/donarvianda-banner.png"
+    title="Donar Viandas"
+    image-url="/assets/img/donarvianda-banner.png"
 }}
-    <form action="/colaboraciones/donaciondeviandas" method="post" class="vstack p-4">
-        <div class="mb-2">
-            <label for="tipocomida" class="form-label fw-medium">Tipo de Comida *</label>
-            <input type="text" name="tipocomida" id="tipocomida" class="form-control" required>
-        </div>
+  <form action="/colaboraciones/donaciondeviandas" method="post" class="vstack p-4">
+    <div class="mb-2">
+      <label for="tipocomida" class="form-label fw-medium">Tipo de Comida *</label>
+      <input type="text" name="tipocomida" id="tipocomida" class="form-control" required>
+    </div>
 
-        <div class="mb-2">
-            <label for="fechavencimiento" class="form-label fw-medium">Fecha de Vencimiento *</label>
-            <input type="date" name="fechavencimiento" id="fechavencimiento" class="form-control"
-                   min="{{currDate}}" required>
-        </div>
+    <div class="mb-2">
+      <label for="fechavencimiento" class="form-label fw-medium">Fecha de Vencimiento *</label>
+      <input type="date" name="fechavencimiento" id="fechavencimiento" class="form-control"
+             min="{{currDate}}" required>
+    </div>
 
-        <div class="mb-2 d-flex flex-column flex-md-row justify-content-start gap-3">
-            <div class="w-50">
-                <label for="peso" class="form-label fw-medium">Peso</label>
-                <div class="input-group">
-                    <input type="number" name="peso" id="peso" class="form-control"
-                           placeholder="0"
-                           min="1">
-                    <span class="input-group-text">Gramos</span>
-                </div>
-            </div>
-            <div class="w-50">
-                <label for="calorias" class="form-label fw-medium">Calorias</label>
-                <input type="number" name="calorias" id="calorias" class="form-control"
-                       placeholder="0"
-                       min="1">
-            </div>
+    <div class="mb-2 d-flex flex-column flex-md-row justify-content-start gap-3">
+      <div class="w-50">
+        <label for="peso" class="form-label fw-medium">Peso</label>
+        <div class="input-group">
+          <input type="number" name="peso" id="peso" class="form-control"
+                 placeholder="0"
+                 min="1">
+          <span class="input-group-text">Gramos</span>
         </div>
+      </div>
+      <div class="w-50">
+        <label for="calorias" class="form-label fw-medium">Calorias</label>
+        <input type="number" name="calorias" id="calorias" class="form-control"
+               placeholder="0"
+               min="1">
+      </div>
+    </div>
 
-        <div class="mb-2">
-            <label for="heladera" class="form-label fw-medium">Heladera *</label>
-            <select name="heladera" id="heladera" class="form-select" required>
-                <option value="" selected>Seleccionar...</option>
-                {{#each heladeras}}
-                    <option value="{{this.id}}">{{this.nombre}}</option>
-                {{/each}}
-            </select>
-        </div>
+    <div class="mb-2">
+      <label for="heladera" class="form-label fw-medium">Heladera *</label>
+      <select name="heladera" id="heladera" class="form-select" required>
+        <option value="" selected>Seleccionar...</option>
+        {{#each heladeras}}
+          <option value="{{this.id}}">{{this.nombre}}</option>
+        {{/each}}
+      </select>
+    </div>
 
-        <button type="submit" class="btn btn-primary align-self-md-end mt-2">Confirmar</button>
-    </form>
+    <button type="submit" class="btn btn-primary align-self-md-end mt-2">Confirmar</button>
+  </form>
 {{/templates/partials/formulariocolaboracion}}

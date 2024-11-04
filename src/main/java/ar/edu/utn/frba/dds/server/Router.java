@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.server;
 
 import ar.edu.utn.frba.dds.controllers.ColaboradorController;
+import ar.edu.utn.frba.dds.controllers.HeladeraController;
 import ar.edu.utn.frba.dds.controllers.SessionController;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
@@ -9,6 +10,7 @@ public class Router implements WithSimplePersistenceUnit {
   public void configure(Javalin app) {
     var sessionController = new SessionController();
     var colaboradorController = new ColaboradorController();
+    var heladeraController = new HeladeraController();
 
     // Limpiar el entity manager antes de cada request
     app.before(ctx -> entityManager().clear());
@@ -20,6 +22,10 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/login", sessionController::show, Role.ANYONE);
     app.post("/login", sessionController::create, Role.ANYONE);
     app.post("/logout", sessionController::logout, Role.COLABORADOR);
+
+    // Sesiones admin
+    app.get("/admin/login", sessionController::showAdmin, Role.ANYONE);
+    app.post("/admin/login", sessionController::createAdmin, Role.ANYONE);
 
     // Colaboraciones
     app.get("/colaboraciones", colaboradorController::formasDeColaborar, Role.COLABORADOR);
@@ -59,5 +65,11 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/colaboraciones/distribuciondeviandas",
         colaboradorController::distribucionDeViandasPost,
         Role.COLABORADOR);
+
+    // Heladeras
+    app.get("/heladeras", heladeraController::show, Role.COLABORADOR);
+    app.get("/heladeras/{id}", heladeraController::details, Role.COLABORADOR);
+    app.get("/heladeras/{id}/reportarfalla", heladeraController::report, Role.COLABORADOR);
+
   }
 }

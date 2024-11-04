@@ -1,0 +1,25 @@
+{{#>templates/partials/layout}}
+  <div class="container-fluid">
+    <div class="vstack align-items-center justify-content-center">
+      <div class="card p-5 m-2 border-0">
+        <div class="card-body">
+          <h1 class="text-center mb-2">INICIA SESIÓN</h1>
+          {{#each errors}}
+            <div class="alert alert-danger" role="alert">
+              {{this}}
+            </div>
+          {{/each}}
+          <form action="/admin/login" method="post">
+            <label for="username" class="form-label">Usuario</label>
+            <input id="username" name="username" type="text" class="form-control mb-4"
+                   placeholder="Ingresa tu usuario">
+            <label for="password" class="form-label">Contraseña</label>
+            <input id="password" name="password" type="password" class="form-control mb-4"
+                   required minlength="4" placeholder="Ingresa tu contraseña">
+            <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/templates/partials/layout}}

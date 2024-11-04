@@ -40,4 +40,13 @@ public class SessionController {
     ctx.sessionAttribute("user_id", null);
     ctx.redirect("/");
   }
+
+  public void showAdmin(@NotNull Context ctx) {
+    ctx.render("loginadmin.hbs");
+  }
+
+  public void createAdmin(@NotNull Context ctx) {
+    
+  }
+
 }

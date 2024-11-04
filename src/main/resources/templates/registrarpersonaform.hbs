@@ -1,31 +1,31 @@
 {{#>templates/partials/formulariocolaboracion
-        title="Registrar a una persona vulnerable"
-        image-url="/assets/img/registrarpersona-banner.png"
+    title="Registrar a una persona vulnerable"
+    image-url="/assets/img/registrarpersona-banner.png"
 }}
-    <form action="/colaboraciones/registrarpersona" method="post" class="vstack p-4">
-        <div class="mb-2">
-            <label for="nombre" class="form-label">Nombre Completo *</label>
-            <input id="nombre" name="nombre" type="text" class="form-control" required>
-        </div>
-        <div class="mb-2">
-            <label for="fechadenacimiento" class="form-label fw-medium">Fecha de Nacimiento *</label>
-            <input type="date" name="fechadenacimiento" id="fechadenacimiento" class="form-control" required>
-        </div>
-        <div class="mb-2">
-            <label for="menoresacargo" class="form-label fw-medium">Menores a Cargo *</label>
-            <input type="number" name="menoresacargo" id="menoresacargo" class="form-control"
-                   min="0" value="0" required>
-        </div>
-        <div class="mb-2">
-            <label for="domicilio" class="form-label fw-medium">Domicilio</label>
-            <input type="text" name="domicilio" id="domicilio" class="form-control">
-        </div>
-        <div class="mb-2">
-            <label for="codigotarjeta" class="form-label fw-medium">Código de Tarjeta *</label>
-            <input type="text" name="codigotarjeta" id="codigotarjeta" class="form-control"
-                   required>
-        </div>
+  <form action="/colaboraciones/registrarpersona" method="post" class="vstack p-4">
+    <div class="mb-2">
+      <label for="nombre" class="form-label">Nombre Completo *</label>
+      <input id="nombre" name="nombre" type="text" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label for="fechadenacimiento" class="form-label fw-medium">Fecha de Nacimiento *</label>
+      <input type="date" name="fechadenacimiento" id="fechadenacimiento" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label for="menoresacargo" class="form-label fw-medium">Menores a Cargo *</label>
+      <input type="number" name="menoresacargo" id="menoresacargo" class="form-control"
+             min="0" value="0" required>
+    </div>
+    <div class="mb-2">
+      <label for="domicilio" class="form-label fw-medium">Domicilio</label>
+      <input type="text" name="domicilio" id="domicilio" class="form-control">
+    </div>
+    <div class="mb-2">
+      <label for="codigotarjeta" class="form-label fw-medium">Código de Tarjeta *</label>
+      <input type="text" name="codigotarjeta" id="codigotarjeta" class="form-control"
+             required>
+    </div>
 
-        <button type="submit" class="btn btn-primary align-self-md-end mt-2">Confirmar</button>
-    </form>
+    <button type="submit" class="btn btn-primary align-self-md-end mt-2">Confirmar</button>
+  </form>
 {{/templates/partials/formulariocolaboracion}}

@@ -23,4 +23,5 @@
 - [ ] `/heladeras/:id/reportarfalla`
 
 - [ ] `/admin/login`
+- [ ] `/admin/logout`
 - [ ] `/admin/cargarcsv`

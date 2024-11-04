@@ -45,4 +45,12 @@ public class MapaHeladeras implements WithSimplePersistenceUnit {
   public void revisarSensoresDeTemperatura() {
     this.listarHeladeras().forEach(Heladera::checkearDesconexionSensorTemperatura);
   }
+
+  public List<Heladera> buscarPorNombre(String nombre) {
+    return entityManager().createQuery(
+        "from Heladera where nombre like :nombre",
+            Heladera.class)
+        .setParameter("nombre", "%" + nombre + "%")
+        .getResultList();
+  }
 }

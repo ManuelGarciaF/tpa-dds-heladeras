@@ -1,40 +1,40 @@
 {{#*inline "colaboracion"}}
-    <div class="col gy-3">
-        <div class="card h-100">
-            <img src="/assets/img/{{image}}" alt="{{title}}" class="card-img-top border-bottom">
-            <div class="card-body d-flex flex-column justify-content-center">
-                <a href="{{url}}"
-                   class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
-                    <h5 class="card-title text-center">{{title}}</h5>
-                </a>
-            </div>
-        </div>
+  <div class="col gy-3">
+    <div class="card h-100">
+      <img src="/assets/img/{{image}}" alt="{{title}}" class="card-img-top border-bottom">
+      <div class="card-body d-flex flex-column justify-content-center">
+        <a href="{{url}}"
+           class="stretched-link link-dark link-underline-opacity-0 link-underline-opacity-100-hover">
+          <h5 class="card-title text-center">{{title}}</h5>
+        </a>
+      </div>
     </div>
+  </div>
 {{/inline}}
 
 {{#>templates/partials/layout}}
-    {{>templates/partials/nav}}
-    <div class="container-lg vstack mt-3">
-        <h3 class="h3 text-center my-3">
-            ¡Qué bueno verte por aquí, {{username}}!
-            <span class="text-primary fw-bold">¿Cómo te gustaría contribuir hoy?</span>
-        </h3>
-        {{#if message}}
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                {{message}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        {{/if}}
-        <div class="container-lg border bg-body rounded-3 p-3 pt-0 content-container">
-            <div class="row row-cols-1 row-cols-sm-3 gx-4">
-                {{>colaboracion image="dinero.png" title="Donar Dinero" url="/colaboraciones/donaciondedinero/new"}}
-                {{>colaboracion image="nuevaheladera.png" title="Hacerse Cargo de una Heladera" url="/colaboraciones/hacersecargodeheladera/new"}}
-                {{>colaboracion image="donarvianda.png" title="Donar una Vianda" url="/colaboraciones/donaciondeviandas/new"}}
-            </div>
-            <div class="row row-cols-1 row-cols-sm-3 gx-4">
-                {{>colaboracion image="distribuir.png" title="Distribuir Viandas entre Heladeras" url="/colaboraciones/distribuciondeviandas/new"}}
-                {{>colaboracion image="registrarpersona.png" title="Registrar Persona Vulnerable" url="/colaboraciones/registrarpersona/new"}}
-            </div>
-        </div>
+  {{>templates/partials/nav}}
+  <div class="container-lg vstack mt-3">
+    <h3 class="h3 text-center my-3">
+      ¡Qué bueno verte por aquí, {{username}}!
+      <span class="text-primary fw-bold">¿Cómo te gustaría contribuir hoy?</span>
+    </h3>
+    {{#if message}}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {{/if}}
+    <div class="container-lg border bg-body rounded-3 p-3 pt-0 content-container">
+      <div class="row row-cols-1 row-cols-sm-3 gx-4">
+        {{>colaboracion image="dinero.png" title="Donar Dinero" url="/colaboraciones/donaciondedinero/new"}}
+        {{>colaboracion image="nuevaheladera.png" title="Hacerse Cargo de una Heladera" url="/colaboraciones/hacersecargodeheladera/new"}}
+        {{>colaboracion image="donarvianda.png" title="Donar una Vianda" url="/colaboraciones/donaciondeviandas/new"}}
+      </div>
+      <div class="row row-cols-1 row-cols-sm-3 gx-4">
+        {{>colaboracion image="distribuir.png" title="Distribuir Viandas entre Heladeras" url="/colaboraciones/distribuciondeviandas/new"}}
+        {{>colaboracion image="registrarpersona.png" title="Registrar Persona Vulnerable" url="/colaboraciones/registrarpersona/new"}}
+      </div>
     </div>
+  </div>
 {{/templates/partials/layout}}
