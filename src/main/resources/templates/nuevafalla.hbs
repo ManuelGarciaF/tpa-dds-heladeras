@@ -1,0 +1,19 @@
+{{#>templates/partials/layout}}
+  {{>templates/partials/nav}}
+  <div class="container-lg vstack mt-3">
+    <h3 class="h3 text-center my-3">
+      REPORTAR FALLA TÉCNICA
+    </h3>
+  <form action="/heladeras/{id}/reportarfalla" method="post" class="vstack p-4">
+    <div class="mb-2">
+      <label for="descripcionfalla" class="form-label">Descripción de la falla *</label>
+      <input id="descripcionfalla" name="descripcionfalla" type="text" class="form-control" required>
+    </div>
+    <div class="mb-2">
+      <label for="urlimagenfalla" class="form-label fw-medium">Imagen de la falla (url)</label>
+      <input type="text" name="urlimagenfalla" id="urlimagenfalla" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary align-self-md-end mt-2">Enviar Reporte</button>
+  </form>
+  </div>
+{{/templates/partials/layout}}

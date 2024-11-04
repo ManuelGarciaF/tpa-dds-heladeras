@@ -2,7 +2,6 @@ package ar.edu.utn.frba.dds.model.repositorios;
 
 import ar.edu.utn.frba.dds.model.Usuario;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
-
 import java.util.List;
 
 public class RepoUsuarios implements WithSimplePersistenceUnit {

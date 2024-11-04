@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.model.notificacionesheladera;
 
+import ar.edu.utn.frba.dds.model.ColaboradorHumano;
 import ar.edu.utn.frba.dds.model.Heladera;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,14 @@ public class NotificacionHeladeraHandler {
     subscriptoresIncidentes.forEach(
         observer -> observer.notificar(sugerenciaTrasladoDeViandas)
     );
+  }
+
+  public SubscriptorCantidadDeViandas buscarSubscriptorCantidadDeViandas(
+      ColaboradorHumano colaboradorHumano) {
+    return subscriptoresCantidadDeViandas.stream()
+        .filter(subscriptor -> subscriptor.getColaboradorInteresado().equals(colaboradorHumano))
+        .findFirst()
+        .orElse(null);
   }
 
 }

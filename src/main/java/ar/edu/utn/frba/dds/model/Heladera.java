@@ -134,7 +134,7 @@ public class Heladera extends PersistentEntity {
       });
     }
 
-    if (proveedorCantidadDeViandas != null) {
+    if (proveedorCantidadDeViandas != null && notificacionHeladeraHandler != null) {
       proveedorCantidadDeViandas.setNuevaMedicionHandler(
           () -> notificacionHeladeraHandler.notificarCambioCantidadDeViandas(this)
       );
@@ -231,6 +231,10 @@ public class Heladera extends PersistentEntity {
     return ultimasTresTemperaturas.size() >= 3 && (masAltas || masBajas);
   }
 
+  public Double getUltimaTemperatura() {
+    return proveedorTemperatura.getTemperatura();
+  }
+
   public Integer cantidadUsos() {
     return usosPersonasVulnerables.size();
   }
@@ -285,6 +289,7 @@ public class Heladera extends PersistentEntity {
   public void limpiarIncidentes() {
     incidentesActivos.clear();
   }
+
   public Integer espacioRestante() {
     return capacidadViandas - this.getCantidadDeViandas();
   }

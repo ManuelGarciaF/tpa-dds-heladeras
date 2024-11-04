@@ -23,10 +23,6 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/login", sessionController::create, Role.ANYONE);
     app.post("/logout", sessionController::logout, Role.COLABORADOR);
 
-    // Sesiones admin
-    app.get("/admin/login", sessionController::showAdmin, Role.ANYONE);
-    app.post("/admin/login", sessionController::createAdmin, Role.ANYONE);
-
     // Colaboraciones
     app.get("/colaboraciones", colaboradorController::formasDeColaborar, Role.COLABORADOR);
 
@@ -71,5 +67,13 @@ public class Router implements WithSimplePersistenceUnit {
     app.get("/heladeras/{id}", heladeraController::details, Role.COLABORADOR);
     app.get("/heladeras/{id}/reportarfalla", heladeraController::report, Role.COLABORADOR);
 
+
+    // Intefaz Admin
+    app.get("/admin/login", sessionController::showAdmin, Role.ANYONE);
+    app.post("/admin/login", sessionController::createAdmin, Role.ANYONE);
+    app.post("/admin/logout", sessionController::logoutAdmin, Role.ADMIN);
+
+    app.get("/admin", ctx -> ctx.redirect("/admin/cargarcsv"), Role.ADMIN);
+    app.get("/admin/cargarcsv", ctx -> {}, Role.ADMIN); // TODO
   }
 }

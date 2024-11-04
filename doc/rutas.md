@@ -18,9 +18,11 @@
 - [x] POST `/colaboraciones/distribuciondeviandas`
 
 ## HeladeraController
-- [ ] `/heladeras`
-- [ ] `/heladeras/:id`
-- [ ] `/heladeras/:id/reportarfalla`
+- [x] GET `/heladeras`
+- [ ] GET `/heladeras/:id`
+- [ ] GET `/heladeras/:id/fallas/new`
+- [ ] POST `/heladeras/:id/fallas`
+- [ ] PUT `/heladeras/:id/subscripciones`
 
 - [ ] `/admin/login`
 - [ ] `/admin/logout`

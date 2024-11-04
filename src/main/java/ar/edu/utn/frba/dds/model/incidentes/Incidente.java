@@ -22,5 +22,7 @@ public abstract class Incidente extends PersistentEntity {
     return fecha;
   }
 
-  abstract String getDescripcionDelError();
+  public abstract String getDescripcionDelError();
+
+  public abstract String getTitulo();
 }

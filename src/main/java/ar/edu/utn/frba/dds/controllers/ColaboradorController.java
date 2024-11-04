@@ -23,7 +23,6 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,9 +31,9 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
   private static final Logger log = LoggerFactory.getLogger(ColaboradorController.class);
 
   public void formasDeColaborar(@NotNull Context ctx) {
-    Long user_id = ctx.sessionAttribute("user_id");
+    Long idUsuario = ctx.sessionAttribute("user_id");
     // TODO cachear esto para no buscarlo en la db cada vez
-    String nombre = RepoUsuarios.getInstance().findById(user_id).getNombre();
+    String nombre = RepoUsuarios.getInstance().findById(idUsuario).getNombre();
     String message = ctx.consumeSessionAttribute("message");
 
     var model = new HashMap<String, Object>();
@@ -237,7 +236,8 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
       return;
     }
 
-    MotivoDeDistribucion motivoDeDistribucion = ctx.formParamAsClass("motivo", MotivoDeDistribucion.class)
+    MotivoDeDistribucion motivoDeDistribucion = ctx.formParamAsClass("motivo",
+            MotivoDeDistribucion.class)
         .get();
 
     Integer cantidadDeViandas = ctx.formParamAsClass("cantidadtransladada", Integer.class)

@@ -1,6 +1,5 @@
 package ar.edu.utn.frba.dds.server;
 
-import ar.edu.utn.frba.dds.model.Colaborador;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.RedirectResponse;
@@ -17,17 +16,17 @@ public class Auth {
     if (allowedRoles.contains(Role.ANYONE)) {
       return;
     }
-    Long user_id = ctx.sessionAttribute("user_id");
-    if (allowedRoles.contains(Role.COLABORADOR) && user_id != null) {
+    Long idUsuario = ctx.sessionAttribute("user_id");
+    if (allowedRoles.contains(Role.COLABORADOR) && idUsuario != null) {
       return;
     }
-    boolean isAdmin = Boolean.TRUE.equals(ctx.sessionAttribute("admin"));
+    boolean isAdmin = Boolean.TRUE.equals(ctx.sessionAttribute("is_admin"));
     if (allowedRoles.contains(Role.ADMIN) && isAdmin) {
       return;
     }
 
     // No tiene el rol necesario, redirigir a login.
     ctx.redirect("/login");
-    throw new RedirectResponse(HttpStatus.FOUND, "Debes iniciar sesión");
+    throw new RedirectResponse(HttpStatus.FOUND, "Hay iniciar sesión");
   }
 }

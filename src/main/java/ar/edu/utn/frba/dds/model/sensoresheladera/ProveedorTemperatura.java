@@ -11,6 +11,8 @@ import javax.persistence.InheritanceType;
 public abstract class ProveedorTemperatura extends PersistentEntity {
   public abstract List<Double> ultimasTresTemperaturas();
 
+  public abstract Double getTemperatura();
+
   public abstract void setCheckeoDeTemperaturaHandler(Runnable checkeoDeTemperaturaHandler);
 
   public abstract boolean hayFalloConexion();

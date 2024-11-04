@@ -27,4 +27,9 @@ public class AlertaFallaConexion extends Incidente {
           "El sensor de temperatura de la heladera no esta funcionando correctamente.";
     };
   }
+
+  @Override
+  public String getTitulo() {
+    return "Falla de conexión";
+  }
 }

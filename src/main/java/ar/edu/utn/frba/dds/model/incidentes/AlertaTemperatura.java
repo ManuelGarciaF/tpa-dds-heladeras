@@ -16,4 +16,9 @@ public class AlertaTemperatura extends Incidente {
   public String getDescripcionDelError() {
     return "La temperatura de la heladera salio fuera de los limites permitidos.";
   }
+
+  @Override
+  public String getTitulo() {
+    return "Alerta de temperatura";
+  }
 }

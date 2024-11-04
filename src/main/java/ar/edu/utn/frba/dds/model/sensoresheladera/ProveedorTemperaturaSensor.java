@@ -77,4 +77,12 @@ public class ProveedorTemperaturaSensor extends ProveedorTemperatura {
   public List<Double> ultimasTresTemperaturas() {
     return ultimasTresTemperaturas;
   }
+
+  @Override
+  public Double getTemperatura() {
+    if (ultimasTresTemperaturas.isEmpty()) {
+      return null;
+    }
+    return ultimasTresTemperaturas.get(ultimasTresTemperaturas.size() - 1);
+  }
 }

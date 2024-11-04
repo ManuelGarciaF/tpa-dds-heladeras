@@ -31,6 +31,11 @@ public class FallaTecnica extends Incidente {
     return descripcionDelError;
   }
 
+  @Override
+  public String getTitulo() {
+    return "Falla técnica";
+  }
+
   public Colaborador getColaborador() {
     return colaborador;
   }

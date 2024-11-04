@@ -23,6 +23,14 @@ public class SubscriptorCantidadDeViandas extends PersistentEntity {
 
   }
 
+  public ColaboradorHumano getColaboradorInteresado() {
+    return colaboradorInteresado;
+  }
+
+  public Integer getCantidadMinima() {
+    return cantidadMinima;
+  }
+
   public void notificar(Heladera heladera) {
     if (heladera.getCantidadDeViandas() <= cantidadMinima) {
       colaboradorInteresado.notificar("Solo quedan " + heladera.getCantidadDeViandas()

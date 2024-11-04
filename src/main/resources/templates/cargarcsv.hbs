@@ -1,0 +1,35 @@
+{{#>templates/partials/layout}}
+<nav class="navbar navbar-expand-lg bg-body">
+  <div class="container-fluid">
+    <a href="/" class="navbar-brand">
+      <img src="/assets/img/icon.png" alt="Icono" class="img nav-icon">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/cargarcsv">Cargar CSV</a>
+        </li>
+      </ul>
+      <button hx-post="/admin/logout" class="ms-auto btn btn-primary me-2" hx-target="body">Cerrar Sesión</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container-lg vstack mt-3">
+  <h3 class="h3 text-center my-3">
+    Importar Datos Históricos
+  </h3>
+  <form action="" method="post" class="vstack p-4">
+    <div class="mb-2">
+
+      <input id="" name="" type="text" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary align-self-md-end mt-2">Importar</button>
+  </form>
+</div>
+
+{{/templates/partials/layout}}
