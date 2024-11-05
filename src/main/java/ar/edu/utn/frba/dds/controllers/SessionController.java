@@ -41,33 +41,5 @@ public class SessionController {
     ctx.redirect("/");
   }
 
-  public void showAdmin(@NotNull Context ctx) {
-    ctx.render("loginadmin.hbs");
-  }
-
-  public void createAdmin(@NotNull Context ctx) {
-    final String ADMIN_USERNAME = "admin";
-    final String ADMIN_PASSWORD = "admin";
-
-    String username = ctx.formParamAsClass("username", String.class)
-        .check(it -> !it.isEmpty(), "Usuario no puede estar vacío")
-        .get();
-    String password = ctx.formParamAsClass("password", String.class)
-        .check(it -> !it.isEmpty(), "Contraseña no puede estar vacía")
-        .get();
-
-    if (!username.equals(ADMIN_USERNAME) || !password.equals(ADMIN_PASSWORD)) {
-      ctx.render("loginadmin.hbs", Map.of("errors", List.of("Usuario o contraseña incorrectos")));
-      return;
-    }
-
-    ctx.sessionAttribute("is_admin", true);
-    ctx.redirect("/admin");
-  }
-
-  public void logoutAdmin(@NotNull Context ctx) {
-    ctx.sessionAttribute("is_admin", null);
-    ctx.redirect("/admin/login");
-  }
 
 }

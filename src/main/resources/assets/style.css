@@ -98,3 +98,12 @@
 .long-container {
     min-height: 120vh;
 }
+
+.file-picker:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.file-picker > i {
+    color: var(--bs-primary);
+}

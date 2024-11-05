@@ -1,5 +1,6 @@
 package ar.edu.utn.frba.dds.server;
 
+import ar.edu.utn.frba.dds.controllers.AdminController;
 import ar.edu.utn.frba.dds.controllers.ColaboradorController;
 import ar.edu.utn.frba.dds.controllers.HeladeraController;
 import ar.edu.utn.frba.dds.controllers.SessionController;
@@ -11,6 +12,7 @@ public class Router implements WithSimplePersistenceUnit {
     var sessionController = new SessionController();
     var colaboradorController = new ColaboradorController();
     var heladeraController = new HeladeraController();
+    var adminController = new AdminController();
 
     // Limpiar el entity manager antes de cada request
     app.before(ctx -> entityManager().clear());
@@ -72,13 +74,13 @@ public class Router implements WithSimplePersistenceUnit {
         Role.COLABORADOR);
 
     // Intefaz Admin
-    app.get("/admin/login", sessionController::showAdmin, Role.ANYONE);
-    app.post("/admin/login", sessionController::createAdmin, Role.ANYONE);
-    app.post("/admin/logout", sessionController::logoutAdmin, Role.ADMIN);
+    app.get("/admin/login", adminController::loginForm, Role.ANYONE);
+    app.post("/admin/login", adminController::loginPost, Role.ANYONE);
+    app.post("/admin/logout", adminController::logout, Role.ADMIN);
 
     app.get("/admin", ctx -> ctx.redirect("/admin/cargarcsv"), Role.ADMIN);
 
-    app.get("/admin/cargarcsv", ctx -> {}, Role.ADMIN); // TODO
-    app.post("/admin/cargarcsv", ctx -> {}, Role.ADMIN); // TODO
+    app.get("/admin/cargarcsv", adminController::cargarCsvForm, Role.ADMIN);
+    app.post("/admin/cargarcsv", adminController::cargarCsvPost, Role.ADMIN);
   }
 }
