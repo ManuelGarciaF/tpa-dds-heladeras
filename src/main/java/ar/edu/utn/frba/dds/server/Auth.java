@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class Auth {
   public static void handleAccess(@NotNull Context ctx) {
     // Ignorar auth para assets
-    if (ctx.path().startsWith("/assets")) {
+    if (ctx.path().startsWith("/assets") || ctx.path().startsWith("/uploaded")) {
       return;
     }
 

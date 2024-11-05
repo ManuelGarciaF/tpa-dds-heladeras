@@ -7,7 +7,9 @@ import com.github.jknack.handlebars.helper.StringHelpers;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
+import io.javalin.http.staticfiles.Location;
 import io.javalin.validation.ValidationException;
+import java.io.File;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,6 +66,11 @@ public class Server implements WithSimplePersistenceUnit {
     config.staticFiles.add(staticFileConfig -> {
       staticFileConfig.hostedPath = "/assets";
       staticFileConfig.directory = "/assets";
+    });
+    config.staticFiles.add(staticFileConfig -> {
+      staticFileConfig.hostedPath = "/uploaded";
+      staticFileConfig.location = Location.EXTERNAL;
+      staticFileConfig.directory = "uploaded/";
     });
   }
 

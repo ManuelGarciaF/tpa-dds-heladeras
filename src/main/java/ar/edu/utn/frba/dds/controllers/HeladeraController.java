@@ -12,6 +12,9 @@ import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import io.javalin.http.ForbiddenResponse;
+import io.javalin.http.UploadedFile;
+import io.javalin.util.FileUtil;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -161,9 +164,40 @@ public class HeladeraController implements WithSimplePersistenceUnit {
   }
 
   public void reportForm(@NotNull Context ctx) {
+    var model = new HashMap<String, Object>();
+    model.put("id", ctx.pathParam("id"));
+    ctx.render("nuevoincidente.hbs", model);
   }
 
   public void reportPost(@NotNull Context ctx) {
+    String descripcion = ctx.formParamAsClass("descripcion", String.class)
+        .check(d -> d.length() >= 10, "Descripcion requerida")
+        .get();
+
+    UploadedFile img = ctx.uploadedFile("img");
+    String nombreImg;
+    if (img != null) {
+      // Guardar archivo
+      nombreImg = img.filename();
+      FileUtil.streamToFile(img.content(), "uploaded/" + img.filename());
+    } else {
+      nombreImg = null;
+    }
+
+    var heladera = obtenerHeladeraDePathParam(ctx);
+
+    var colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(ctx.sessionAttribute("user_id"));
+
+    withTransaction(() -> {
+      heladera.nuevoIncidente(new FallaTecnica(
+          colaborador,
+          LocalDateTime.now(),
+          descripcion,
+          nombreImg
+      ));
+    });
+
+    ctx.redirect("/heladeras/" + heladera.getId());
   }
 
   private static @NotNull Heladera obtenerHeladeraDePathParam(@NotNull Context ctx) {

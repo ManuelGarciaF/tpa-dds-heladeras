@@ -60,7 +60,7 @@
       <div class="m-4">
         <div class="hstack justify-content-between mb-3">
           <h5>Incidentes Activos</h5>
-          <a href="/heladeras/:id/incidentes/new" class="btn btn-primary">Reportar Falla Técnica</a>
+          <a href="/heladeras/{{id}}/incidentes/new" class="btn btn-primary">Reportar Falla Técnica</a>
         </div>
         {{#each incidentes}}
           <div class="card mb-3 bg-secondary-subtle border-0">
@@ -73,7 +73,7 @@
                 <div class="col-md-4 col text-end">
                   <div>{{dateFormat fecha "long"}}</div>
                   {{#if foto}}
-                    <a href="{{foto}}" class="d-block">
+                    <a href="/uploaded/{{foto}}" class="d-block">
                       <i class="bi bi-camera"></i>
                       Ver foto
                     </a>
