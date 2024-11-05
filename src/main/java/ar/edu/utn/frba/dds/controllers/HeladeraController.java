@@ -4,11 +4,14 @@ import ar.edu.utn.frba.dds.model.Colaborador;
 import ar.edu.utn.frba.dds.model.ColaboradorHumano;
 import ar.edu.utn.frba.dds.model.Heladera;
 import ar.edu.utn.frba.dds.model.incidentes.FallaTecnica;
+import ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorCantidadDeViandas;
+import ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorIncidente;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColaboradores;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
+import io.javalin.http.ForbiddenResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +19,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class HeladeraController implements WithSimplePersistenceUnit {
 
-  public void show(@NotNull Context ctx) {
+  public void showAll(@NotNull Context ctx) {
     String busqueda = ctx.queryParam("q");
 
     var model = new HashMap<String, Object>();
 
     Long idUsuario = ctx.sessionAttribute("user_id");
-    // TODO cachear esto para no buscarlo en la db cada vez
-    String nombre = RepoUsuarios.getInstance().findById(idUsuario).getNombre();
+    String nombre = ctx.cachedSessionAttributeOrCompute("username", (c) ->
+        RepoUsuarios.getInstance().findById(idUsuario).getNombre());
     model.put("username", nombre);
 
     List<Heladera> heladeras = busqueda != null
@@ -33,12 +36,7 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     model.put("heladeras", heladeras.stream().map(h -> {
       var ubicacion = h.getUbicacion();
 
-      Integer cantidadDeViandas;
-      try { // TODO revisar
-        cantidadDeViandas = h.getCantidadDeViandas();
-      } catch (NullPointerException ignored) {
-        cantidadDeViandas = 0;
-      }
+      Integer cantidadDeViandas = h.getCantidadDeViandas();
 
       return Map.of(
           "id", h.getId(),
@@ -54,27 +52,16 @@ public class HeladeraController implements WithSimplePersistenceUnit {
   }
 
   public void details(@NotNull Context ctx) {
-    Long id = ctx.pathParamAsClass("id", Long.class).get();
-    var heladera = MapaHeladeras.getInstance().buscarPorId(id);
-    if (heladera == null) {
-      ctx.status(404);
-      return;
-    }
+    var heladera = obtenerHeladeraDePathParam(ctx);
 
     var model = new HashMap<String, Object>();
 
-    Integer cantidadDeViandas;
-    try { // TODO revisar
-      cantidadDeViandas = heladera.getCantidadDeViandas();
-    } catch (NullPointerException ignored) {
-      cantidadDeViandas = 0;
-    }
     var ubicacion = heladera.getUbicacion();
 
     model.put("id", heladera.getId());
     model.put("nombre", heladera.getNombre());
     model.put("numeroSerie", heladera.getNumeroDeSerie());
-    model.put("viandas", cantidadDeViandas);
+    model.put("viandas", heladera.getCantidadDeViandas());
     model.put("temperatura", heladera.getUltimaTemperatura());
     model.put("incidentes", heladera.getIncidentesActivos().size());
     model.put("lat", ubicacion.latitud());
@@ -86,13 +73,22 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     // FIXME No se que mejor forma hay de hacer esto, los colaboradores juridicos no
     //  pueden subscribirse a heladeras.
     try {
-      var subscriptorCantidadDeViandas = heladera
-          .getNotificacionHeladeraHandler()
-          .buscarSubscriptorCantidadDeViandas((ColaboradorHumano) colaborador);
-      var cantidadAlertaViandas = subscriptorCantidadDeViandas == null
-          ? 0
-          : subscriptorCantidadDeViandas.getCantidadMinima();
-      model.put("cantidadAlertaViandas", cantidadAlertaViandas);
+      var colaboradorHumano = (ColaboradorHumano) colaborador;
+      var notifHandler = heladera
+          .getNotificacionHeladeraHandler();
+      model.put("subscriptoIncidentes", notifHandler.estaSubscriptoIncidentes(colaboradorHumano));
+
+      var subscriptoCantidadDeViandas = notifHandler
+          .estaSubscriptoCantidadDeViandas(colaboradorHumano);
+      model.put("subscriptoCantidadDeViandas", subscriptoCantidadDeViandas);
+
+      if (subscriptoCantidadDeViandas) {
+        model.put("cantidadAlertaViandas",
+            notifHandler.buscarSubscriptorCantidadDeViandas(colaboradorHumano).getCantidadMinima()
+        );
+      }
+
+
       model.put("puedeSubscribirse", true);
     } catch (ClassCastException e) {
       model.put("puedeSubscribirse", false);
@@ -102,11 +98,11 @@ public class HeladeraController implements WithSimplePersistenceUnit {
       var map = new HashMap<String, Object>();
       map.put("titulo", i.getTitulo());
       map.put("descripcion", i.getDescripcionDelError());
-      map.put("fecha", i.getFecha().toString());
+      map.put("fecha", i.getFecha());
       try {
-        var fallaTecnica = (FallaTecnica) i; // De nuevo, no se como hacer esto mejor.
+        var fallaTecnica = (FallaTecnica) i; // FIXME De nuevo, no se como hacer esto mejor.
         map.put("foto", fallaTecnica.getUrlFoto());
-        map.put("reportadoPor", fallaTecnica.getUrlFoto());
+        map.put("reportadoPor", fallaTecnica.getColaborador().getUsuario().getNombre());
       } catch (ClassCastException ignored) {
         // No es una falla tecnica
       }
@@ -117,6 +113,66 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     ctx.render("heladeradetalle.hbs", model);
   }
 
-  public void report(@NotNull Context ctx) {
+  public void subscripcionesPost(@NotNull Context ctx) {
+    Long idUsuario = ctx.sessionAttribute("user_id");
+    ColaboradorHumano colaborador;
+    try {
+      colaborador = (ColaboradorHumano) RepoColaboradores.getInstance().buscarPorIdUsuario(idUsuario);
+    } catch (ClassCastException e) {
+      ctx.status(403);
+      return;
+    }
+
+    var notifHandler = obtenerHeladeraDePathParam(ctx).getNotificacionHeladeraHandler();
+
+    boolean subscribirseIncidentes = ctx.formParamAsClass("incidente", Boolean.class)
+        .getOrDefault(false);
+    boolean subscribirseViandas = ctx.formParamAsClass("pocasviandas", Boolean.class)
+        .getOrDefault(false);
+
+    var cantidadMinimaViandas = ctx.formParamAsClass("cantidadAlertaViandas", Integer.class)
+        .check(v -> !(subscribirseViandas && v == null), "Cantidad de viandas requerida")
+        .check(v -> v > 0, "Cantidad de viandas debe ser mayor a 0")
+        .getOrDefault(null);
+
+
+    // Cambiar las subscripciones del colaborador
+    withTransaction(() -> {
+      if (notifHandler.estaSubscriptoIncidentes(colaborador) != subscribirseIncidentes) {
+        if (subscribirseIncidentes) {
+          notifHandler.agregarSubscriptorIncidente(new SubscriptorIncidente(colaborador));
+        } else {
+          notifHandler.removerSubscriptorIncidente(colaborador);
+        }
+      }
+
+      if (notifHandler.estaSubscriptoCantidadDeViandas(colaborador) && !subscribirseViandas) {
+        notifHandler.removerSubscriptorCantidadDeViandas(colaborador);
+      } else if (!notifHandler.estaSubscriptoCantidadDeViandas(colaborador) && subscribirseViandas) {
+        notifHandler.agregarSubscriptorCantidadDeViandas(
+            new SubscriptorCantidadDeViandas(colaborador, cantidadMinimaViandas)
+        );
+      } else if (subscribirseViandas) {
+        notifHandler.buscarSubscriptorCantidadDeViandas(colaborador).setCantidadMinima(cantidadMinimaViandas);
+      }
+    });
+
+    ctx.render("fragments/msgexito.hbs", Map.of("message", "Subscripciones actualizadas"));
   }
+
+  public void reportForm(@NotNull Context ctx) {
+  }
+
+  public void reportPost(@NotNull Context ctx) {
+  }
+
+  private static @NotNull Heladera obtenerHeladeraDePathParam(@NotNull Context ctx) {
+    Long id = ctx.pathParamAsClass("id", Long.class).get();
+    var heladera = MapaHeladeras.getInstance().buscarPorId(id);
+    if (heladera == null) {
+      throw new ForbiddenResponse();
+    }
+    return heladera;
+  }
+
 }

@@ -10,6 +10,7 @@ import ar.edu.utn.frba.dds.model.Ubicacion;
 import ar.edu.utn.frba.dds.model.Usuario;
 import ar.edu.utn.frba.dds.model.incidentes.AlertaFallaConexion;
 import ar.edu.utn.frba.dds.model.incidentes.AlertaTemperatura;
+import ar.edu.utn.frba.dds.model.incidentes.FallaTecnica;
 import ar.edu.utn.frba.dds.model.incidentes.TipoDeFalla;
 import ar.edu.utn.frba.dds.model.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
@@ -56,6 +57,15 @@ public class Bootstrap implements WithSimplePersistenceUnit {
       );
       MapaHeladeras.getInstance().buscarHeladera("HeladeritaDeJuan").nuevoIncidente(
           new AlertaTemperatura(LocalDateTime.now())
+      );
+
+      MapaHeladeras.getInstance().buscarHeladera("HeladeritaDeJuan").nuevoIncidente(
+          new FallaTecnica(
+              RepoColaboradores.getInstance().getColaboradores().get(0),
+              LocalDateTime.now(),
+              "Error en el sensor de temperatura",
+              "https://www.google.com"
+          )
       );
     });
   }

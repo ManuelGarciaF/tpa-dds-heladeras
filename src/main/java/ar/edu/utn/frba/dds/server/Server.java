@@ -3,12 +3,12 @@ package ar.edu.utn.frba.dds.server;
 import ar.edu.utn.frba.dds.model.MotivoDeDistribucion;
 import ar.edu.utn.frba.dds.server.templates.JavalinHandlebars;
 import ar.edu.utn.frba.dds.server.templates.JavalinRenderer;
+import com.github.jknack.handlebars.helper.StringHelpers;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.validation.ValidationException;
 import java.time.LocalDate;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +51,12 @@ public class Server implements WithSimplePersistenceUnit {
   }
 
   private static void initializeTemplating(JavalinConfig config) {
+    // Registrar helpers utiles
+    var handlebars = new JavalinHandlebars();
+    handlebars.registerHelper("dateFormat", StringHelpers.dateFormat);
+
     config.fileRenderer(
-        new JavalinRenderer().register("hbs", new JavalinHandlebars())
+        new JavalinRenderer().register("hbs", handlebars)
     );
   }
 
@@ -71,6 +75,7 @@ public class Server implements WithSimplePersistenceUnit {
       case "noespecificado" -> MotivoDeDistribucion.NO_ESPECIFICADO;
       default -> null;
     });
+    config.validation.register(Boolean.class, v -> v != null && v.equals("on"));
   }
 
 }

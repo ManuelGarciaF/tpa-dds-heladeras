@@ -154,6 +154,9 @@ public class Heladera extends PersistentEntity {
   }
 
   public Integer getCantidadDeViandas() {
+    if (proveedorCantidadDeViandas == null) {
+      return null;
+    }
     return proveedorCantidadDeViandas.getCantidadDeViandas();
   }
 

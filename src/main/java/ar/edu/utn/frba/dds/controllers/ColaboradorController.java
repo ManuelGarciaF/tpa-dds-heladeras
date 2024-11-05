@@ -32,8 +32,8 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
 
   public void formasDeColaborar(@NotNull Context ctx) {
     Long idUsuario = ctx.sessionAttribute("user_id");
-    // TODO cachear esto para no buscarlo en la db cada vez
-    String nombre = RepoUsuarios.getInstance().findById(idUsuario).getNombre();
+    String nombre = ctx.cachedSessionAttributeOrCompute("username", (c) ->
+        RepoUsuarios.getInstance().findById(idUsuario).getNombre());
     String message = ctx.consumeSessionAttribute("message");
 
     var model = new HashMap<String, Object>();

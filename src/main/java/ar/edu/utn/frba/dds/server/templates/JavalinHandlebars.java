@@ -1,6 +1,7 @@
 package ar.edu.utn.frba.dds.server.templates;
 
 import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Template;
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -28,5 +29,9 @@ public class JavalinHandlebars implements FileRenderer {
       context.status(HttpStatus.NOT_FOUND);
       return "No se encuentra la página indicada...";
     }
+  }
+
+  public <T> void registerHelper(String name, Helper<T> helper) {
+    handlebars.registerHelper(name, helper);
   }
 }

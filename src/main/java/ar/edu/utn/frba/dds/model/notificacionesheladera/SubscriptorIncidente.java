@@ -17,6 +17,10 @@ public class SubscriptorIncidente extends PersistentEntity {
   public SubscriptorIncidente() {
   }
 
+  public ColaboradorHumano getColaboradorInteresado() {
+    return colaboradorInteresado;
+  }
+
   public void notificar(SugerenciaTrasladoDeViandas sugerenciaTrasladoDeViandas) {
     colaboradorInteresado.notificar("Se ha detectado un incidente en la heladera "
         + sugerenciaTrasladoDeViandas.getHeladeraRota().getNumeroDeSerie());

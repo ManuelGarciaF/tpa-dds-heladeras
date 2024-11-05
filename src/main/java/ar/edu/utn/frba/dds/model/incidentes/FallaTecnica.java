@@ -2,12 +2,14 @@ package ar.edu.utn.frba.dds.model.incidentes;
 
 import ar.edu.utn.frba.dds.model.Colaborador;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class FallaTecnica extends Incidente {
   private String descripcionDelError;
+
   private String urlFoto;
 
   @ManyToOne

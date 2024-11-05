@@ -19,11 +19,13 @@
 
 ## HeladeraController
 - [x] GET `/heladeras`
-- [ ] GET `/heladeras/:id`
-- [ ] GET `/heladeras/:id/fallas/new`
-- [ ] POST `/heladeras/:id/fallas`
+- [x] GET `/heladeras/:id`
+- [ ] GET `/heladeras/:id/incidentes/new`
+- [ ] POST `/heladeras/:id/incidentes`
 - [ ] PUT `/heladeras/:id/subscripciones`
 
-- [ ] `/admin/login`
-- [ ] `/admin/logout`
-- [ ] `/admin/cargarcsv`
+- [ ] GET `/admin/login`
+- [ ] POST `/admin/login`
+- [ ] POST `/admin/logout`
+- [ ] GET `/admin/cargarcsv`
+- [ ] POST `/admin/cargarcsv`

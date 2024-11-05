@@ -56,4 +56,26 @@ public class NotificacionHeladeraHandler {
         .orElse(null);
   }
 
+  public boolean estaSubscriptoCantidadDeViandas(ColaboradorHumano colaboradorHumano) {
+    return subscriptoresCantidadDeViandas.stream()
+        .anyMatch(subscriptor -> subscriptor.getColaboradorInteresado().equals(colaboradorHumano));
+  }
+
+  public void removerSubscriptorCantidadDeViandas(ColaboradorHumano colaboradorHumano) {
+    subscriptoresCantidadDeViandas.removeIf(
+        subscriptor -> subscriptor.getColaboradorInteresado().equals(colaboradorHumano)
+    );
+  }
+
+  public boolean estaSubscriptoIncidentes(ColaboradorHumano colaboradorHumano) {
+    return subscriptoresIncidentes.stream()
+        .anyMatch(subscriptor -> subscriptor.getColaboradorInteresado().equals(colaboradorHumano));
+  }
+
+  public void removerSubscriptorIncidente(ColaboradorHumano colaboradorHumano) {
+    subscriptoresIncidentes.removeIf(
+        subscriptor -> subscriptor.getColaboradorInteresado().equals(colaboradorHumano)
+    );
+  }
+
 }

@@ -20,7 +20,6 @@ public class SubscriptorCantidadDeViandas extends PersistentEntity {
   }
 
   public SubscriptorCantidadDeViandas() {
-
   }
 
   public ColaboradorHumano getColaboradorInteresado() {
@@ -29,6 +28,10 @@ public class SubscriptorCantidadDeViandas extends PersistentEntity {
 
   public Integer getCantidadMinima() {
     return cantidadMinima;
+  }
+
+  public void setCantidadMinima(Integer cantidadMinima) {
+    this.cantidadMinima = cantidadMinima;
   }
 
   public void notificar(Heladera heladera) {
