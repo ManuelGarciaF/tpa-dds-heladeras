@@ -2,7 +2,7 @@ package ar.edu.utn.frba.dds.cargamasiva;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import ar.edu.utn.frba.dds.dominio.TipoDocumento;
+import ar.edu.utn.frba.dds.model.TipoDocumento;
 import ar.edu.utn.frba.dds.exceptions.CsvInvalidoException;
 import java.time.LocalDate;
 import java.util.List;

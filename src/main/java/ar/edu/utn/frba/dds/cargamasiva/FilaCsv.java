@@ -1,13 +1,13 @@
 package ar.edu.utn.frba.dds.cargamasiva;
 
-import ar.edu.utn.frba.dds.dominio.MotivoDeDistribucion;
-import ar.edu.utn.frba.dds.dominio.TipoDocumento;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.Colaboracion;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.DistribucionDeViandas;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeDinero;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.DonacionDeViandaHistorica;
-import ar.edu.utn.frba.dds.dominio.colaboraciones.RegistroDePersonaVulnerableHistorico;
 import ar.edu.utn.frba.dds.exceptions.CsvInvalidoException;
+import ar.edu.utn.frba.dds.model.MotivoDeDistribucion;
+import ar.edu.utn.frba.dds.model.TipoDocumento;
+import ar.edu.utn.frba.dds.model.colaboraciones.Colaboracion;
+import ar.edu.utn.frba.dds.model.colaboraciones.DistribucionDeViandas;
+import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeDinero;
+import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeViandaHistorica;
+import ar.edu.utn.frba.dds.model.colaboraciones.RegistroDePersonaVulnerableHistorico;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -33,7 +33,7 @@ public record FilaCsv(
 
   public Colaboracion crearColaboracion() {
     return switch (formaColaboracion) {
-      case DINERO -> new DonacionDeDinero(cantidad, false, null);
+      case DINERO -> new DonacionDeDinero(fechaColaboracion, cantidad, false, null);
       case DONACION_VIANDAS -> new DonacionDeViandaHistorica(cantidad);
       case REDISTRIBUCION_VIANDAS -> new DistribucionDeViandas(
           MotivoDeDistribucion.NO_ESPECIFICADO,

@@ -1,6 +1,6 @@
 package ar.edu.utn.frba.dds;
 
-import ar.edu.utn.frba.dds.dominio.notificacionesheladera.ProveedorMensajeriaMail;
+import ar.edu.utn.frba.dds.model.notificacionesheladera.ProveedorMensajeriaMail;
 
 public class MailTest {
   public static void main(String[] args) {

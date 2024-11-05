@@ -1,0 +1,116 @@
+{{#>templates/partials/layout}}
+  {{>templates/partials/nav}}
+  <div class="container-lg vstack mt-3">
+    <h3 class="h3 text-center my-3">
+      {{nombre}}
+    </h3>
+    <div class="container-lg content-container border border-3 rounded-4 bg-body p-3 mt-5">
+      <div class="row row-cols-1 row-cols-lg-2 m-4">
+        <div class="col">
+          <h5>Ubicación</h5>
+          <div id="map" class="border border-2 rounded rounded-3 mapa-heladeras w-100 mb-4"></div>
+        </div>
+        <div class="col">
+          <h5>Detalles</h5>
+          <ul class="list-group">
+            <li class="list-group-item hstack justify-content-between">
+              <span>Número de Serie</span>
+              <span>{{numeroSerie}}</span>
+            </li>
+            <li class="list-group-item hstack justify-content-between">
+              <span>Última temperatura</span>
+              <span>{{temperatura}} °C</span>
+            </li>
+            <li class="list-group-item hstack justify-content-between">
+              <span>Viandas</span>
+              <span>{{viandas}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      {{#if puedeSubscribirse}}
+        <div class="m-4">
+          <h5>Mis Subscripciones</h5>
+          <div id="msg-target"></div>
+          <form hx-put="/heladeras/{{id}}/subscripciones" hx-target="#msg-target" hx-swap="innerHTML">
+            <div class="mb-3 hstack justify-content-start align-items-center">
+              <input class="form-check-input d-block me-2" type="checkbox" id="incidente" name="incidente"
+                     {{#if subscriptoIncidentes}}checked{{/if}} >
+              <label for="incidente">Notificar cuando sufra un incidente</label>
+            </div>
+            <div class="mb-3 hstack justify-content-start align-items-center">
+              <input class="form-check-input d-block me-2" type="checkbox" id="pocasviandas" name="pocasviandas"
+                     {{#if subscriptoCantidadDeViandas}}checked{{/if}} >
+              <label for="pocasviandas" class="flex-grow-5 text-nowrap">Notificar cuando queden menos de </label>
+              <div class="input-group">
+                <input type="number" class="form-control ms-2" name="cantidadAlertaViandas" id="cantidadAlertaViandas"
+                       style="max-width: 4em"
+                       aria-label="Cantidad de viandas"
+                       min="1" value="{{cantidadAlertaViandas}}" required
+                       {{#unless subscriptoCantidadDeViandas}}disabled{{/unless}}
+                >
+                <span class="input-group-text">viandas</span>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary align-self-start">Guardar</button>
+          </form>
+        </div>
+      {{/if}}
+
+      <div class="m-4">
+        <div class="hstack justify-content-between mb-3">
+          <h5>Incidentes Activos</h5>
+          <a href="/heladeras/{{id}}/incidentes/new" class="btn btn-primary">Reportar Falla Técnica</a>
+        </div>
+        {{#each incidentes}}
+          <div class="card mb-3 bg-secondary-subtle border-0">
+            <div class="card-body">
+              <div class="row row-cols-1 row-cols-md-2">
+                <div class="col-md-8 col">
+                  <h6 class="card-title">{{titulo}}</h6>
+                  <p class="card-text">{{descripcion}}</p>
+                </div>
+                <div class="col-md-4 col text-end">
+                  <div>{{dateFormat fecha "long"}}</div>
+                  {{#if foto}}
+                    <a href="/uploaded/{{foto}}" class="d-block">
+                      <i class="bi bi-camera"></i>
+                      Ver foto
+                    </a>
+                  {{/if}}
+                  {{#if reportadoPor}}
+                    <div>Reportado por: <br>{{reportadoPor}}</div>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Cosas del mapa -->
+
+  <!-- Leaflet.js -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <script>
+    const map = L.map("map").setView([{{lat}}, {{lng}}], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([{{lat}}, {{lng}}]).addTo(map);
+  </script>
+
+  <!-- Desactivar input de viandas si no está subscripto -->
+  <script>
+    document.getElementById('pocasviandas').addEventListener('change', e => {
+      document.getElementById('cantidadAlertaViandas').disabled = !e.target.checked;
+    });
+  </script>
+{{/templates/partials/layout}}

@@ -28,3 +28,7 @@ target/**
 # IJ files
 *.iml
 .idea/**
+
+# Uploaded directory
+/uploaded/*
+/uploadedcsv/*
