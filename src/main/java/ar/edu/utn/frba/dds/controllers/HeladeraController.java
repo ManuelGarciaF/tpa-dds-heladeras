@@ -120,7 +120,8 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     Long idUsuario = ctx.sessionAttribute("user_id");
     ColaboradorHumano colaborador;
     try {
-      colaborador = (ColaboradorHumano) RepoColaboradores.getInstance().buscarPorIdUsuario(idUsuario);
+      colaborador = (ColaboradorHumano) RepoColaboradores.getInstance()
+          .buscarPorIdUsuario(idUsuario);
     } catch (ClassCastException e) {
       ctx.status(403);
       return;
@@ -151,12 +152,14 @@ public class HeladeraController implements WithSimplePersistenceUnit {
 
       if (notifHandler.estaSubscriptoCantidadDeViandas(colaborador) && !subscribirseViandas) {
         notifHandler.removerSubscriptorCantidadDeViandas(colaborador);
-      } else if (!notifHandler.estaSubscriptoCantidadDeViandas(colaborador) && subscribirseViandas) {
+      } else if (!notifHandler.estaSubscriptoCantidadDeViandas(colaborador)
+          && subscribirseViandas) {
         notifHandler.agregarSubscriptorCantidadDeViandas(
             new SubscriptorCantidadDeViandas(colaborador, cantidadMinimaViandas)
         );
       } else if (subscribirseViandas) {
-        notifHandler.buscarSubscriptorCantidadDeViandas(colaborador).setCantidadMinima(cantidadMinimaViandas);
+        notifHandler.buscarSubscriptorCantidadDeViandas(colaborador)
+            .setCantidadMinima(cantidadMinimaViandas);
       }
     });
 
@@ -186,7 +189,8 @@ public class HeladeraController implements WithSimplePersistenceUnit {
 
     var heladera = obtenerHeladeraDePathParam(ctx);
 
-    var colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(ctx.sessionAttribute("user_id"));
+    var colaborador = RepoColaboradores.getInstance()
+        .buscarPorIdUsuario(ctx.sessionAttribute("user_id"));
 
     withTransaction(() -> {
       heladera.nuevoIncidente(new FallaTecnica(
