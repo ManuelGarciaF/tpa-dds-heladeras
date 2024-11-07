@@ -181,7 +181,7 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     String nombreImg;
     if (img != null) {
       // Guardar archivo
-      nombreImg = img.filename();
+      nombreImg = img.filename(); // TODO quizas habria que generar un UUID para evitar conflictos
       FileUtil.streamToFile(img.content(), "uploaded/" + img.filename());
     } else {
       nombreImg = null;
@@ -192,14 +192,12 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     var colaborador = RepoColaboradores.getInstance()
         .buscarPorIdUsuario(ctx.sessionAttribute("user_id"));
 
-    withTransaction(() -> {
-      heladera.nuevoIncidente(new FallaTecnica(
-          colaborador,
-          LocalDateTime.now(),
-          descripcion,
-          nombreImg
-      ));
-    });
+    withTransaction(() -> heladera.nuevoIncidente(new FallaTecnica(
+        colaborador,
+        LocalDateTime.now(),
+        descripcion,
+        nombreImg
+    )));
 
     ctx.redirect("/heladeras/" + heladera.getId());
   }

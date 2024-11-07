@@ -64,7 +64,7 @@ public class Bootstrap implements WithSimplePersistenceUnit {
               RepoColaboradores.getInstance().getColaboradores().get(0),
               LocalDateTime.now(),
               "Error en el sensor de temperatura",
-              "https://www.google.com"
+              "prueba.png"
           )
       );
     });

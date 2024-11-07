@@ -1,5 +1,10 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.externo.ControladorDeAccesoImpl;
+import ar.edu.utn.frba.dds.externo.LSensorImpl;
+import ar.edu.utn.frba.dds.externo.TSensorImpl;
+import ar.edu.utn.frba.dds.externo.WSensorImpl;
+import ar.edu.utn.frba.dds.model.AutorizadorAperturasActual;
 import ar.edu.utn.frba.dds.model.Colaborador;
 import ar.edu.utn.frba.dds.model.Heladera;
 import ar.edu.utn.frba.dds.model.MotivoDeDistribucion;
@@ -12,17 +17,23 @@ import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeDinero;
 import ar.edu.utn.frba.dds.model.colaboraciones.DonacionDeVianda;
 import ar.edu.utn.frba.dds.model.colaboraciones.HacerseCargoHeladera;
 import ar.edu.utn.frba.dds.model.colaboraciones.RegistroDePersonaVulnerable;
+import ar.edu.utn.frba.dds.model.notificacionesheladera.NotificacionHeladeraHandler;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColaboradores;
 import ar.edu.utn.frba.dds.model.repositorios.RepoTecnicos;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
+import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorCantidadDeViandasSensor;
+import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorPesoSensor;
+import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorTemperaturaSensor;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import io.javalin.validation.ValidationException;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,11 +89,11 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
           LocalDate.now(),
           2.0,
           8.0,
-          null,
-          null,
-          null,
-          null,
-          null,
+          new ProveedorPesoSensor(new WSensorImpl()), // Usamos las implementaciones de mentira
+          new ProveedorTemperaturaSensor(new TSensorImpl(), numeroSerie),
+          new AutorizadorAperturasActual(new ControladorDeAccesoImpl()),
+          new ProveedorCantidadDeViandasSensor(new LSensorImpl()),
+          new NotificacionHeladeraHandler(),
           RepoTecnicos.getInstance()
       );
       MapaHeladeras.getInstance().agregarHeladera(heladera);
