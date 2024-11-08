@@ -9,14 +9,16 @@
     <div class="container-lg content-container border border-3 rounded-4 bg-body p-3 mt-5">
       <div id="map" class="border border-2 rounded rounded-3 mapa-heladeras w-100 mb-4"></div>
 
-      <form hx-get="/heladeras" hx-target="#lista-heladeras" hx-select="#lista-heladeras" hx-swap="outerHTML"
+      <form hx-get="/heladeras" hx-target="#lista-heladeras" hx-select="#lista-heladeras"
+            hx-swap="outerHTML"
       >
         <div class="input-group mb-3 search-input">
           <input type="text" class="form-control" id="search-input" placeholder="Buscar Heladeras"
                  name="q"
                  aria-label="Nombre de heladeras"
                  aria-describedby="search-submit"
-                 hx-get="/heladeras" hx-target="#lista-heladeras" hx-select="#lista-heladeras" hx-swap="outerHTML"
+                 hx-get="/heladeras" hx-target="#lista-heladeras" hx-select="#lista-heladeras"
+                 hx-swap="outerHTML"
                  hx-trigger="keyup changed delay:500ms from:#search-input"
           >
           <button class="btn btn-outline-secondary" type="button" id="search-submit"><i
@@ -36,17 +38,23 @@
               </h5>
               <div class="card-text">
                 <span class="badge text-bg-light border border-1 border-tertiary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon burger">
-                        <path
-                            d="M61.1 224C45 224 32 211 32 194.9c0-1.9 .2-3.7 .6-5.6C37.9 168.3 78.8 32 256 32s218.1 136.3 223.4 157.3c.5 1.9 .6 3.7 .6 5.6c0 16.1-13 29.1-29.1 29.1L61.1 224zM144 128a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm240 16a16 16 0 1 0 0-32 16 16 0 1 0 0 32zM272 96a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zM16 304c0-26.5 21.5-48 48-48l384 0c26.5 0 48 21.5 48 48s-21.5 48-48 48L64 352c-26.5 0-48-21.5-48-48zm16 96c0-8.8 7.2-16 16-16l416 0c8.8 0 16 7.2 16 16l0 16c0 35.3-28.7 64-64 64L96 480c-35.3 0-64-28.7-64-64l0-16z"/>
-                    </svg>
-                    <span class="p-2 text-body-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                       class="icon burger">
+                    <path
+                        d="M61.1 224C45 224 32 211 32 194.9c0-1.9 .2-3.7 .6-5.6C37.9 168.3 78.8 32 256 32s218.1 136.3 223.4 157.3c.5 1.9 .6 3.7 .6 5.6c0 16.1-13 29.1-29.1 29.1L61.1 224zM144 128a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zm240 16a16 16 0 1 0 0-32 16 16 0 1 0 0 32zM272 96a16 16 0 1 0 -32 0 16 16 0 1 0 32 0zM16 304c0-26.5 21.5-48 48-48l384 0c26.5 0 48 21.5 48 48s-21.5 48-48 48L64 352c-26.5 0-48-21.5-48-48zm16 96c0-8.8 7.2-16 16-16l416 0c8.8 0 16 7.2 16 16l0 16c0 35.3-28.7 64-64 64L96 480c-35.3 0-64-28.7-64-64l0-16z"/>
+                  </svg>
+                  <span class="p-2 text-body-secondary">
+                    {{#if viandas}}
                       {{viandas}}
-                    </span>
+                    {{else}}
+                      ?
+                    {{/if}}
+                  </span>
                 </span>
                 {{#if incidentes}}
-                <span class="badge text-bg-light border border-1 border-tertiary">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon incidente">
+                  <span class="badge text-bg-light border border-1 border-tertiary">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                         class="icon incidente">
                       <path
                           d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24l0 112c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-112c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
                     </svg>
@@ -93,7 +101,7 @@
       {{/each}}
     ].forEach(heladera => {
       L.marker([heladera.latitud, heladera.longitud]).addTo(map)
-        .bindPopup(`<h5>${heladera.nombre}</h5><a href="/heladeras/${heladera.id}">Ver detalles</a>`);
+          .bindPopup(`<h5>${heladera.nombre}</h5><a href="/heladeras/${heladera.id}">Ver detalles</a>`);
     });
   </script>
 {{/templates/partials/layout}}

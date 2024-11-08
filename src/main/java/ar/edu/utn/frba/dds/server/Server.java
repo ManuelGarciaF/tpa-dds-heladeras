@@ -43,6 +43,9 @@ public class Server implements WithSimplePersistenceUnit {
     new Router().configure(app);
 
     app.start(9001);
+
+    // Hacer que hybernate se inicialize ahora para no esperar 10s en la primera request.
+    withTransaction(() -> {});
   }
 
   private static void configurarExcepciones(Javalin app) {

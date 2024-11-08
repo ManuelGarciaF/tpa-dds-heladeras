@@ -1,11 +1,12 @@
 package ar.edu.utn.frba.dds.model;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class TarjetaColaborador {
-  @Id
+public class TarjetaColaborador extends PersistentEntity {
   private String codigoTarjeta;
 
   public TarjetaColaborador(String codigoTarjeta) {

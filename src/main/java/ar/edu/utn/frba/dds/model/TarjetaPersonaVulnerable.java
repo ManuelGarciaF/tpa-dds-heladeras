@@ -1,16 +1,14 @@
 package ar.edu.utn.frba.dds.model;
 
+import ar.edu.utn.frba.dds.PersistentEntity;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
+
 import java.time.LocalDate;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
-public class TarjetaPersonaVulnerable {
-  @Id
+public class TarjetaPersonaVulnerable extends PersistentEntity {
   private String codigoTarjeta;
 
   @Transient

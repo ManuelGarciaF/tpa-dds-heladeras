@@ -41,14 +41,15 @@ public class HeladeraController implements WithSimplePersistenceUnit {
 
       Integer cantidadDeViandas = h.getCantidadDeViandas();
 
-      return Map.of(
-          "id", h.getId(),
-          "nombre", h.getNombre(),
-          "viandas", cantidadDeViandas,
-          "incidentes", h.getIncidentesActivos().size(),
-          "lat", ubicacion.latitud(),
-          "lng", ubicacion.longitud()
-      );
+      var m = new HashMap<String, Object>();
+      m.put("id", h.getId());
+      m.put("nombre", h.getNombre());
+      m.put("viandas", cantidadDeViandas);
+      m.put("incidentes", h.getIncidentesActivos().size());
+      m.put("lat", ubicacion.latitud());
+      m.put("lng", ubicacion.longitud());
+
+      return m;
     }).toList());
 
     ctx.render("heladeras.hbs", model);
