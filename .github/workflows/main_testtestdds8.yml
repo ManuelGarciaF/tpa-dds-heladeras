@@ -28,8 +28,8 @@ jobs:
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/javalin-deploy-1.0-SNAPSHOT-jar-with-dependencies.jar'
+          name: javalin-deploy-1.0-SNAPSHOT-jar-with-dependencies
+          path: '${{ github.workspace }}/target/*.jar'
   
   deploy:
     runs-on: ubuntu-latest
