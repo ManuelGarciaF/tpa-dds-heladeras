@@ -67,6 +67,11 @@ public class ColaboradorHumano extends Colaborador {
     return this.tipoDocumento.equals(tipoDocumento) && this.numeroDocumento.equals(numeroDocumento);
   }
 
+  @Override
+  public boolean esHumano() {
+    return true;
+  }
+
   public void notificar(String mensaje) {
     proveedorMensajeria.enviarMensaje(mensaje);
   }

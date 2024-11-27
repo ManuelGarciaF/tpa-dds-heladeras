@@ -1,17 +1,21 @@
 package ar.edu.utn.frba.dds.controllers;
 
+import ar.edu.utn.frba.dds.exceptions.CsvInvalidoException;
 import ar.edu.utn.frba.dds.model.repositorios.RepoColaboradores;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
 import io.javalin.util.FileUtil;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 
 public class AdminController implements WithSimplePersistenceUnit {
   public void loginForm(@NotNull Context ctx) {
-    ctx.render("loginadmin.hbs");
+    var model = new HashMap<String, Object>();
+    model.put("errors", ctx.consumeSessionAttribute("errors"));
+    ctx.render("loginadmin.hbs", model);
   }
 
   public void loginPost(@NotNull Context ctx) {
@@ -26,7 +30,8 @@ public class AdminController implements WithSimplePersistenceUnit {
         .get();
 
     if (!username.equals(ADMIN_USERNAME) || !password.equals(ADMIN_PASSWORD)) {
-      ctx.render("loginadmin.hbs", Map.of("errors", List.of("Usuario o contraseña incorrectos")));
+      ctx.sessionAttribute("errors", List.of("Usuario o contraseña incorrectos"));
+      ctx.redirect("/admin/login");
       return;
     }
 
@@ -40,13 +45,16 @@ public class AdminController implements WithSimplePersistenceUnit {
   }
 
   public void cargarCsvForm(@NotNull Context ctx) {
-    ctx.render("cargarcsv.hbs");
+    var model = new HashMap<String, Object>();
+    model.put("errors", ctx.consumeSessionAttribute("errors"));
+    ctx.render("cargarcsv.hbs", model);
   }
 
   public void cargarCsvPost(@NotNull Context ctx) {
     UploadedFile csv = ctx.uploadedFile("csv");
     if (csv == null) {
-      ctx.render("cargarcsv.hbs", Map.of("errors", List.of("Debe seleccionar un archivo CSV")));
+      ctx.sessionAttribute("errors", List.of("Debe seleccionar un archivo CSV"));
+      ctx.redirect("/admin/csvs/new");
       return;
     }
 
@@ -55,7 +63,13 @@ public class AdminController implements WithSimplePersistenceUnit {
     FileUtil.streamToFile(csv.content(), path);
 
     // Cargar los datos del archivo
-    withTransaction(() -> RepoColaboradores.getInstance().cargarDeCsv(path));
+    try {
+      withTransaction(() -> RepoColaboradores.getInstance().cargarDeCsv(path));
+    } catch (CsvInvalidoException e) {
+      ctx.sessionAttribute("errors", List.of("El archivo CSV es inválido"));
+      ctx.redirect("/admin/csvs/new");
+      return;
+    }
 
     ctx.render("cargarcsv.hbs", Map.of("success", "Archivo cargado exitosamente"));
   }

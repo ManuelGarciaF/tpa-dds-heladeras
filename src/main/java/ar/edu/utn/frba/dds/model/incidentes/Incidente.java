@@ -25,4 +25,6 @@ public abstract class Incidente extends PersistentEntity {
   public abstract String getDescripcionDelError();
 
   public abstract String getTitulo();
+
+  public abstract TipoIncidente getTipo();
 }

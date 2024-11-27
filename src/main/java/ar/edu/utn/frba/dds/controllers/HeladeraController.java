@@ -4,6 +4,7 @@ import ar.edu.utn.frba.dds.model.Colaborador;
 import ar.edu.utn.frba.dds.model.ColaboradorHumano;
 import ar.edu.utn.frba.dds.model.Heladera;
 import ar.edu.utn.frba.dds.model.incidentes.FallaTecnica;
+import ar.edu.utn.frba.dds.model.incidentes.TipoIncidente;
 import ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorCantidadDeViandas;
 import ar.edu.utn.frba.dds.model.notificacionesheladera.SubscriptorIncidente;
 import ar.edu.utn.frba.dds.model.repositorios.MapaHeladeras;
@@ -74,9 +75,8 @@ public class HeladeraController implements WithSimplePersistenceUnit {
     Long idUsuario = ctx.sessionAttribute("user_id");
     Colaborador colaborador = RepoColaboradores.getInstance().buscarPorIdUsuario(idUsuario);
 
-    // FIXME No se que mejor forma hay de hacer esto, los colaboradores juridicos no
-    //  pueden subscribirse a heladeras.
-    try {
+    // Los colaboradores juridicos no pueden subscribirse a heladeras.
+    if (colaborador.esHumano()) {
       var colaboradorHumano = (ColaboradorHumano) colaborador;
       var notifHandler = heladera
           .getNotificacionHeladeraHandler();
@@ -94,7 +94,7 @@ public class HeladeraController implements WithSimplePersistenceUnit {
 
 
       model.put("puedeSubscribirse", true);
-    } catch (ClassCastException e) {
+    } else {
       model.put("puedeSubscribirse", false);
     }
 
@@ -103,12 +103,10 @@ public class HeladeraController implements WithSimplePersistenceUnit {
       map.put("titulo", i.getTitulo());
       map.put("descripcion", i.getDescripcionDelError());
       map.put("fecha", i.getFecha());
-      try {
-        var fallaTecnica = (FallaTecnica) i; // FIXME De nuevo, no se como hacer esto mejor.
+      if (i.getTipo().equals(TipoIncidente.FALLA_TECNICA)) {
+        var fallaTecnica = (FallaTecnica) i;
         map.put("foto", fallaTecnica.getUrlFoto());
         map.put("reportadoPor", fallaTecnica.getColaborador().getUsuario().getNombre());
-      } catch (ClassCastException ignored) {
-        // No es una falla tecnica
       }
 
       return map;
@@ -180,7 +178,7 @@ public class HeladeraController implements WithSimplePersistenceUnit {
 
     UploadedFile img = ctx.uploadedFile("img");
     String nombreImg;
-    if (img != null) {
+    if (img != null && img.size() > 0) {
       // Guardar archivo
       nombreImg = img.filename(); // TODO quizas habria que generar un UUID para evitar conflictos
       FileUtil.streamToFile(img.content(), "uploaded/" + img.filename());

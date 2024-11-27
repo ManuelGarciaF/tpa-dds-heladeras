@@ -73,4 +73,8 @@ public abstract class Colaborador extends PersistentEntity {
   }
 
   public abstract boolean esDeDocumento(TipoDocumento tipoDocumento, Integer numeroDocumento);
+
+  public boolean esHumano() {
+    return false;
+  }
 }

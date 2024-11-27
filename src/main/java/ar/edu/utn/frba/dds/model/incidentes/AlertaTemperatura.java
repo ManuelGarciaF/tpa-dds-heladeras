@@ -21,4 +21,9 @@ public class AlertaTemperatura extends Incidente {
   public String getTitulo() {
     return "Alerta de temperatura";
   }
+
+  @Override
+  public TipoIncidente getTipo() {
+    return TipoIncidente.ALERTA_TEMPERATURA;
+  }
 }

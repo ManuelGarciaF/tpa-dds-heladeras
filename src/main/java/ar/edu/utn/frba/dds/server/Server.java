@@ -9,7 +9,6 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.validation.ValidationException;
-import java.io.File;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +41,7 @@ public class Server implements WithSimplePersistenceUnit {
     // Configurar rutas
     new Router().configure(app);
 
-    app.start(80);
+    app.start(getHerokuAssignedPort());
 
     // Hacer que hybernate se inicialize ahora para no esperar 10s en la primera request.
     withTransaction(() -> {});
@@ -86,6 +85,14 @@ public class Server implements WithSimplePersistenceUnit {
       default -> null;
     });
     config.validation.register(Boolean.class, v -> v != null && v.equals("on"));
+  }
+
+  private static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+      return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 7070;
   }
 
 }

@@ -38,6 +38,11 @@ public class FallaTecnica extends Incidente {
     return "Falla técnica";
   }
 
+  @Override
+  public TipoIncidente getTipo() {
+    return TipoIncidente.FALLA_TECNICA;
+  }
+
   public Colaborador getColaborador() {
     return colaborador;
   }

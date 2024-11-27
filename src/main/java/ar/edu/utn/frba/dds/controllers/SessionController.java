@@ -3,8 +3,8 @@ package ar.edu.utn.frba.dds.controllers;
 import ar.edu.utn.frba.dds.model.Usuario;
 import ar.edu.utn.frba.dds.model.repositorios.RepoUsuarios;
 import io.javalin.http.Context;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,9 @@ public class SessionController {
   private static final Logger log = LoggerFactory.getLogger(SessionController.class);
 
   public void show(@NotNull Context ctx) {
-    ctx.render("login.hbs");
+    var model = new HashMap<String, Object>();
+    model.put("errors", ctx.consumeSessionAttribute("errors"));
+    ctx.render("login.hbs", model);
   }
 
   public void create(@NotNull Context ctx) {
@@ -27,7 +29,8 @@ public class SessionController {
     Usuario usuario = RepoUsuarios.getInstance().findByUsername(username);
     // Si no se encontro el usuario o la contrasenia es incorrecta
     if (usuario == null || !usuario.verificarContrasenia(password)) {
-      ctx.render("login.hbs", Map.of("errors", List.of("Usuario o contraseña incorrectos")));
+      ctx.sessionAttribute("errors", List.of("Usuario o contraseña incorrectos"));
+      ctx.redirect("/login");
       return;
     }
 

@@ -28,18 +28,13 @@ import ar.edu.utn.frba.dds.model.sensoresheladera.ProveedorTemperaturaSensor;
 import io.github.flbulgarelli.jpa.extras.simple.WithSimplePersistenceUnit;
 import io.javalin.http.Context;
 import io.javalin.validation.ValidationException;
-
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ColaboradorController implements WithSimplePersistenceUnit {
-  private static final Logger log = LoggerFactory.getLogger(ColaboradorController.class);
 
   public void formasDeColaborar(@NotNull Context ctx) {
     Long idUsuario = ctx.sessionAttribute("user_id");
@@ -54,7 +49,9 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
   }
 
   public void hacerseCargoDeHeladeraForm(@NotNull Context ctx) {
-    ctx.render("hacersecargodeheladeraform.hbs");
+    var model = new HashMap<String, Object>();
+    model.put("errors", ctx.consumeSessionAttribute("errors"));
+    ctx.render("hacersecargodeheladeraform.hbs", model);
   }
 
   public void hacerseCargoDeHeladeraPost(@NotNull Context ctx) {
@@ -62,8 +59,8 @@ public class ColaboradorController implements WithSimplePersistenceUnit {
     Double lng = ctx.formParamAsClass("longitud", Double.class).getOrDefault(null);
     // Campos ocultos no son validados del lado del cliente, hay que hacerlo acá
     if (lat == null || lng == null) {
-      var model = Map.of("errors", List.of("Ubicación inválida"));
-      ctx.render("hacersecargodeheladeraform.hbs", model);
+      ctx.sessionAttribute("errors", List.of("Ubicación inválida"));
+      ctx.redirect("/colaboraciones/hacersecargodeheladera/new");
       return;
     }
 

@@ -32,4 +32,9 @@ public class AlertaFallaConexion extends Incidente {
   public String getTitulo() {
     return "Falla de conexión";
   }
+
+  @Override
+  public TipoIncidente getTipo() {
+    return TipoIncidente.ALERTA_FALLA_CONEXION;
+  }
 }

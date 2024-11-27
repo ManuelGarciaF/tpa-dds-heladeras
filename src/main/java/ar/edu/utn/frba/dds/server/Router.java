@@ -78,9 +78,9 @@ public class Router implements WithSimplePersistenceUnit {
     app.post("/admin/login", adminController::loginPost, Role.ANYONE);
     app.post("/admin/logout", adminController::logout, Role.ADMIN);
 
-    app.get("/admin", ctx -> ctx.redirect("/admin/cargarcsv"), Role.ADMIN);
+    app.get("/admin", ctx -> ctx.redirect("/admin/csvs/new"), Role.ADMIN);
 
-    app.get("/admin/cargarcsv", adminController::cargarCsvForm, Role.ADMIN);
-    app.post("/admin/cargarcsv", adminController::cargarCsvPost, Role.ADMIN);
+    app.get("/admin/csvs/new", adminController::cargarCsvForm, Role.ADMIN);
+    app.post("/admin/csvs", adminController::cargarCsvPost, Role.ADMIN);
   }
 }
