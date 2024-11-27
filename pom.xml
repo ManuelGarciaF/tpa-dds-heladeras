@@ -124,7 +124,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ar.edu.utn.frba.dds.CheckearSensores</mainClass>
+                            <mainClass>ar.edu.utn.frba.dds.server.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
