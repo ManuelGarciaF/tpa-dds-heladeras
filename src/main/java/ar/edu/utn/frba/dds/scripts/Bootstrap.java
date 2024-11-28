@@ -24,6 +24,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Bootstrap implements WithSimplePersistenceUnit {
+  static public void main(String[] args) {
+    new Bootstrap().init();
+  }
+
   public void init() {
     withTransaction(() -> {
       agregarColaborador("manu", "contraseniaManu", "manu", "garcia");

@@ -22,7 +22,7 @@ public class ProveedorTemperaturaSensor extends ProveedorTemperatura {
 
   @ElementCollection
   private final List<Double> ultimasTresTemperaturas = new ArrayList<>();
-  private LocalDate ultimaMedicion;
+  private LocalDateTime ultimaMedicion;
 
   @Transient
   private Runnable checkeoDeTemperaturaHandler;
@@ -53,9 +53,11 @@ public class ProveedorTemperaturaSensor extends ProveedorTemperatura {
 
   @Override
   public boolean hayFalloConexion() {
+    if (ultimaMedicion == null) {
+      return false;
+    }
     long diferenciaMinutos = ChronoUnit.MINUTES.between(LocalDateTime.now(), ultimaMedicion);
-    return ultimaMedicion != null
-        && diferenciaMinutos > MINUTOS_DESCONECTADO_MAXIMOS;
+    return diferenciaMinutos > MINUTOS_DESCONECTADO_MAXIMOS;
   }
 
   public void agregarLectura(Double temperatura) {
@@ -65,7 +67,7 @@ public class ProveedorTemperaturaSensor extends ProveedorTemperatura {
     }
     // Agregar la temperatura nueva al final
     ultimasTresTemperaturas.add(temperatura);
-    ultimaMedicion = LocalDate.now();
+    ultimaMedicion = LocalDateTime.now();
 
     // Delegar el checkeo de temperatura a la heladera
     if (checkeoDeTemperaturaHandler != null) {
