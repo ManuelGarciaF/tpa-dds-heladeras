@@ -178,19 +178,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <!-- Build an executable JAR -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>ar.edu.utn.frba.dds.server.App</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-            <plugin>
                 <!-- Build an executable JAR with dependencies -->
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
@@ -210,6 +197,19 @@
                             <mainClass>ar.edu.utn.frba.dds.server.App</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.3</version>
+                <configuration>
+                    <jdkVersion>17</jdkVersion>
+                    <appName>heladeras-dds</appName>
+                    <processTypes>
+                        <!-- Tell Heroku how to launch your application -->
+                        <web>java -jar ./target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar</web>
+                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>

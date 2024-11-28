@@ -9,6 +9,8 @@ import io.javalin.Javalin;
 import io.javalin.config.JavalinConfig;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.validation.ValidationException;
+import java.io.File;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +67,12 @@ public class Server implements WithSimplePersistenceUnit {
   }
 
   private static void initializeStaticFiles(JavalinConfig config) {
+    // Crear las carpetas vacias
+    var uploaded = new File("uploaded/").mkdirs();
+    log.info("creando uploaded: {}", uploaded);
+    var uploadedcsv = new File("uploadedcsv/").mkdirs();
+    log.info("creando uploadedcsv: {}", uploadedcsv);
+
     config.staticFiles.add(staticFileConfig -> {
       staticFileConfig.hostedPath = "/assets";
       staticFileConfig.directory = "/assets";
