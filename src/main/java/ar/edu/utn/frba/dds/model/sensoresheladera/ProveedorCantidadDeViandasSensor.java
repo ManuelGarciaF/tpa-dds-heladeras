@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 @Entity
 @DiscriminatorValue("SENSOR")
 public class ProveedorCantidadDeViandasSensor extends ProveedorCantidadDeViandas {
-  private Integer cantidadDeViandas;
+  private Integer cantidadDeViandas = 0;
 
   @Transient
   private Runnable nuevaMedicionHandler;

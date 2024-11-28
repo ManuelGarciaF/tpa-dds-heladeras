@@ -10,7 +10,6 @@ import io.javalin.config.JavalinConfig;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.validation.ValidationException;
 import java.io.File;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

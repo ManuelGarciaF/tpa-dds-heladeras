@@ -27,7 +27,9 @@ public class Bootstrap implements WithSimplePersistenceUnit {
   public void init() {
     withTransaction(() -> {
       agregarColaborador("manu", "contraseniaManu", "manu", "garcia");
-      agregarColaborador("laura84", "lauraPass123", "laura", "rodriguez");
+      agregarColaborador("mati", "contraseniaMati", "mati", "rainhart");
+      agregarColaborador("gere_dev", "contraseniaGere", "geremias", "ortiz");
+      agregarColaborador("roli", "contraseniaRoli", "rodolfo", "caputo");
       agregarColaborador("carlos_dev", "carlosSecure!", "carlos", "martinez");
       agregarColaborador("ana2024", "ana#Pass456", "ana", "lopez");
       agregarColaborador("pablo_tech", "pabloSecret789", "pablo", "sanchez");
