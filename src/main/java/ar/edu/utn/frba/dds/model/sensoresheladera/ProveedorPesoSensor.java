@@ -2,6 +2,7 @@ package ar.edu.utn.frba.dds.model.sensoresheladera;
 
 import static java.util.Objects.requireNonNull;
 
+import ar.edu.utn.frba.dds.exceptions.HeladeraException;
 import ar.edu.utn.frba.dds.exceptions.LecturaInvalidaException;
 import ar.edu.utn.frba.dds.externo.Reading;
 import ar.edu.utn.frba.dds.externo.WSensor;
@@ -34,8 +35,8 @@ public class ProveedorPesoSensor implements ProveedorPeso {
       heladera.nuevoIncidente(
           new AlertaFallaConexion(LocalDateTime.now(), TipoDeFalla.SENSOR_DE_PESO)
       );
+      throw new HeladeraException("Fallo el sensor de peso"/*, e*/);
     }
-    return -1.0;
   }
 
   // Entrega 3
