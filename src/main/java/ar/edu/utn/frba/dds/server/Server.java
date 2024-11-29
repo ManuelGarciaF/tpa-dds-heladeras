@@ -67,10 +67,14 @@ public class Server implements WithSimplePersistenceUnit {
 
   private static void initializeStaticFiles(JavalinConfig config) {
     // Crear las carpetas vacias
-    var uploaded = new File("uploaded/").mkdirs();
-    log.info("creando uploaded: {}", uploaded);
-    var uploadedcsv = new File("uploadedcsv/").mkdirs();
-    log.info("creando uploadedcsv: {}", uploadedcsv);
+    String userDir = System.getProperty("user.dir");
+    log.info("Creando carpetas desde {}", userDir);
+    var uploaded = new File(userDir + File.separator + "uploaded/");
+    var resultUploaded = uploaded.mkdirs();
+    log.info("creando uploaded: {} ({})", uploaded.getAbsolutePath(), resultUploaded);
+    var uploadedcsv = new File(userDir + File.separator + "uploadedcsv/");
+    var resultUploadedcsv = uploadedcsv.mkdirs();
+    log.info("creando uploadedcsv: {} ({})", uploadedcsv, resultUploadedcsv);
 
     config.staticFiles.add(staticFileConfig -> {
       staticFileConfig.hostedPath = "/assets";

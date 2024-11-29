@@ -48,17 +48,19 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>
 
-            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-            <property name="hibernate.connection.url" value="jdbc:postgresql://c5p86clmevrg5s.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d8nh6cmua8dcaj" />
-            <property name="hibernate.connection.username" value="udf0ks5ob0vd71" />
-            <property name="hibernate.connection.password" value="AGREGAR ANTES DE HACER DEPLOY" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect" />
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.url"
+                      value="jdbc:postgresql://c5p86clmevrg5s.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d8nh6cmua8dcaj"/>
+            <property name="hibernate.connection.username" value="udf0ks5ob0vd71"/>
+            <property name="hibernate.connection.password"
+                      value="AGREGAR ANTES DE DEPLOY"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
 
-<!--            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>-->
-<!--            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>-->
-<!--            <property name="hibernate.connection.username" value="sa"/>-->
-<!--            <property name="hibernate.connection.password" value=""/>-->
-<!--            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>-->
+            <!--           <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver"/>-->
+            <!--           <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db"/>-->
+            <!--           <property name="hibernate.connection.username" value="sa"/>-->
+            <!--           <property name="hibernate.connection.password" value=""/>-->
+            <!--           <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>-->
 
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>

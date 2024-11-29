@@ -162,7 +162,11 @@ class HeladeraTest implements SimplePersistenceTest {
   void seGeneraUnIncidenteCuandoElSensorDePesoLanzaUnaExcepcion() {
     when(wSensor.getWeight("kd993j")).thenThrow(new RuntimeException("Error"));
 
-    heladera.nivelLlenado(); // Operacion que requiere obtener el peso
+    try {
+      heladera.nivelLlenado(); // Operacion que requiere obtener el peso
+    } catch (HeladeraException e) {
+      // Ignorada
+    }
 
     assertEquals(1, heladera.getIncidentesActivos().size());
   }
